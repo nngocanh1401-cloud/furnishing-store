@@ -1,7 +1,9 @@
 export default function Home() {
   return (
     <main>
-      <h1>Furniro Home</h1>
+      <h1>
+        <span className="font-logo">Furniro</span> Home
+      </h1>
     </main>
   );
 }
