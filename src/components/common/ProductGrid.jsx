@@ -1,31 +1,37 @@
-import { layoutStyles, textStyles } from "@/styles/styles";
-import Button from "./Button";
-import Container from "./Container";
-import ProductCard from "./ProductCard";
-import { cn } from "@/utils/cn";
+import Button from "@/components/common/Button";
+import ProductCard from "@/components/common/ProductCard";
+import SectionTitle from "@/components/common/SectionTitle";
+import { layoutStyles } from "@/styles/styles";
 
-export default function ProductGrid({ title = "Our Products", products = [] }) {
+export default function ProductGrid({
+  title = "Our Products",
+  subtitle,
+  products = [],
+  showMore = true,
+}) {
   return (
-    <section className="pb-[56px] md:pb-[70px]">
-      <Container size="products">
-        {title && (
-          <h2 className={`text-center ${textStyles.sectionTitle}`}>{title}</h2>
-        )}
+    <section className="bg-white px-5 py-[32px]">
+      <div className="mx-auto max-w-[1236px]">
+        <SectionTitle
+          title={title}
+          subtitle={subtitle}
+          className="text-center"
+        />
 
-        <div className={cn(layoutStyles.productGrid, title ? "mt-8" : "mt-0")}>
+        <div className={`${layoutStyles.productGrid} mt-[32px]`}>
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id || product.name} product={product} />
           ))}
         </div>
 
-        {title && (
-          <div className="mt-8 flex justify-center">
+        {showMore && (
+          <div className="mt-[32px] flex justify-center">
             <Button href="/shop" variant="outline" size="showMore">
               Show More
             </Button>
           </div>
         )}
-      </Container>
+      </div>
     </section>
   );
 }
