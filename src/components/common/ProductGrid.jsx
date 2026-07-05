@@ -12,13 +12,15 @@ export default function ProductGrid({
   return (
     <section className="bg-white px-5 py-[32px]">
       <div className="mx-auto max-w-[1236px]">
-        <SectionTitle
-          title={title}
-          subtitle={subtitle}
-          className="text-center"
-        />
+        {title && (
+          <SectionTitle
+            title={title}
+            subtitle={subtitle}
+            className="text-center"
+          />
+        )}
 
-        <div className={`${layoutStyles.productGrid} mt-[32px]`}>
+        <div className={`${layoutStyles.productGrid} ${title ? "mt-[32px]" : ""}`}>
           {products.map((product) => (
             <ProductCard key={product.id || product.name} product={product} />
           ))}
