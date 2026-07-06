@@ -26,14 +26,18 @@ export const compareProducts = [
     image: "/images/black-sofa.jpg",
     rating: 4.5,
     reviews: 20,
+    productUrl: "/product",
+    quantity: 1,
   },
-    {
+  {
     id: 4,
     name: "Vintage Coffee Table",
     price: "Rs. 160,000.00",
     image: "/images/black-sofa.jpg",
     rating: 4.1,
     reviews: 18,
+    productUrl: "/product",
+    quantity: 1,
   },
 ];
 

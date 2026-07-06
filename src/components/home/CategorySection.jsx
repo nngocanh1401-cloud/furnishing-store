@@ -21,7 +21,7 @@ function CategoryCard({ category }) {
       </a>
     </article>
   );
-
+}
 
 export default function CategorySection() {
   return (
