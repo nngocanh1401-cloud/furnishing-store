@@ -15,6 +15,22 @@ export const compareProducts = [
     rating: 4.2,
     reviews: 145,
   },
+  {
+    id: 3,
+    name: "Elegant Dining Table",
+    price: "Rs. 180,000.00",
+    image: "/images/black-sofa.jpg",
+    rating: 4.5,
+    reviews: 20,
+  },
+    {
+    id: 4,
+    name: "Vintage Coffee Table",
+    price: "Rs. 160,000.00",
+    image: "/images/black-sofa.jpg",
+    rating: 4.1,
+    reviews: 18,
+  },
 ];
 
 export const comparisonSections = [

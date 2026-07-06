@@ -2,7 +2,7 @@ import CartSection from "@/components/cart/CartSection";
 
 export const metadata = {
   title: "Cart | Furniro",
-  description: "Review your furniture cart before checkout.",
+  description: "Review your cart before checkout.",
 };
 
 export default function CartPage() {
