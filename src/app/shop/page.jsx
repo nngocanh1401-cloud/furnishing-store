@@ -1,8 +1,10 @@
-import ShopBanner from "@/components/common/ShopBanner";
-import ShopFilterBar from "@/components/common/ShopFilterBar";
+import ShopBanner from "@/components/shop/ShopBanner";
+import ShopFilterBar from "@/components/shop/ShopFilterBar";
+
 import ProductGrid from "@/components/common/ProductGrid";
 import Pagination from "@/components/common/Pagination";
 import FeatureSection from "@/components/common/FeatureSection";
+
 import { products } from "@/data/product";
 
 export const metadata = {

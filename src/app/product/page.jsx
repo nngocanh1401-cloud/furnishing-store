@@ -1,8 +1,9 @@
-import ProductBreadcrumb from "@/components/common/ProductBreadcrumb";
-import ProductDetail from "@/components/common/ProductDetail";
-import ProductTabs from "@/components/common/ProductTabs";
-import RelatedProducts from "@/components/common/RelatedProducts";
+import ProductDetail from "@/components/product/ProductDetail";
+import ProductTabs from "@/components/product/ProductTabs";
+import RelatedProducts from "@/components/product/RelatedProducts";
+import Breadcrumb from "@/components/common/Breadcrumb";
 import FeatureSection from "@/components/common/FeatureSection";
+
 import { products } from "@/data/product";
 
 export const metadata = {
@@ -16,7 +17,7 @@ export default function ProductPage() {
 
   return (
     <>
-      <ProductBreadcrumb product={product} />
+      <Breadcrumb product={product} />
       <ProductDetail product={product} />
       <ProductTabs />
       <RelatedProducts products={relatedProducts} />
