@@ -1,4 +1,5 @@
 import ProductComparison from "@/components/comparison/ProductComparison";
+import ShopBanner from "@/components/common/ShopBanner";
 
 export const metadata = {
   title: "Product Comparison | Furniro",
@@ -9,6 +10,7 @@ export const metadata = {
 export default function ComparisonPage() {
   return (
     <main>
+      <ShopBanner title="Comparison" current="Comparison" />
       <ProductComparison />
     </main>
   );
