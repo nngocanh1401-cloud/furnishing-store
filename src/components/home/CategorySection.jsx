@@ -21,16 +21,17 @@ function CategoryCard({ category }) {
       </a>
     </article>
   );
-}
+
 
 export default function CategorySection() {
   return (
     <section className="pb-[56px] pt-[56px]">
+
       <Container size="categories">
         <SectionTitle
           title="Browse The Range"
           subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-        />
+ />
 
         <div className={layoutStyles.categoryGrid}>
           {categories.map((category) => (

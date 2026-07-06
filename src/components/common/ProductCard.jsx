@@ -1,60 +1,120 @@
-import { textStyles } from "@/styles/styles";
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
+import CartSidebar from "@/components/common/CartSidebar";
+
+function getBadgeClass(product) {
+  const badge = product.badge || product.tag || "";
+
+  if (badge.toLowerCase().includes("new")) {
+    return "bg-[#2EC1AC]";
+  }
+
+  return "bg-[#E97171]";
+}
 
 export default function ProductCard({ product }) {
-  const isDiscount = product.badge?.startsWith("-");
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const productHref = product.productUrl || product.href || "/product";
+  const name = product.name || product.title;
+  const description = product.description || product.subtitle || "";
+  const price = product.price || product.currentPrice || "";
+  const oldPrice = product.oldPrice || product.originalPrice || "";
+  const badge = product.badge || product.tag || "";
 
   return (
-    <article className="group relative w-full overflow-hidden bg-[#F4F5F7] lg:h-[446px] lg:w-[285px]">
-      <div className="relative aspect-[285/301] w-full overflow-hidden lg:h-[301px]">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-        />
+    <>
+      <article className="group relative bg-[#F4F5F7] font-['Poppins']">
+        <div className="relative h-[301px] overflow-hidden bg-[#F4F5F7]">
+          <Link href={productHref} aria-label={`View ${name}`}>
+            <img
+              src={product.image}
+              alt={name}
+              className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+            />
+          </Link>
 
-        {product.badge && (
-          <span
-            className={`absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full font-['Poppins'] text-[16px] font-medium text-white ${
-              isDiscount ? "bg-[#E97171]" : "bg-[#2EC1AC]"
-            }`}
-          >
-            {product.badge}
-          </span>
-        )}
+          {badge && (
+            <span
+              className={`absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full text-[16px] font-medium text-white ${getBadgeClass(product)}`}
+            >
+              {badge}
+            </span>
+          )}
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-[#3A3A3A]/70 opacity-0 transition duration-300 group-hover:opacity-100">
-          <button
-            type="button"
-            className="h-12 w-[202px] bg-white font-['Poppins'] text-[16px] font-semibold text-[#B88E2F] transition hover:bg-[#B88E2F] hover:text-white"
-          >
-            Add to cart
-          </button>
+          <div className="absolute inset-0 hidden items-center justify-center bg-black/50 group-hover:flex">
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => setIsCartOpen(true)}
+                className="h-12 w-[202px] bg-white font-['Poppins'] text-[16px] font-semibold text-[#B88E2F] transition hover:bg-[#B88E2F] hover:text-white"
+              >
+                Add to cart
+              </button>
 
-          <div className="flex gap-5 font-['Poppins'] text-[16px] font-semibold text-white">
-            <button type="button">Share</button>
-            <button type="button">Compare</button>
-            <button type="button">Like</button>
+              <div className="mt-6 flex items-center justify-center gap-5 text-white">
+                <button
+                  type="button"
+                  className="text-[16px] font-semibold transition hover:text-[#B88E2F]"
+                >
+                  Share
+                </button>
+
+                <Link
+                  href="/comparison"
+                  className="text-[16px] font-semibold transition hover:text-[#B88E2F]"
+                >
+                  Compare
+                </Link>
+
+                <button
+                  type="button"
+                  className="text-[16px] font-semibold transition hover:text-[#B88E2F]"
+                >
+                  Like
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="px-4 pb-[30px] pt-4">
-        <h3 className={textStyles.productName}>{product.name}</h3>
+        <div className="px-4 pb-[30px] pt-4">
+          <Link href={productHref}>
+            <h3 className="text-[24px] font-semibold leading-[29px] text-[#3A3A3A] transition hover:text-[#B88E2F]">
+              {name}
+            </h3>
+          </Link>
 
-        <p className={`mt-2 ${textStyles.productDescription}`}>
-          {product.description}
-        </p>
+          <p className="mt-2 text-[16px] font-medium leading-[24px] text-[#898989]">
+            {description}
+          </p>
 
-        <div className="mt-2 flex flex-wrap items-center gap-4">
-          <p className={textStyles.productPrice}>{product.price}</p>
-
-          {product.oldPrice && (
-            <p className="font-['Poppins'] text-[16px] leading-[24px] text-[#B0B0B0] line-through">
-              {product.oldPrice}
+          <div className="mt-2 flex flex-wrap items-center gap-4">
+            <p className="text-[20px] font-semibold leading-[30px] text-[#3A3A3A]">
+              {price}
             </p>
-          )}
+
+            {oldPrice && (
+              <p className="text-[16px] leading-[24px] text-[#B0B0B0] line-through">
+                {oldPrice}
+              </p>
+            )}
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+
+      <CartSidebar
+        isOpen={isCartOpen}
+        product={{
+          name,
+          image: product.image,
+          price,
+          quantity: 1,
+        }}
+        onClose={() => setIsCartOpen(false)}
+      />
+    </>
   );
 }

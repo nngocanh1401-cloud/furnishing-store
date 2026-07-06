@@ -2,9 +2,9 @@ import ProductComparison from "@/components/comparison/ProductComparison";
 import ShopBanner from "@/components/common/ShopBanner";
 
 export const metadata = {
-  title: "Product Comparison | Furniro",
+  title: "Product Comparison",
   description:
-    "Compare furniture products, prices, dimensions and warranty information.",
+    "Compare Furniro furniture products by price, material, dimensions and warranty.",
 };
 
 export default function ComparisonPage() {
@@ -15,3 +15,4 @@ export default function ComparisonPage() {
     </main>
   );
 }
+

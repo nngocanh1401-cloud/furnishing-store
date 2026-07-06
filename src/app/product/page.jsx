@@ -1,4 +1,11 @@
+
 import ShopBanner from "@/components/common/ShopBanner";
+import ProductDetail from "@/components/product/ProductDetail";
+import ProductTabs from "@/components/product/ProductTabs";
+import RelatedProducts from "@/components/product/RelatedProducts";
+import Breadcrumb from "@/components/common/Breadcrumb";
+import FeatureSection from "@/components/common/FeatureSection";
+import { products } from "@/data/product";
 
 export const metadata = {
   title: "Product",
@@ -6,5 +13,16 @@ export const metadata = {
 };
 
 export default function ProductPage() {
-  return <ShopBanner title="Product" current="Product" />;
+  const product = products[0];
+  const relatedProducts = products.slice(0, 4);
+
+  return (
+    <>
+      <Breadcrumb product={product} />
+      <ProductDetail product={product} />
+      <ProductTabs />
+      <RelatedProducts products={relatedProducts} />
+      <FeatureSection />
+    </>
+  );
 }
