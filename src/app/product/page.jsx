@@ -1,5 +1,3 @@
-
-import ShopBanner from "@/components/common/ShopBanner";
 import ProductDetail from "@/components/product/ProductDetail";
 import ProductTabs from "@/components/product/ProductTabs";
 import RelatedProducts from "@/components/product/RelatedProducts";
