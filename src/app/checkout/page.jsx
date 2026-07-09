@@ -1,3 +1,5 @@
+import ShopBanner from "@/components/common/ShopBanner";
+import Pagination from "@/components/common/Pagination";
 import CheckoutSection from "@/components/checkout/CheckoutSection";
 
 export const metadata = {
@@ -7,8 +9,10 @@ export const metadata = {
 
 export default function CheckoutPage() {
   return (
-    <main>
+    <>
+      <ShopBanner title="Checkout" current="Checkout" />
       <CheckoutSection />
-    </main>
+      <Pagination />
+    </>
   );
 }

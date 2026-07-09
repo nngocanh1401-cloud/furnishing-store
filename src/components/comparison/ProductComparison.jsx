@@ -153,8 +153,6 @@ export default function ProductComparison() {
 
   return (
     <>
-      <ShopBanner title="Product Comparison" current="Comparison" />
-
       <section className={comparisonStyles.section}>
         <div className="mx-auto max-w-[1332px] px-5 lg:px-0">
           <p className={comparisonStyles.mobileHint}>
