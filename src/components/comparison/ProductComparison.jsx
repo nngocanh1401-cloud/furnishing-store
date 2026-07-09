@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import FeatureSection from "@/components/common/FeatureSection";
-import ShopBanner from "@/components/common/ShopBanner";
 import ComparisonCartSidebar from "@/components/comparison/ComparisonCartSidebar";
 import { compareProducts, comparisonSections } from "@/data/comparisonData";
 import { comparisonStyles } from "@/styles/styles";
@@ -23,10 +22,7 @@ function RatingStars() {
 function ProductHeaderCard({ product }) {
   return (
     <article className={comparisonStyles.productColumn}>
-      <Link
-        href={product.productUrl ?? "/product"}
-        className={comparisonStyles.productImageBox}
-      >
+      <Link href={product.productUrl} className={comparisonStyles.productImageBox}>
         <img
           src={product.image}
           alt={product.name}
@@ -34,7 +30,7 @@ function ProductHeaderCard({ product }) {
         />
       </Link>
 
-      <Link href={product.productUrl ?? "/product"}>
+      <Link href={product.productUrl}>
         <h2 className="mt-[18px] text-[24px] font-medium leading-[126.5%] text-black transition hover:text-[#B88E2F]">
           {product.name}
         </h2>
