@@ -1,4 +1,5 @@
 import Button from "@/components/common/Button";
+import Container from "@/components/common/Container";
 import ProductCard from "@/components/common/ProductCard";
 import SectionTitle from "@/components/common/SectionTitle";
 import { layoutStyles } from "@/styles/styles";
@@ -10,8 +11,8 @@ export default function ProductGrid({
   showMore = true,
 }) {
   return (
-    <section className="bg-white px-5 py-[32px]">
-      <div className="mx-auto max-w-[1236px]">
+    <section className="bg-white py-[32px]">
+      <Container size="products">
         {title && (
           <SectionTitle
             title={title}
@@ -20,7 +21,11 @@ export default function ProductGrid({
           />
         )}
 
-        <div className={`${layoutStyles.productGrid} ${title ? "mt-[32px]" : ""}`}>
+        <div
+          className={`${layoutStyles.productGrid} ${
+            title ? "mt-[32px]" : ""
+          }`}
+        >
           {products.map((product) => (
             <ProductCard key={product.id || product.name} product={product} />
           ))}
@@ -33,7 +38,7 @@ export default function ProductGrid({
             </Button>
           </div>
         )}
-      </div>
+      </Container>
     </section>
   );
 }

@@ -1,5 +1,6 @@
-import ProductComparison from "@/components/comparison/ProductComparison";
+import FeatureSection from "@/components/common/FeatureSection";
 import ShopBanner from "@/components/common/ShopBanner";
+import ProductComparison from "@/components/comparison/ProductComparison";
 
 export const metadata = {
   title: "Product Comparison",
@@ -9,10 +10,10 @@ export const metadata = {
 
 export default function ComparisonPage() {
   return (
-    <main>
-      <ShopBanner title="Comparison" current="Comparison" />
+    <>
+      <ShopBanner title="Product Comparison" current="Comparison" />
       <ProductComparison />
-    </main>
+      <FeatureSection />
+    </>
   );
 }
-
