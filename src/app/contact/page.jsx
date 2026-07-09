@@ -1,3 +1,5 @@
+import FeatureSection from "@/components/common/FeatureSection";
+import ShopBanner from "@/components/common/ShopBanner";
 import Contact from "@/components/contact/contact";
 
 export const metadata = {
@@ -6,5 +8,11 @@ export const metadata = {
 };
 
 export default function ContactPage() {
-  return <Contact />;
+  return (
+    <>
+      <ShopBanner title="Contact" current="Contact" />
+      <Contact />
+      <FeatureSection />
+    </>
+  );
 }

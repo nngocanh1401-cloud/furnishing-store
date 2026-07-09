@@ -1,4 +1,4 @@
-import Home from "@/components/home/home";
+import Home from "@/app/home/home";
 
 export const metadata = {
   title: "Home",
