@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Button from "@/components/common/Button";
-import { images } from "@/data/images";
+import images from "@/data/images.json";
 import { textStyles } from "@/styles/styles";
 
 const inspirations = [

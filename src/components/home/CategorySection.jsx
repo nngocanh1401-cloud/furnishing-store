@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Container from "@/components/common/Container";
 import SectionTitle from "@/components/common/SectionTitle";
-import { categories } from "@/data/categories";
+import categories from "@/data/categories.json";
 import { layoutStyles } from "@/styles/styles";
 
 function CategoryCard({ category }) {

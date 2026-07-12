@@ -1,6 +1,6 @@
 import Button from "@/components/common/Button";
 import Container from "@/components/common/Container";
-import { images } from "@/data/images";
+import images from "@/data/images.json";
 
 export default function HeroBanner() {
   return (
