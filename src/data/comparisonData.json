@@ -5,11 +5,7 @@
       "name": "Asgaard Sofa",
       "price": "Rs. 250,000.00",
       "image": "/images/black-sofa.jpg",
-<<<<<<< HEAD
       "rating": 4.7,
-=======
-      "rating": "4.7",
->>>>>>> testHP
       "reviews": 204,
       "productUrl": "/product",
       "quantity": 1
@@ -19,11 +15,7 @@
       "name": "Outdoor Sofa Set",
       "price": "Rs. 224,000.00",
       "image": "/images/black-sofa.jpg",
-<<<<<<< HEAD
       "rating": 4.2,
-=======
-      "rating": "4.2",
->>>>>>> testHP
       "reviews": 145,
       "productUrl": "/product",
       "quantity": 1
@@ -55,7 +47,6 @@
       "rows": [
         {
           "label": "Sales Package",
-<<<<<<< HEAD
           "values": ["1 sectional sofa", "1 Three Seater, 2 Single Seater"]
         },
         {
@@ -77,47 +68,7 @@
         {
           "label": "Upholstery Color",
           "values": ["Bright Grey & Lion", "Bright Grey & Lion"]
-=======
-          "values": [
-            "1 sectional sofa",
-            "1 Three Seater, 2 Single Seater"
-          ]
-        },
-        {
-          "label": "Model Number",
-          "values": [
-            "TFCBLIGRBL6SRHS",
-            "DTUBLIGRBL568"
-          ]
-        },
-        {
-          "label": "Secondary Material",
-          "values": [
-            "Solid Wood",
-            "Solid Wood"
-          ]
-        },
-        {
-          "label": "Configuration",
-          "values": [
-            "L-shaped",
-            "L-shaped"
-          ]
-        },
-        {
-          "label": "Upholstery Material",
-          "values": [
-            "Fabric + Cotton",
-            "Fabric + Cotton"
-          ]
-        },
-        {
-          "label": "Upholstery Color",
-          "values": [
-            "Bright Grey & Lion",
-            "Bright Grey & Lion"
-          ]
->>>>>>> testHP
+
         }
       ]
     },
@@ -126,7 +77,6 @@
       "rows": [
         {
           "label": "Filling Material",
-<<<<<<< HEAD
           "values": ["Foam", "Matte"]
         },
         {
@@ -144,40 +94,7 @@
         {
           "label": "Origin of Manufacture",
           "values": ["India", "India"]
-=======
-          "values": [
-            "Foam",
-            "Matte"
-          ]
-        },
-        {
-          "label": "Finish Type",
-          "values": [
-            "Bright Grey & Lion",
-            "Bright Grey & Lion"
-          ]
-        },
-        {
-          "label": "Adjustable Headrest",
-          "values": [
-            "No",
-            "Yes"
-          ]
-        },
-        {
-          "label": "Maximum Load Capacity",
-          "values": [
-            "280 KG",
-            "300 KG"
-          ]
-        },
-        {
-          "label": "Origin of Manufacture",
-          "values": [
-            "India",
-            "India"
-          ]
->>>>>>> testHP
+
         }
       ]
     },
@@ -186,7 +103,6 @@
       "rows": [
         {
           "label": "Width",
-<<<<<<< HEAD
           "values": ["265.32 cm", "265.32 cm"]
         },
         {
@@ -208,47 +124,6 @@
         {
           "label": "Leg Height",
           "values": ["5.46 cm", "5.46 cm"]
-=======
-          "values": [
-            "265.32 cm",
-            "265.32 cm"
-          ]
-        },
-        {
-          "label": "Height",
-          "values": [
-            "76 cm",
-            "76 cm"
-          ]
-        },
-        {
-          "label": "Depth",
-          "values": [
-            "167.76 cm",
-            "167.76 cm"
-          ]
-        },
-        {
-          "label": "Weight",
-          "values": [
-            "45 KG",
-            "65 KG"
-          ]
-        },
-        {
-          "label": "Seat Height",
-          "values": [
-            "41.52 cm",
-            "41.52 cm"
-          ]
-        },
-        {
-          "label": "Leg Height",
-          "values": [
-            "5.46 cm",
-            "5.46 cm"
-          ]
->>>>>>> testHP
         }
       ]
     },
@@ -285,14 +160,8 @@
         },
         {
           "label": "Domestic Warranty",
-<<<<<<< HEAD
           "values": ["1 Year", "3 Months"]
-=======
-          "values": [
-            "1 Year",
-            "3 Months"
-          ]
->>>>>>> testHP
+
         }
       ]
     }
