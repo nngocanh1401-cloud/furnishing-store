@@ -1,12 +1,10 @@
 "use client";
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import FeatureSection from "@/components/common/FeatureSection";
-import ComparisonCartSidebar from "@/components/comparison/ComparisonCartSidebar";
 import { compareProducts, comparisonSections } from "@/data/comparisonData";
 import { comparisonStyles } from "@/styles/styles";
+import ComparisonCartSidebar from "./ComparisonCartSidebar";
 
 function RatingStars() {
   return (
@@ -81,42 +79,50 @@ function AddProductBox({ onChooseProduct }) {
   );
 }
 
-function ComparisonRow({ row }) {
+function ComparisonRow({ row, productCount, canAddProduct}) {
+  const visibleValues = row.values.slice(0, productCount);
+
   return (
     <div className={comparisonStyles.rowGrid}>
       <div className={comparisonStyles.rowLabel}>{row.label}</div>
 
-      {row.values.map((value, index) => (
+      {visibleValues.map((value, index) => (
         <div key={`${row.label}-${index}`} className={comparisonStyles.rowValue}>
           {value}
         </div>
       ))}
+
 
       <div className="min-h-[59px] border-l border-[#E8E8E8]" />
     </div>
   );
 }
 
-function ComparisonSection({ section }) {
+function ComparisonSection({ section, productCount, canAddProduct }) {
   return (
     <section>
       <h2 className={comparisonStyles.sectionTitle}>{section.title}</h2>
 
       <div>
         {section.rows.map((row) => (
-          <ComparisonRow key={row.label} row={row} />
+          <ComparisonRow
+            key={row.label}
+            row={row}
+            productCount={productCount}
+            canAddProduct={canAddProduct}
+          />
         ))}
       </div>
     </section>
   );
 }
 
-function AddToCartRow({ onAddToCart }) {
+function AddToCartRow({ products, canAddProduct, onAddToCart }) {
   return (
     <div className="grid grid-cols-[300px_344px_344px_344px] pt-[36px]">
       <div />
 
-      {compareProducts.map((product) => (
+      {products.map((product) => (
         <div
           key={product.id}
           className="border-l border-[#E8E8E8] px-[42px] pb-[60px]"
@@ -131,7 +137,7 @@ function AddToCartRow({ onAddToCart }) {
         </div>
       ))}
 
-      <div className="border-l border-[#E8E8E8]" />
+      {canAddProduct && <div className="border-l border-[#E8E8E8]" />}
     </div>
   );
 }
@@ -140,6 +146,10 @@ export default function ProductComparison() {
   const router = useRouter();
   const [isCartSidebarOpen, setIsCartSidebarOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const MAX_COMPARE_PRODUCTS = 3;
+  const productsToCompare = compareProducts.slice(0, MAX_COMPARE_PRODUCTS);
+  const canAddProduct = productsToCompare.length < MAX_COMPARE_PRODUCTS;
 
   function handleAddToCart(product) {
     setSelectedProduct(product);
@@ -176,23 +186,30 @@ export default function ProductComparison() {
                 </Link>
               </div>
 
-              {compareProducts.map((product) => (
+              {productsToCompare.map((product) => (
                 <ProductHeaderCard key={product.id} product={product} />
               ))}
-
-              <AddProductBox onChooseProduct={handleChooseProduct} />
+              {canAddProduct && (
+                <AddProductBox onChooseProduct={handleChooseProduct} />
+              )}
             </div>
 
             {comparisonSections.map((section) => (
-              <ComparisonSection key={section.title} section={section} />
+              <ComparisonSection
+                key={section.title}
+                section={section}
+                productCount={productsToCompare.length}
+                canAddProduct={canAddProduct}
+              />
             ))}
 
-            <AddToCartRow onAddToCart={handleAddToCart} />
+            <AddToCartRow
+              products={productsToCompare}
+              canAddProduct={canAddProduct}
+              onAddToCart={handleAddToCart} />
           </div>
         </div>
       </section>
-
-      <FeatureSection />
 
       <ComparisonCartSidebar
         isOpen={isCartSidebarOpen}
