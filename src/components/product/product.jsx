@@ -1,5 +1,5 @@
 import ProductGrid from "@/components/common/ProductGrid";
-import products from "@/data/products.json";
+import { products } from "@/data/product";
 
 export default function Product() {
   const product = products[0];

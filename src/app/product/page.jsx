@@ -5,7 +5,7 @@ import ProductTabs from "@/components/product/ProductTabs";
 import RelatedProducts from "@/components/product/RelatedProducts";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import FeatureSection from "@/components/common/FeatureSection";
-import products from "@/data/products.json";
+import { products } from "@/data/product";
 
 export const metadata = {
   title: "Product",

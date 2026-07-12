@@ -1,4 +1,4 @@
-import images from "@/data/images.json";
+import { images } from "@/data/images";
 import { textStyles } from "@/styles/styles";
 
 export default function InteriorGallery() {
