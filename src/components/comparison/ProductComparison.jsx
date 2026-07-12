@@ -2,9 +2,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { compareProducts, comparisonSections } from "@/data/comparisonData";
+import Container from "@/components/common/Container";
+import CartSidebar from "@/components/common/CartSidebar";
+import comparisonData from "@/data/comparisonData.json";
 import { comparisonStyles } from "@/styles/styles";
-import ComparisonCartSidebar from "./ComparisonCartSidebar";
+
+const { compareProducts, comparisonSections } = comparisonData;
 
 function RatingStars() {
   return (
@@ -18,17 +21,18 @@ function RatingStars() {
 }
 
 function ProductHeaderCard({ product }) {
+  const productUrl = product.productUrl ?? "/product";
+
   return (
     <article className={comparisonStyles.productColumn}>
-      <Link href={product.productUrl} className={comparisonStyles.productImageBox}>
+      <Link href={productUrl} className={comparisonStyles.productImageBox}>
         <img
           src={product.image}
           alt={product.name}
           className={comparisonStyles.productImage}
         />
       </Link>
-
-      <Link href={product.productUrl}>
+      <Link href={productUrl}>
         <h2 className="mt-[18px] text-[24px] font-medium leading-[126.5%] text-black transition hover:text-[#B88E2F]">
           {product.name}
         </h2>
@@ -79,7 +83,7 @@ function AddProductBox({ onChooseProduct }) {
   );
 }
 
-function ComparisonRow({ row, productCount, canAddProduct}) {
+function ComparisonRow({ row, productCount, canAddProduct }) {
   const visibleValues = row.values.slice(0, productCount);
 
   return (
@@ -93,7 +97,9 @@ function ComparisonRow({ row, productCount, canAddProduct}) {
       ))}
 
 
-      <div className="min-h-[59px] border-l border-[#E8E8E8]" />
+      {canAddProduct && (
+        <div className="min-h-[59px] border-l border-[#E8E8E8]" />
+      )}
     </div>
   );
 }
@@ -164,13 +170,11 @@ export default function ProductComparison() {
   return (
     <>
       <section className={comparisonStyles.section}>
-        <div className="mx-auto max-w-[1332px] px-5 lg:px-0">
+        <Container size="comparison" className={comparisonStyles.wrapper}>
           <p className={comparisonStyles.mobileHint}>
             Kéo ngang bảng để xem đầy đủ thông tin so sánh sản phẩm.
           </p>
-        </div>
 
-        <div className={comparisonStyles.wrapper}>
           <div className={comparisonStyles.table}>
             <div className={comparisonStyles.topGrid}>
               <div className={comparisonStyles.leftIntro}>
@@ -208,10 +212,9 @@ export default function ProductComparison() {
               canAddProduct={canAddProduct}
               onAddToCart={handleAddToCart} />
           </div>
-        </div>
+        </Container>
       </section>
-
-      <ComparisonCartSidebar
+      <CartSidebar
         isOpen={isCartSidebarOpen}
         product={selectedProduct}
         onClose={() => setIsCartSidebarOpen(false)}

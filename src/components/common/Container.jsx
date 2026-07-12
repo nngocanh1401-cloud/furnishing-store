@@ -6,6 +6,9 @@ const sizes = {
   content: "max-w-[1240px]",
   products: "max-w-[1236px]",
   categories: "max-w-[1183px]",
+  narrow: "max-w-[1058px]",
+  comparison: "max-w-[1332px]",
+  cart: "max-w-[1240px]",
 };
 
 export default function Container({

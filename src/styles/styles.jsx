@@ -34,9 +34,7 @@ export const buttonSizes = {
   hero: "h-[74px] w-[222px] uppercase",
   showMore: "h-12 w-[245px]",
   inspiration: "h-12 w-[176px]",
-
   compareAdd: "h-[64px] w-[215px] text-[20px] font-normal",
-
 };
 
 export const layoutStyles = {
@@ -47,20 +45,87 @@ export const layoutStyles = {
   categoryGrid:
     "mt-[48px] grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3",
 
+  pageSection: "bg-white py-[98px]",
+};
+
+export const formStyles = {
+  group: "grid gap-[22px]",
+
+  label:
+    "font-['Poppins'] text-[16px] font-medium text-black",
+
+  input:
+    "h-[75px] rounded-[10px] border border-[#9F9F9F] px-6 font-['Poppins'] outline-none",
+
+  textarea:
+    "h-[120px] rounded-[10px] border border-[#9F9F9F] px-6 py-5 font-['Poppins'] outline-none",
+
+  submit:
+    "h-[55px] w-[237px] rounded-[5px] bg-[#B88E2F] font-['Poppins'] text-[16px] text-white transition hover:bg-[#9F7928]",
+};
+
+export const contactStyles = {
+  title:
+    "font-['Poppins'] text-[36px] font-semibold text-black",
+
+  description:
+    "mx-auto mt-2 max-w-[644px] font-['Poppins'] text-[16px] text-[#9F9F9F]",
+
+  contentGrid:
+    "mt-[82px] grid gap-10 lg:grid-cols-[393px_1fr]",
+
+  infoWrapper:
+    "space-y-10 font-['Poppins']",
+
+  infoTitle:
+    "text-[24px] font-medium text-black",
+
+  infoText:
+    "text-[16px] leading-[24px] text-black",
+};
+
+export const shopStyles = {
+  filterBar: "bg-[#F9F1E7] font-['Poppins']",
+
+  filterContent:
+    "flex flex-col gap-6 py-8 lg:flex-row lg:items-center lg:justify-between",
+
+  filterLeft:
+    "flex flex-wrap items-center gap-6",
+
+  filterButton:
+    "flex items-center gap-2 text-[20px] text-black",
+
+  divider:
+    "hidden h-[37px] w-px bg-[#9F9F9F] md:block",
+
+  filterRight:
+    "flex flex-wrap items-center gap-4",
+
+  filterLabel:
+    "text-[20px] text-black",
+
+  numberInput:
+    "h-[55px] w-[55px] bg-white text-center text-[20px] text-[#9F9F9F] outline-none",
+
+  select:
+    "h-[55px] w-[188px] bg-white px-4 text-[20px] text-[#9F9F9F] outline-none",
 };
 
 export const comparisonStyles = {
-  section: "bg-white px-5 py-[34px] lg:px-0",
+  section: "bg-white py-[34px]",
 
   wrapper:
-    "mx-auto w-full max-w-[1332px] overflow-x-auto font-['Poppins']",
+    "overflow-x-auto font-['Poppins']",
 
-  table: "min-w-[1000px] border-collapse text-left",
+  table:
+    "min-w-[1000px] border-collapse text-left",
 
   topGrid:
     "grid grid-cols-[300px_344px_344px_344px] border-b border-[#E8E8E8]",
 
-  leftIntro: "px-[42px] pt-[21px] pb-8",
+  leftIntro:
+    "px-[42px] pb-8 pt-[21px]",
 
   productColumn:
     "border-l border-[#E8E8E8] px-[39px] pb-[30px]",
@@ -74,7 +139,8 @@ export const comparisonStyles = {
   productImage:
     "max-h-[165px] max-w-[260px] object-contain",
 
-  rowGrid: "grid grid-cols-[300px_344px_344px_344px]",
+  rowGrid:
+    "grid grid-cols-[300px_344px_344px_344px]",
 
   rowLabel:
     "min-h-[59px] px-[42px] py-[12px] text-[20px] font-normal leading-[126.5%] text-black",
