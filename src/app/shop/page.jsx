@@ -3,7 +3,7 @@ import ShopFilterBar from "@/components/shop/ShopFilterBar";
 import ProductGrid from "@/components/common/ProductGrid";
 import Pagination from "@/components/shop/Pagination";
 import FeatureSection from "@/components/common/FeatureSection";
-import { products } from "@/data/product";
+import products from "@/data/products.json";
 
 export const metadata = {
   title: "Shop",

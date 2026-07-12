@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Container from "@/components/common/Container";
-import ComparisonCartSidebar from "@/components/comparison/ComparisonCartSidebar";
-import { compareProducts, comparisonSections } from "@/data/comparisonData";
+import CartSidebar from "@/components/common/CartSidebar";
+import comparisonData from "@/data/comparisonData.json";
 import { comparisonStyles } from "@/styles/styles";
+
+const { compareProducts, comparisonSections } = comparisonData;
 
 function RatingStars() {
   return (
@@ -192,11 +194,11 @@ export default function ProductComparison() {
         </Container>
       </section>
 
-      <ComparisonCartSidebar
-        isOpen={isCartSidebarOpen}
-        product={selectedProduct}
-        onClose={() => setIsCartSidebarOpen(false)}
-      />
+      <CartSidebar
+  isOpen={isCartSidebarOpen}
+  product={selectedProduct}
+  onClose={() => setIsCartSidebarOpen(false)}
+/>
     </>
   );
 }
