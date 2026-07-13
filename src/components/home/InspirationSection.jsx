@@ -1,5 +1,6 @@
+import Link from "next/link";
 import Button from "@/components/common/Button";
-import { images } from "@/data/images";
+import images from "@/data/images.json";
 import { textStyles } from "@/styles/styles";
 
 const inspirations = [
@@ -66,13 +67,13 @@ export default function InspirationSection() {
                 </h3>
               </div>
 
-              <a
+              <Link
                 href="/shop"
                 aria-label="Explore room inspiration"
-                className="flex h-12 w-12 items-center justify-center bg-[#B88E2F] text-2xl text-white"
+                className="flex h-12 w-12 items-center justify-center bg-[#B88E2F] text-2xl text-white transition hover:bg-[#9F7928]"
               >
                 →
-              </a>
+              </Link>
             </div>
           </div>
 

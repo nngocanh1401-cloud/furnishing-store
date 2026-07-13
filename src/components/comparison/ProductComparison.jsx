@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import FeatureSection from "@/components/common/FeatureSection";
-import ShopBanner from "@/components/common/ShopBanner";
-import ComparisonCartSidebar from "@/components/comparison/ComparisonCartSidebar";
-import { compareProducts, comparisonSections } from "@/data/comparisonData";
+import Container from "@/components/common/Container";
+import CartSidebar from "@/components/common/CartSidebar";
+import comparisonData from "@/data/comparisonData.json";
 import { comparisonStyles } from "@/styles/styles";
+
+const { compareProducts, comparisonSections } = comparisonData;
 
 function RatingStars() {
   return (
@@ -21,9 +22,11 @@ function RatingStars() {
 }
 
 function ProductHeaderCard({ product }) {
+  const productUrl = product.productUrl ?? "/product";
+
   return (
     <article className={comparisonStyles.productColumn}>
-      <Link href={product.productUrl} className={comparisonStyles.productImageBox}>
+      <Link href={productUrl} className={comparisonStyles.productImageBox}>
         <img
           src={product.image}
           alt={product.name}
@@ -31,7 +34,7 @@ function ProductHeaderCard({ product }) {
         />
       </Link>
 
-      <Link href={product.productUrl}>
+      <Link href={productUrl}>
         <h2 className="mt-[18px] text-[24px] font-medium leading-[126.5%] text-black transition hover:text-[#B88E2F]">
           {product.name}
         </h2>
@@ -154,16 +157,12 @@ export default function ProductComparison() {
 
   return (
     <>
-      <ShopBanner title="Product Comparison" current="Comparison" />
-
       <section className={comparisonStyles.section}>
-        <div className="mx-auto max-w-[1332px] px-5 lg:px-0">
+        <Container size="comparison" className={comparisonStyles.wrapper}>
           <p className={comparisonStyles.mobileHint}>
             Kéo ngang bảng để xem đầy đủ thông tin so sánh sản phẩm.
           </p>
-        </div>
 
-        <div className={comparisonStyles.wrapper}>
           <div className={comparisonStyles.table}>
             <div className={comparisonStyles.topGrid}>
               <div className={comparisonStyles.leftIntro}>
@@ -192,16 +191,14 @@ export default function ProductComparison() {
 
             <AddToCartRow onAddToCart={handleAddToCart} />
           </div>
-        </div>
+        </Container>
       </section>
 
-      <FeatureSection />
-
-      <ComparisonCartSidebar
-        isOpen={isCartSidebarOpen}
-        product={selectedProduct}
-        onClose={() => setIsCartSidebarOpen(false)}
-      />
+      <CartSidebar
+  isOpen={isCartSidebarOpen}
+  product={selectedProduct}
+  onClose={() => setIsCartSidebarOpen(false)}
+/>
     </>
   );
 }

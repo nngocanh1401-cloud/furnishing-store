@@ -1,31 +1,38 @@
 import Button from "@/components/common/Button";
-import { images } from "@/data/images";
+import Container from "@/components/common/Container";
+import images from "@/data/images.json";
 
 export default function HeroBanner() {
   return (
-    <section
-      className="relative min-h-[716px] bg-cover bg-center"
-      style={{ backgroundImage: `url(${images.hero})` }}
-    >
-      <div className="mx-auto flex min-h-[716px] max-w-[1440px] items-center justify-end px-5 lg:px-[58px]">
-        <div className="w-full max-w-[643px] rounded-[10px] bg-[#FFF3E3] px-[39px] pb-[37px] pt-[62px] font-['Poppins']">
-          <p className="text-[16px] font-semibold uppercase tracking-[3px] text-[#333333]">
-            New Arrival
-          </p>
+    <section className="relative h-[560px] overflow-hidden md:h-[650px] lg:h-[716px]">
+      <img
+        src={images.hero}
+        alt="Modern Scandinavian interior room"
+        className="h-full w-full object-cover"
+      />
 
-          <h1 className="mt-1 max-w-[559px] text-[clamp(42px,5vw,52px)] font-bold leading-[65px] text-[#B88E2F]">
-            Discover Our New Collection
-          </h1>
+      <div className="absolute inset-0">
+        <Container size="page" className="relative h-full">
+          <div className="absolute left-1/2 top-1/2 w-[90%] max-w-[643px] -translate-x-1/2 -translate-y-1/2 rounded-[10px] bg-[#FFF3E3] px-6 py-8 md:w-[643px] lg:left-auto lg:right-[58px] lg:min-h-[443px] lg:translate-x-0 lg:px-[39px] lg:py-[62px]">
+            <p className="font-['Poppins'] text-[16px] font-semibold leading-[24px] tracking-[3px] text-[#333333]">
+              New Arrival
+            </p>
 
-          <p className="mt-[17px] max-w-[546px] text-[18px] font-medium leading-[24px] text-[#333333]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-            tellus, luctus nec ullamcorper mattis.
-          </p>
+            <h1 className="mt-1 font-['Poppins'] text-[clamp(36px,4vw,52px)] font-bold leading-[1.25] text-[#B88E2F]">
+              Discover Our <br />
+              New Collection
+            </h1>
 
-          <Button href="/shop" size="hero" className="mt-[46px]">
-            BUY NOW
-          </Button>
-        </div>
+            <p className="mt-4 max-w-[546px] font-['Poppins'] text-[clamp(16px,1.6vw,18px)] font-medium leading-[1.5] text-[#333333]">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
+              tellus, luctus nec ullamcorper mattis.
+            </p>
+
+            <Button href="/shop" size="hero" className="mt-8 lg:mt-[46px]">
+              BUY NOW
+            </Button>
+          </div>
+        </Container>
       </div>
     </section>
   );

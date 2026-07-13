@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${poppins.variable} ${montserrat.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-white text-[#333333]">
+      <body className="min-h-full flex flex-col bg-white text-[#333333]">
         <Header />
         <main>{children}</main>
         <Footer />

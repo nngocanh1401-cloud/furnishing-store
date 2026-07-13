@@ -1,12 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
   --primary: #b88e2f;
   --primary-dark: #9f7928;
-
   --background: #ffffff;
   --foreground: #333333;
-
   --text-main: #333333;
   --gray-1: #3a3a3a;
   --gray-2: #616161;

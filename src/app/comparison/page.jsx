@@ -1,3 +1,5 @@
+import FeatureSection from "@/components/common/FeatureSection";
+import ShopBanner from "@/components/common/ShopBanner";
 import ProductComparison from "@/components/comparison/ProductComparison";
 
 export const metadata = {
@@ -7,5 +9,11 @@ export const metadata = {
 };
 
 export default function ComparisonPage() {
-  return <ProductComparison />;
+  return (
+    <>
+      <ShopBanner title="Product Comparison" current="Comparison" />
+      <ProductComparison />
+      <FeatureSection />
+    </>
+  );
 }
