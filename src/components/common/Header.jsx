@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import CartSidebar from "@/components/common/CartSidebar";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -95,11 +96,12 @@ function Logo() {
   );
 }
 
-function IconButton({ label, children }) {
+function IconButton({ label, children, onClick }) {
   return (
     <button
       type="button"
       aria-label={label}
+      onClick={onClick}
       className="flex h-7 w-7 items-center justify-center"
     >
       {children}
@@ -109,8 +111,10 @@ function IconButton({ label, children }) {
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
+    <>
     <header className="sticky top-0 z-[999] bg-white shadow-sm">
       <div className="mx-auto flex h-[80px] w-full max-w-[1440px] items-center justify-between px-5 md:h-[90px] lg:h-[100px] lg:px-[54px]">
         <Logo />
@@ -143,7 +147,10 @@ export default function Header() {
             <HeartIcon />
           </IconButton>
 
-          <IconButton label="Cart">
+          <IconButton
+            label="Cart"
+            onClick={() => setIsCartOpen(true)}
+          >
             <CartIcon />
           </IconButton>
         </div>
@@ -189,7 +196,13 @@ export default function Header() {
                 <HeartIcon />
               </IconButton>
 
-              <IconButton label="Cart">
+              <IconButton
+                label="Cart"
+                onClick={() => {
+                  setIsOpen(false);
+                  setIsCartOpen(true);
+                }}
+              >
                 <CartIcon />
               </IconButton>
             </div>
@@ -197,5 +210,11 @@ export default function Header() {
         </div>
       )}
     </header>
+
+    <CartSidebar
+    isOpen={isCartOpen}
+    onClose={() => setIsCartOpen(false)}
+  />
+  </>
   );
 }

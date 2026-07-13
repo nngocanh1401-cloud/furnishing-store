@@ -154,3 +154,29 @@ export const comparisonStyles = {
   mobileHint:
     "mb-4 block rounded-md bg-[#FFF3E3] px-4 py-3 text-center text-[14px] text-[#616161] lg:hidden",
 };
+
+export const singleProductStyles = {
+  section:
+    "px-5 py-10 font-['Poppins']",
+
+  container:
+    "mx-auto grid max-w-[1236px] gap-10 lg:grid-cols-[553px_1fr]",
+
+  mutedText:
+    "text-[#9F9F9F]",
+
+  softBackground:
+    "bg-[#F9F1E7]",
+
+  actionButton:
+    "flex h-[64px] w-[215px] items-center justify-center rounded-[15px] border border-black text-[20px] text-black",
+
+  optionButton:
+    "h-[30px] w-[30px] rounded-[5px] bg-[#F9F1E7] text-[13px]",
+
+  colorButton:
+    "h-[30px] w-[30px] rounded-full",
+
+  meta:
+    "space-y-3 text-[16px] leading-[24px] text-[#9F9F9F]",
+};

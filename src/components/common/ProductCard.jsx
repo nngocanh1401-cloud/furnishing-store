@@ -107,12 +107,6 @@ export default function ProductCard({ product }) {
 
       <CartSidebar
         isOpen={isCartOpen}
-        product={{
-          name,
-          image: product.image,
-          price,
-          quantity: 1,
-        }}
         onClose={() => setIsCartOpen(false)}
       />
     </>
