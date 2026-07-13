@@ -1,4 +1,7 @@
+import ShopBanner from "@/components/common/ShopBanner";
+import Pagination from "@/components/common/Breadcrumb";
 import CheckoutSection from "@/components/checkout/CheckoutSection";
+import Breadcrumb from "@/components/common/Breadcrumb";
 
 export const metadata = {
   title: "Checkout | Furniro",
@@ -7,8 +10,9 @@ export const metadata = {
 
 export default function CheckoutPage() {
   return (
-    <main>
+    <>
+      <ShopBanner title="Checkout" current="Checkout" />
       <CheckoutSection />
-    </main>
+    </>
   );
 }
