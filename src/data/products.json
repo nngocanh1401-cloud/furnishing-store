@@ -1,0 +1,94 @@
+[
+  {
+    "id": 1,
+    "name": "Syltherine",
+    "description": "Stylish cafe chair",
+    "price": "Rp 2.500.000",
+    "oldPrice": "Rp 3.500.000",
+    "badge": "-30%",
+    "image": "/images/furniro-hero.png"
+  },
+  {
+    "id": 2,
+    "name": "Leviosa",
+    "description": "Stylish cafe chair",
+    "price": "Rp 2.500.000",
+    "oldPrice": "",
+    "badge": "",
+    "image": "/images/furniro-hero.png"
+  },
+  {
+    "id": 3,
+    "name": "Lolito",
+    "description": "Luxury big sofa",
+    "price": "Rp 7.000.000",
+    "oldPrice": "Rp 14.000.000",
+    "badge": "-50%",
+    "image": "/images/furniro-hero.png"
+  },
+  {
+    "id": 4,
+    "name": "Respira",
+    "description": "Outdoor bar table and stool",
+    "price": "Rp 500.000",
+    "oldPrice": "",
+    "badge": "New",
+    "image": "/images/furniro-hero.png"
+  },
+  {
+    "id": 5,
+    "name": "Grifo",
+    "description": "Night lamp",
+    "price": "Rp 1.500.000",
+    "oldPrice": "",
+    "badge": "",
+    "image": "/images/furniro-hero.png"
+  },
+  {
+    "id": 6,
+    "name": "Muggo",
+    "description": "Small mug",
+    "price": "Rp 150.000",
+    "oldPrice": "",
+    "badge": "New",
+    "image": "/images/furniro-hero.png"
+  },
+  {
+    "id": 7,
+    "name": "Pingky",
+    "description": "Cute bed set",
+    "price": "Rp 7.000.000",
+    "oldPrice": "Rp 14.000.000",
+    "badge": "-50%",
+    "image": "/images/furniro-hero.png"
+  },
+  {
+    "id": 8,
+    "name": "Potty",
+    "description": "Minimalist flower pot",
+    "price": "Rp 500.000",
+    "oldPrice": "",
+    "badge": "New",
+    "image": "/images/furniro-hero.png"
+  },
+  {
+    "id": 9,
+    "name": "Asgaard Sofa",
+    "price": "Rs. 250,000.00",
+    "image": "/images/black-sofa.jpg",
+    "rating": 4.7,
+    "reviews": 204,
+    "productUrl": "/product",
+    "quantity": 1
+  },
+  {
+    "id": 10,
+    "name": "Outdoor Sofa Set",
+    "price": "Rs. 224,000.00",
+    "image": "/images/black-sofa.jpg",
+    "rating": 4.2,
+    "reviews": 145,
+    "productUrl": "/product",
+    "quantity": 1
+  }
+]
