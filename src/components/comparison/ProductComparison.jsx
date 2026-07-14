@@ -10,13 +10,22 @@ import { comparisonStyles } from "@/styles/styles";
 const { comparisonSections } = comparisonData;
 const allProducts = productData.products ?? productData;
 
-function RatingStars() {
+  const INITIAL_COMPARE_PRODUCTS = 2;
+  const MAX_COMPARE_PRODUCTS = 3;
+
+function RatingStars({ rating }) {
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 >= 0.5;
+  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
   return (
     <span
       className="text-[20px] leading-none tracking-[2px] text-[#FFC700]"
-      aria-label="5 stars"
+      aria-label={`${rating} out of 5 stars`}
     >
-      ★★★★★
+      {"★".repeat(fullStars)}
+      {hasHalfStar && "☆"}
+      {"☆".repeat(emptyStars)}
     </span>
   );
 }
@@ -56,7 +65,7 @@ function ProductHeaderCard({ product, onRemove }) {
           {product.rating}
         </span>
 
-        <RatingStars />
+        <RatingStars rating={Number(product.rating)} />
 
         <span className="mx-[6px] h-[30px] w-px bg-[#9F9F9F]" />
 
@@ -164,9 +173,6 @@ function AddToCartRow({ products, canAddProduct, onAddToCart }) {
 export default function ProductComparison() {
   const [isCartSidebarOpen, setIsCartSidebarOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const INITIAL_COMPARE_PRODUCTS = 2;
-  const MAX_COMPARE_PRODUCTS = 3;
 
   const [productsToCompare, setProductsToCompare] = useState(
     allProducts.slice(0, INITIAL_COMPARE_PRODUCTS)
