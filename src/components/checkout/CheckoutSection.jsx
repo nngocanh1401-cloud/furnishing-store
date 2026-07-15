@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const orderItem = {
   name: "Asgaard sofa",
@@ -10,9 +9,19 @@ const orderItem = {
 
 const countries = ["Sri Lanka", "Viet Nam", "United States", "Japan"];
 
+const fallbackProvinces = {
+  "Sri Lanka": ["Western Province", "Central Province", "Southern Province"],
+  "United States": ["California", "Texas", "New York"],
+  Japan: ["Tokyo", "Osaka", "Kyoto"],
+};
+
+
 export default function CheckoutSection() {
   const [paymentMethod, setPaymentMethod] = useState("bank");
+  const [provinces, setProvinces] = useState([]);
+  const [isProvinceLoading, setIsProvinceLoading] = useState(true);
   const [formData, setFormData] = useState({
+    //truethy
     firstName: "",
     lastName: "",
     companyName: "",
@@ -26,6 +35,28 @@ export default function CheckoutSection() {
     note: "",
   });
 
+  useEffect(() => {
+    async function fetchProvinces() {
+      try {
+        const response = await fetch("https://provinces.open-api.vn/api/v2/p/");
+        const data = await response.json();
+
+        setProvinces(data);
+      } catch (error) {
+        console.error("Failed to fetch provinces:", error);
+      } finally {
+        setIsProvinceLoading(false);
+      }
+    }
+
+    fetchProvinces();
+  }, []);
+
+  const provinceOptions =
+    formData.country === "Viet Nam"
+      ? provinces.map((province) => province.name)
+      : fallbackProvinces[formData.country] || [];
+
   const subtotal = orderItem.price * orderItem.quantity;
 
   const formatPrice = (price) => `Rs. ${price.toLocaleString("en-US")}.00`;
@@ -33,10 +64,25 @@ export default function CheckoutSection() {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => {
+      if (name === "country") {
+        const nextProvince =
+          value === "Viet Nam"
+            ? ""
+            : fallbackProvinces[value]?.[0] || "";
+
+        return {
+          ...prev,
+          country: value,
+          province: nextProvince,
+        };
+      }
+
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
   };
 
   const handlePlaceOrder = (event) => {
@@ -47,6 +93,7 @@ export default function CheckoutSection() {
       !formData.lastName ||
       !formData.streetAddress ||
       !formData.city ||
+      !formData.province ||
       !formData.phone ||
       !formData.email
     ) {
@@ -61,7 +108,7 @@ export default function CheckoutSection() {
     <section className="bg-white py-10 font-[Poppins] min-[768px]:py-14 min-[1200px]:py-[63px]">
       <form
         onSubmit={handlePlaceOrder}
-        className="mx-auto grid max-w-[1240px] grid-cols-1 gap-10 px-4 min-[600px]:px-6 min-[992px]:grid-cols-[608px_608px] min-[992px]:gap-6 min-[1200px]:px-0"
+        className="mx-auto grid max-w-[1242px] grid-cols-1 gap-10 px-4 min-[600px]:px-6 min-[992px]:grid-cols-[608px_608px] min-[992px]:gap-26 min-[1200px]:px-0"
       >
         <section className="w-full">
           <div className="mx-auto max-w-[453px] min-[992px]:mx-0 min-[1200px]:ml-[74px]">
@@ -106,7 +153,9 @@ export default function CheckoutSection() {
                 className="h-[75px] w-full rounded-[10px] border border-[#9F9F9F] px-[29px] text-[16px] text-[#9F9F9F] outline-none"
               >
                 {countries.map((country) => (
-                  <option key={country}>{country}</option>
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
                 ))}
               </select>
             </div>
@@ -138,9 +187,17 @@ export default function CheckoutSection() {
                 onChange={handleChange}
                 className="h-[75px] w-full rounded-[10px] border border-[#9F9F9F] px-[29px] text-[16px] text-[#9F9F9F] outline-none"
               >
-                <option>Western Province</option>
-                <option>Central Province</option>
-                <option>Southern Province</option>
+                <option value="">
+                  {formData.country === "Viet Nam" && isProvinceLoading
+                    ? "Loading provinces..."
+                    : "Choose province"}
+                </option>
+
+                {provinceOptions.map((province) => (
+                  <option key={province} value={province}>
+                    {province}
+                  </option>
+                ))}
               </select>
             </div>
 
