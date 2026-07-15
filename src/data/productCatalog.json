@@ -1,0 +1,479 @@
+{
+  "schemaVersion": 2,
+  "products": [
+    {
+      "id": 1,
+      "name": "Syltherine",
+      "description": "Stylish cafe chair",
+      "price": 2500000,
+      "oldPrice": 3500000,
+      "currency": "IDR",
+      "priceDisplay": "Rp 2.500.000",
+      "oldPriceDisplay": "Rp 3.500.000",
+      "badge": "-30%",
+      "image": "/images/furniro-hero.png",
+      "rating": null,
+      "reviews": null,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": []
+    },
+    {
+      "id": 2,
+      "name": "Leviosa",
+      "description": "Stylish cafe chair",
+      "price": 2500000,
+      "oldPrice": null,
+      "currency": "IDR",
+      "priceDisplay": "Rp 2.500.000",
+      "oldPriceDisplay": "",
+      "badge": "",
+      "image": "/images/furniro-hero.png",
+      "rating": null,
+      "reviews": null,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": []
+    },
+    {
+      "id": 3,
+      "name": "Lolito",
+      "description": "Luxury big sofa",
+      "price": 7000000,
+      "oldPrice": 14000000,
+      "currency": "IDR",
+      "priceDisplay": "Rp 7.000.000",
+      "oldPriceDisplay": "Rp 14.000.000",
+      "badge": "-50%",
+      "image": "/images/furniro-hero.png",
+      "rating": null,
+      "reviews": null,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": []
+    },
+    {
+      "id": 4,
+      "name": "Respira",
+      "description": "Outdoor bar table and stool",
+      "price": 500000,
+      "oldPrice": null,
+      "currency": "IDR",
+      "priceDisplay": "Rp 500.000",
+      "oldPriceDisplay": "",
+      "badge": "New",
+      "image": "/images/furniro-hero.png",
+      "rating": null,
+      "reviews": null,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": []
+    },
+    {
+      "id": 5,
+      "name": "Grifo",
+      "description": "Night lamp",
+      "price": 1500000,
+      "oldPrice": null,
+      "currency": "IDR",
+      "priceDisplay": "Rp 1.500.000",
+      "oldPriceDisplay": "",
+      "badge": "",
+      "image": "/images/furniro-hero.png",
+      "rating": null,
+      "reviews": null,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": []
+    },
+    {
+      "id": 6,
+      "name": "Muggo",
+      "description": "Small mug",
+      "price": 150000,
+      "oldPrice": null,
+      "currency": "IDR",
+      "priceDisplay": "Rp 150.000",
+      "oldPriceDisplay": "",
+      "badge": "New",
+      "image": "/images/furniro-hero.png",
+      "rating": null,
+      "reviews": null,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": []
+    },
+    {
+      "id": 7,
+      "name": "Pingky",
+      "description": "Cute bed set",
+      "price": 7000000,
+      "oldPrice": 14000000,
+      "currency": "IDR",
+      "priceDisplay": "Rp 7.000.000",
+      "oldPriceDisplay": "Rp 14.000.000",
+      "badge": "-50%",
+      "image": "/images/furniro-hero.png",
+      "rating": null,
+      "reviews": null,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": []
+    },
+    {
+      "id": 8,
+      "name": "Potty",
+      "description": "Minimalist flower pot",
+      "price": 500000,
+      "oldPrice": null,
+      "currency": "IDR",
+      "priceDisplay": "Rp 500.000",
+      "oldPriceDisplay": "",
+      "badge": "New",
+      "image": "/images/furniro-hero.png",
+      "rating": null,
+      "reviews": null,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": []
+    },
+    {
+      "id": 9,
+      "name": "Asgaard Sofa",
+      "description": "Modern and comfortable sofa",
+      "price": 250000,
+      "oldPrice": null,
+      "currency": "INR",
+      "priceDisplay": "Rs. 250,000.00",
+      "oldPriceDisplay": "",
+      "badge": "",
+      "image": "/images/black-sofa.jpg",
+      "rating": 4.7,
+      "reviews": 204,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": [
+        {
+          "key": "general",
+          "title": "General",
+          "rows": [
+            {
+              "key": "salesPackage",
+              "label": "Sales Package",
+              "value": "1 sectional sofa"
+            },
+            {
+              "key": "modelNumber",
+              "label": "Model Number",
+              "value": "TFCBLIGRBL6SRHS"
+            },
+            {
+              "key": "secondaryMaterial",
+              "label": "Secondary Material",
+              "value": "Solid Wood"
+            },
+            {
+              "key": "configuration",
+              "label": "Configuration",
+              "value": "L-shaped"
+            },
+            {
+              "key": "upholsteryMaterial",
+              "label": "Upholstery Material",
+              "value": "Fabric + Cotton"
+            },
+            {
+              "key": "upholsteryColor",
+              "label": "Upholstery Color",
+              "value": "Bright Grey & Lion"
+            }
+          ]
+        },
+        {
+          "key": "product",
+          "title": "Product",
+          "rows": [
+            {
+              "key": "fillingMaterial",
+              "label": "Filling Material",
+              "value": "Foam"
+            },
+            {
+              "key": "finishType",
+              "label": "Finish Type",
+              "value": "Bright Grey & Lion"
+            },
+            {
+              "key": "adjustableHeadrest",
+              "label": "Adjustable Headrest",
+              "value": "No"
+            },
+            {
+              "key": "maximumLoadCapacity",
+              "label": "Maximum Load Capacity",
+              "value": "280 KG"
+            },
+            {
+              "key": "originOfManufacture",
+              "label": "Origin of Manufacture",
+              "value": "India"
+            }
+          ]
+        },
+        {
+          "key": "dimensions",
+          "title": "Dimensions",
+          "rows": [
+            {
+              "key": "width",
+              "label": "Width",
+              "value": "265.32 cm"
+            },
+            {
+              "key": "height",
+              "label": "Height",
+              "value": "76 cm"
+            },
+            {
+              "key": "depth",
+              "label": "Depth",
+              "value": "167.76 cm"
+            },
+            {
+              "key": "weight",
+              "label": "Weight",
+              "value": "45 KG"
+            },
+            {
+              "key": "seatHeight",
+              "label": "Seat Height",
+              "value": "41.52 cm"
+            },
+            {
+              "key": "legHeight",
+              "label": "Leg Height",
+              "value": "5.46 cm"
+            }
+          ]
+        },
+        {
+          "key": "warranty",
+          "title": "Warranty",
+          "rows": [
+            {
+              "key": "warrantySummary",
+              "label": "Warranty Summary",
+              "value": "1 Year Manufacturing Warranty"
+            },
+            {
+              "key": "warrantyServiceType",
+              "label": "Warranty Service Type",
+              "value": "For Warranty Claims or Any Product Related Issues Please Email at operations@trevifurniture.com"
+            },
+            {
+              "key": "coveredInWarranty",
+              "label": "Covered in Warranty",
+              "value": "Warranty Against Manufacturing Defect"
+            },
+            {
+              "key": "notCoveredInWarranty",
+              "label": "Not Covered in Warranty",
+              "value": "The Warranty Does Not Cover Damages Due To Usage Of The Product Beyond Its Intended Use."
+            },
+            {
+              "key": "domesticWarranty",
+              "label": "Domestic Warranty",
+              "value": "1 Year"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Outdoor Sofa Set",
+      "description": "Comfortable outdoor sofa set",
+      "price": 224000,
+      "oldPrice": null,
+      "currency": "INR",
+      "priceDisplay": "Rs. 224,000.00",
+      "oldPriceDisplay": "",
+      "badge": "",
+      "image": "/images/black-sofa.jpg",
+      "rating": 4.2,
+      "reviews": 145,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": [
+        {
+          "key": "general",
+          "title": "General",
+          "rows": [
+            {
+              "key": "salesPackage",
+              "label": "Sales Package",
+              "value": "1 Three Seater, 2 Single Seater"
+            },
+            {
+              "key": "modelNumber",
+              "label": "Model Number",
+              "value": "DTUBLIGRBL568"
+            },
+            {
+              "key": "secondaryMaterial",
+              "label": "Secondary Material",
+              "value": "Solid Wood"
+            },
+            {
+              "key": "configuration",
+              "label": "Configuration",
+              "value": "L-shaped"
+            },
+            {
+              "key": "upholsteryMaterial",
+              "label": "Upholstery Material",
+              "value": "Fabric + Cotton"
+            },
+            {
+              "key": "upholsteryColor",
+              "label": "Upholstery Color",
+              "value": "Bright Grey & Lion"
+            }
+          ]
+        },
+        {
+          "key": "product",
+          "title": "Product",
+          "rows": [
+            {
+              "key": "fillingMaterial",
+              "label": "Filling Material",
+              "value": "Matte"
+            },
+            {
+              "key": "finishType",
+              "label": "Finish Type",
+              "value": "Bright Grey & Lion"
+            },
+            {
+              "key": "adjustableHeadrest",
+              "label": "Adjustable Headrest",
+              "value": "Yes"
+            },
+            {
+              "key": "maximumLoadCapacity",
+              "label": "Maximum Load Capacity",
+              "value": "300 KG"
+            },
+            {
+              "key": "originOfManufacture",
+              "label": "Origin of Manufacture",
+              "value": "India"
+            }
+          ]
+        },
+        {
+          "key": "dimensions",
+          "title": "Dimensions",
+          "rows": [
+            {
+              "key": "width",
+              "label": "Width",
+              "value": "265.32 cm"
+            },
+            {
+              "key": "height",
+              "label": "Height",
+              "value": "76 cm"
+            },
+            {
+              "key": "depth",
+              "label": "Depth",
+              "value": "167.76 cm"
+            },
+            {
+              "key": "weight",
+              "label": "Weight",
+              "value": "65 KG"
+            },
+            {
+              "key": "seatHeight",
+              "label": "Seat Height",
+              "value": "41.52 cm"
+            },
+            {
+              "key": "legHeight",
+              "label": "Leg Height",
+              "value": "5.46 cm"
+            }
+          ]
+        },
+        {
+          "key": "warranty",
+          "title": "Warranty",
+          "rows": [
+            {
+              "key": "warrantySummary",
+              "label": "Warranty Summary",
+              "value": "1.2 Year Manufacturing Warranty"
+            },
+            {
+              "key": "warrantyServiceType",
+              "label": "Warranty Service Type",
+              "value": "For Warranty Claims or Any Product Related Issues Please Email at support@xyz.com"
+            },
+            {
+              "key": "coveredInWarranty",
+              "label": "Covered in Warranty",
+              "value": "Warranty of the product is limited to manufacturing defects only."
+            },
+            {
+              "key": "notCoveredInWarranty",
+              "label": "Not Covered in Warranty",
+              "value": "The Warranty Does Not Cover Damage Due To Usage Of The Product Beyond Its Intended Use."
+            },
+            {
+              "key": "domesticWarranty",
+              "label": "Domestic Warranty",
+              "value": "3 Months"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Elegant Dining Table",
+      "description": "",
+      "price": 180000,
+      "oldPrice": null,
+      "currency": "INR",
+      "priceDisplay": "Rs. 180,000.00",
+      "oldPriceDisplay": "",
+      "badge": "",
+      "image": "/images/black-sofa.jpg",
+      "rating": 4.5,
+      "reviews": 20,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": []
+    },
+    {
+      "id": 12,
+      "name": "Vintage Coffee Table",
+      "description": "",
+      "price": 160000,
+      "oldPrice": null,
+      "currency": "INR",
+      "priceDisplay": "Rs. 160,000.00",
+      "oldPriceDisplay": "",
+      "badge": "",
+      "image": "/images/black-sofa.jpg",
+      "rating": 4.1,
+      "reviews": 18,
+      "quantity": 1,
+      "gallery": [],
+      "comparison": []
+    }
+  ]
+}
