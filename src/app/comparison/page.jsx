@@ -1,6 +1,8 @@
-import FeatureSection from "@/components/common/FeatureSection";
-import ShopBanner from "@/components/common/ShopBanner";
 import ProductComparison from "@/components/comparison/ProductComparison";
+import ShopBanner from "@/components/common/ShopBanner";
+import FeatureSection from "@/components/common/FeatureSection";
+
+
 
 export const metadata = {
   title: "Product Comparison",

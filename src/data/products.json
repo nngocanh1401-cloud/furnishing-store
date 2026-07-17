@@ -70,5 +70,29 @@
     "oldPrice": "",
     "badge": "New",
     "image": "/images/furniro-hero.png"
+  },
+  {
+    "id": 9,
+    "name": "Asgaard Sofa",
+    "description": "Modern and comfortable sofa",
+    "price": "Rs. 250,000.00",
+    "oldPrice": "",
+    "badge": "",
+    "image": "/images/black-sofa.jpg",
+    "rating": 4.7,
+    "reviews": 204,
+    "quantity": 1
+  },
+  {
+    "id": 10,
+    "name": "Outdoor Sofa Set",
+    "description": "Comfortable outdoor sofa set",
+    "price": "Rs. 224,000.00",
+    "oldPrice": "",
+    "badge": "",
+    "image": "/images/black-sofa.jpg",
+    "rating": 4.2,
+    "reviews": 145,
+    "quantity": 1
   }
 ]
