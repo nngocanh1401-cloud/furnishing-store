@@ -165,8 +165,16 @@ export const singleProductStyles = {
   mutedText:
     "text-[#9F9F9F]",
 
+  mutedLabel: "text-[14px] text-[#9F9F9F]",
+
   softBackground:
     "bg-[#F9F1E7]",
+
+  thumbnail:
+    "flex h-[80px] w-[76px] items-center justify-center overflow-hidden rounded-[10px] bg-[#F9F1E7]",
+
+  mainImage:
+  "flex h-[500px] w-[423px] shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-[#F9F1E7]",
 
   actionButton:
     "flex h-[64px] w-[215px] items-center justify-center rounded-[15px] border border-black text-[20px] text-black",
@@ -177,6 +185,12 @@ export const singleProductStyles = {
   colorButton:
     "h-[30px] w-[30px] rounded-full",
 
+  quantityBox:
+    "flex h-[64px] w-[123px] items-center justify-around rounded-[10px] border border-[#9F9F9F] text-[16px]",
+
   meta:
     "space-y-3 text-[16px] leading-[24px] text-[#9F9F9F]",
+
+  divider:
+    "my-10 border-[#D9D9D9]",
 };

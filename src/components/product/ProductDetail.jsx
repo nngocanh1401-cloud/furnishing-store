@@ -105,8 +105,7 @@ export default function ProductDetail({ product }) {
 
             {/* Actions */}
             <div className="mt-8 flex flex-wrap gap-4">
-              <div className="flex h-[64px] w-[123px] items-center justify-around rounded-[10px] border border-[#9F9F9F] text-[16px]">
-                <button type="button">-</button>
+              <div className={singleProductStyles.quantityBox}>                <button type="button">-</button>
                 <span>1</span>
                 <button type="button">+</button>
               </div>
@@ -127,8 +126,7 @@ export default function ProductDetail({ product }) {
               </Link>
             </div>
 
-            <hr className="my-10 border-[#D9D9D9]" />
-
+            <hr className={singleProductStyles.divider} />
             <div className={singleProductStyles.meta}>
               <p>SKU : SS001</p>
               <p>Category : Sofas</p>
