@@ -2,22 +2,7 @@
 
 import Link from "next/link";
 
-const cartItems = [
-  {
-    id: 1,
-    name: "Asgaard sofa",
-    image: "/images/black-sofa.jpg",
-    price: "Rs. 250,000.00",
-    quantity: 1,
-  },
-  {
-    id: 2,
-    name: "Casaliving Wood",
-    image: "/images/casaliving-wood.jpg",
-    price: "Rs. 270,000.00",
-    quantity: 1,
-  },
-];
+import { useCart } from "@/context/CartContext";
 
 /* Icon đóng Cart SiFdebar lấy trực tiếp từ SVG của Figma */
 function CloseCartIcon() {
@@ -73,8 +58,21 @@ function RemoveIcon() {
     </svg>
   );
 }
-
 export default function CartSidebar({ isOpen, onClose }) {
+  const { cartItems, removeFromCart } = useCart();
+  const subtotal = cartItems.reduce((total, item) => {
+    const numericPrice =
+      typeof item.price === "number"
+        ? item.price
+        : Number(
+          String(item.price)
+            .replace(/[^\d.,]/g, "")
+            .replace(/,/g, "")
+        );
+
+    return total + numericPrice * item.quantity;
+  }, 0);
+
   if (!isOpen) return null;
 
   return (
@@ -110,48 +108,55 @@ export default function CartSidebar({ isOpen, onClose }) {
           <div className="absolute left-[30px] top-[90px] h-px w-[287px] bg-[#D9D9D9]" />
 
           <div className="absolute left-[27px] top-[132px] flex w-[350px] flex-col gap-[20px]">
-            {cartItems.map((item) => (
-              <div
-                key={item.id}
-                className="relative flex h-[105px] w-[350px] items-center"
-              >
-                <div className="flex h-[105px] w-[108px] shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-[#F9F1E7]">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="h-full w-full object-contain"
-                  />
-                </div>
-
-                <div className="ml-[27px] flex min-w-0 flex-1 flex-col justify-center">
-                  <h3 className="text-[16px] font-normal leading-[24px] text-black">
-                    {item.name}
-                  </h3>
-
-                  <div className="mt-[5px] flex items-center gap-[15px]">
-                    <span className="text-[16px] font-normal leading-[24px] text-black">
-                      {item.quantity}
-                    </span>
-
-                    <span className="text-[12px] font-normal leading-[18px] text-black">
-                      X
-                    </span>
-
-                    <span className="whitespace-nowrap text-[12px] font-medium leading-[18px] text-[#B88E2F]">
-                      {item.price}
-                    </span>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  aria-label={`Remove ${item.name}`}
-                  className="absolute right-0 top-[42px] flex h-5 w-5 items-center justify-center"
+            {cartItems.length === 0 ? (
+              <p className="text-[14px] leading-[21px] text-[#9F9F9F]">
+                Your cart is empty.
+              </p>
+            ) : (
+              cartItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="relative flex h-[105px] w-[350px] items-center"
                 >
-                  <RemoveIcon />
-                </button>
-              </div>
-            ))}
+                  <div className="flex h-[105px] w-[108px] shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-[#F9F1E7]">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+
+                  <div className="ml-[27px] flex min-w-0 flex-1 flex-col justify-center">
+                    <h3 className="text-[16px] font-normal leading-[24px] text-black">
+                      {item.name}
+                    </h3>
+
+                    <div className="mt-[5px] flex items-center gap-[15px]">
+                      <span className="text-[16px] font-normal leading-[24px] text-black">
+                        {item.quantity}
+                      </span>
+
+                      <span className="text-[12px] font-normal leading-[18px] text-black">
+                        X
+                      </span>
+
+                      <span className="whitespace-nowrap text-[12px] font-medium leading-[18px] text-[#B88E2F]">
+                        {item.priceDisplay || item.price}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    aria-label={`Remove ${item.name}`}
+                    onClick={() => removeFromCart(item.id)}
+                    className="absolute right-0 top-[42px] flex h-5 w-5 items-center justify-center"
+                  >
+                    <RemoveIcon />
+                  </button>
+                </div>
+              ))
+            )}
           </div>
 
           <span className="absolute left-[31px] top-[615px] h-[24px] w-[68px] text-[16px] font-normal leading-[24px] text-black">
@@ -159,7 +164,10 @@ export default function CartSidebar({ isOpen, onClose }) {
           </span>
 
           <span className="absolute left-[200px] top-[615px] h-[24px] w-[117px] whitespace-nowrap text-[16px] font-semibold leading-[24px] text-[#B88E2F]">
-            Rs. 520,000.00
+            Rs. {subtotal.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </span>
 
           <div className="absolute left-[30px] top-[663px] h-px w-[287px] bg-[#D9D9D9]" />

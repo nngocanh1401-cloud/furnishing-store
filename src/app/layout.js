@@ -1,6 +1,7 @@
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 import { Montserrat, Poppins } from "next/font/google";
+import { CartProvider } from "@/context/CartContext";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -39,9 +40,11 @@ export default function RootLayout({ children }) {
       className={`${poppins.variable} ${montserrat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white text-[#333333]">
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <CartProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

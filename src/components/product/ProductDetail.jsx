@@ -5,8 +5,11 @@ import Link from "next/link";
 
 import CartSidebar from "@/components/common/CartSidebar";
 import { singleProductStyles } from "@/styles/styles";
+import { useCart } from "@/context/CartContext";
 
 export default function ProductDetail({ product }) {
+  const { addToCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
@@ -104,38 +107,58 @@ export default function ProductDetail({ product }) {
             </div>
 
             {/* Actions */}
-            <div className="mt-8 flex flex-wrap gap-4">
-              <div className={singleProductStyles.quantityBox}>                <button type="button">-</button>
-                <span>1</span>
-                <button type="button">+</button>
-              </div>
+            <div className={singleProductStyles.quantityBox}>
+              <button
+                type="button"
+                onClick={() =>
+                  setQuantity((currentQuantity) =>
+                    Math.max(1, currentQuantity - 1)
+                  )
+                }
+              >
+                -
+              </button>
+
+              <span>{quantity}</span>
 
               <button
                 type="button"
-                onClick={() => setIsCartOpen(true)}
-                className={`${singleProductStyles.actionButton} transition hover:bg-black hover:text-white`}
+                onClick={() =>
+                  setQuantity((currentQuantity) => currentQuantity + 1)
+                }
               >
-                Add To Cart
+                +
               </button>
-
-              <Link
-                href="/comparison"
-                className={singleProductStyles.actionButton}
-              >
-                + Compare
-              </Link>
             </div>
 
-            <hr className={singleProductStyles.divider} />
-            <div className={singleProductStyles.meta}>
-              <p>SKU : SS001</p>
-              <p>Category : Sofas</p>
-              <p>Tags : Sofa, Chair, Home, Shop</p>
-              <p>Share : f t in</p>
-            </div>
+            <button
+              type="button"
+              onClick={() => {
+                addToCart(product, quantity);
+                setIsCartOpen(true);
+              }}
+              className={`${singleProductStyles.actionButton} transition hover:bg-black hover:text-white`}
+            >
+              Add To Cart
+            </button>
+
+            <Link
+              href="/comparison"
+              className={singleProductStyles.actionButton}
+            >
+              + Compare
+            </Link>
+          </div>
+
+          <hr className={singleProductStyles.divider} />
+          <div className={singleProductStyles.meta}>
+            <p>SKU : SS001</p>
+            <p>Category : Sofas</p>
+            <p>Tags : Sofa, Chair, Home, Shop</p>
+            <p>Share : f t in</p>
           </div>
         </div>
-      </section>
+    </section>
 
       <CartSidebar
         isOpen={isCartOpen}

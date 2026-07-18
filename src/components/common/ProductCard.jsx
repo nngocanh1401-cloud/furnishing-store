@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useCart } from "@/context/CartContext";
 import CartSidebar from "@/components/common/CartSidebar";
 
 function getBadgeClass(product) {
@@ -16,7 +17,7 @@ function getBadgeClass(product) {
 
 export default function ProductCard({ product }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
-
+  const { addToCart } = useCart();
   /*
    * Nếu sản phẩm có id:
    * id = 1 → /product/1
@@ -72,6 +73,7 @@ export default function ProductCard({ product }) {
           <Link
             href={productHref}
             aria-label={`View ${name}`}
+            className="relative z-0 block h-full w-full"
           >
             <img
               src={productImage}
@@ -90,11 +92,14 @@ export default function ProductCard({ product }) {
             </span>
           )}
 
-          <div className="absolute inset-0 hidden items-center justify-center bg-black/50 group-hover:flex">
-            <div className="text-center">
+          <div className="pointer-events-none absolute inset-0 z-10 hidden items-center justify-center bg-black/50 group-hover:flex">
+            <div className="pointer-events-auto text-center">
               <button
                 type="button"
-                onClick={() => setIsCartOpen(true)}
+                onClick={() => {
+                  addToCart(product, 1);
+                  setIsCartOpen(true);
+                }}
                 className="h-12 w-[202px] bg-white font-['Poppins'] text-[16px] font-semibold text-[#B88E2F] transition hover:bg-[#B88E2F] hover:text-white"
               >
                 Add to cart
@@ -128,7 +133,10 @@ export default function ProductCard({ product }) {
 
         <div className="px-4 pb-[30px] pt-4">
           {/* Bấm tên để mở đúng trang sản phẩm theo ID */}
-          <Link href={productHref}>
+          <Link
+            href={productHref}
+            className="relative z-20 block"
+          >
             <h3 className="text-[24px] font-semibold leading-[29px] text-[#3A3A3A] transition hover:text-[#B88E2F]">
               {name}
             </h3>
@@ -151,12 +159,6 @@ export default function ProductCard({ product }) {
           </div>
         </div>
       </article>
-
-      <CartSidebar
-        isOpen={isCartOpen}
-        product={product}
-        onClose={() => setIsCartOpen(false)}
-      />
     </>
   );
 }
