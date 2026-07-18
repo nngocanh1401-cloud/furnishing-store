@@ -7,34 +7,72 @@ import ProductTabs from "@/components/product/ProductTabs";
 import RelatedProducts from "@/components/product/RelatedProducts";
 import productCatalog from "@/data/productCatalog.json";
 
+/*
+ * productCatalog.json có dạng:
+ *
+ * {
+ *   "schemaVersion": 2,
+ *   "products": [...]
+ * }
+ *
+ * Đoạn này cũng hỗ trợ trường hợp file JSON
+ * được đổi thành một mảng trực tiếp trong tương lai.
+ */
 const products = Array.isArray(productCatalog)
   ? productCatalog
   : productCatalog.products ?? [];
 
 /*
- * ProductDetail và ProductCard hiện vẫn quen đọc:
- * product.price, product.oldPrice và product.image.
+ * Một số component hiện đang đọc:
  *
- * Vì vậy ta chuyển dữ liệu mới về cấu trúc tương thích.
+ * product.price
+ * product.oldPrice
+ * product.image
+ *
+ * Trong productCatalog.json lại có thêm:
+ *
+ * priceDisplay
+ * oldPriceDisplay
+ *
+ * Vì vậy cần chuẩn hóa dữ liệu trước khi truyền xuống component.
  */
 function normalizeProduct(product) {
   return {
     ...product,
-    price: product.priceDisplay || product.price || "",
-    oldPrice: product.oldPriceDisplay || "",
+
+    price:
+      product.priceDisplay ||
+      product.price ||
+      "",
+
+    oldPrice:
+      product.oldPriceDisplay ||
+      product.oldPrice ||
+      "",
+
     image:
       product.images?.thumbnail ||
       product.image ||
       "/images/furniro-hero.png",
+
+    gallery:
+      Array.isArray(product.gallery) &&
+      product.gallery.length > 0
+        ? product.gallery
+        : [
+            product.image ||
+              "/images/furniro-hero.png",
+          ],
   };
 }
 
 /*
- * Tạo sẵn:
+ * Tạo sẵn các route:
+ *
  * /product/1
  * /product/2
+ * /product/3
  * ...
- * /product/12
  */
 export function generateStaticParams() {
   return products.map((product) => ({
@@ -42,6 +80,9 @@ export function generateStaticParams() {
   }));
 }
 
+/*
+ * Tạo metadata riêng cho từng sản phẩm.
+ */
 export async function generateMetadata({ params }) {
   const { id } = await params;
 
@@ -52,7 +93,8 @@ export async function generateMetadata({ params }) {
   if (!product) {
     return {
       title: "Product Not Found",
-      description: "The requested product could not be found.",
+      description:
+        "The requested product could not be found.",
     };
   }
 
@@ -67,10 +109,16 @@ export async function generateMetadata({ params }) {
 export default async function ProductPage({ params }) {
   const { id } = await params;
 
+  /*
+   * Tìm sản phẩm có ID giống với ID trên URL.
+   */
   const foundProduct = products.find(
     (item) => String(item.id) === String(id)
   );
 
+  /*
+   * Không tìm thấy sản phẩm thì hiển thị trang 404.
+   */
   if (!foundProduct) {
     notFound();
   }
@@ -78,11 +126,13 @@ export default async function ProductPage({ params }) {
   const product = normalizeProduct(foundProduct);
 
   /*
-   * Tạm lấy 4 sản phẩm khác làm Related Products.
+   * Lấy 4 sản phẩm khác làm Related Products.
    */
   const relatedProducts = products
     .filter(
-      (item) => String(item.id) !== String(foundProduct.id)
+      (item) =>
+        String(item.id) !==
+        String(foundProduct.id)
     )
     .slice(0, 4)
     .map(normalizeProduct);
@@ -90,14 +140,19 @@ export default async function ProductPage({ params }) {
   return (
     <>
       <section className="bg-[#F9F1E7] px-5 py-8">
-        <Breadcrumb current={product.name} showShop />
+        <Breadcrumb
+          current={product.name}
+          showShop
+        />
       </section>
 
       <ProductDetail product={product} />
 
       <ProductTabs product={product} />
 
-      <RelatedProducts products={relatedProducts} />
+      <RelatedProducts
+        products={relatedProducts}
+      />
 
       <FeatureSection />
     </>

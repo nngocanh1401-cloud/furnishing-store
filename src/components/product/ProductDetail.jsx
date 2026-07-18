@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 import CartSidebar from "@/components/common/CartSidebar";
+import ProductGallery from "@/components/product/ProductGallery";
 import { singleProductStyles } from "@/styles/styles";
 import { useCart } from "@/context/CartContext";
 
@@ -16,28 +17,8 @@ export default function ProductDetail({ product }) {
     <>
       <section className={singleProductStyles.section}>
         <div className={singleProductStyles.container}>
-          {/* Gallery */}
-          <div className="flex gap-8">
-            <div className="flex flex-col gap-8">
-              {[1, 2, 3, 4].map((item) => (
-                <div key={item} className={singleProductStyles.thumbnail}>
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="h-full w-full rounded-[10px] object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className={singleProductStyles.mainImage}>
-              <img
-                src={product.image}
-                alt={product.name}
-                className="max-h-[430px] object-contain"
-              />
-            </div>
-          </div>
+          {/* Gallery ảnh sản phẩm có chức năng zoom */}
+          <ProductGallery product={product} />
 
           {/* Product info */}
           <div>
@@ -50,12 +31,14 @@ export default function ProductDetail({ product }) {
             </p>
 
             <div className="mt-4 flex items-center gap-4">
-              <div className="text-[#FFC700]">★★★★★</div>
+              <div className="text-[#FFC700]">
+                ★★★★★
+              </div>
 
               <span className="h-[30px] w-px bg-[#9F9F9F]" />
 
               <p className="text-[13px] text-[#9F9F9F]">
-                5 Customer Review
+                {product.reviews || 0} Customer Reviews
               </p>
             </div>
 
@@ -66,7 +49,9 @@ export default function ProductDetail({ product }) {
 
             {/* Size */}
             <div className="mt-6">
-              <p className={singleProductStyles.mutedLabel}>Size</p>
+              <p className={singleProductStyles.mutedLabel}>
+                Size
+              </p>
 
               <div className="mt-3 flex gap-4">
                 {["L", "XL", "XS"].map((size) => (
@@ -83,7 +68,9 @@ export default function ProductDetail({ product }) {
 
             {/* Color */}
             <div className="mt-5">
-              <p className={singleProductStyles.mutedLabel}>Color</p>
+              <p className={singleProductStyles.mutedLabel}>
+                Color
+              </p>
 
               <div className="mt-3 flex gap-4">
                 <button
@@ -164,6 +151,7 @@ export default function ProductDetail({ product }) {
 
       <CartSidebar
         isOpen={isCartOpen}
+        product={product}
         onClose={() => setIsCartOpen(false)}
       />
     </>

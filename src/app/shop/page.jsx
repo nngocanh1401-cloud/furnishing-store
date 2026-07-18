@@ -1,21 +1,24 @@
-import ProductGrid from "@/components/common/ProductGrid";
-import Pagination from "@/components/shop/Pagination";
 import FeatureSection from "@/components/common/FeatureSection";
 import ShopBanner from "@/components/common/ShopBanner";
-import products from "@/data/products.json";
+import ShopProductFilter from "@/components/shop/ShopProductFilter";
+import productCatalog from "@/data/productCatalog.json";
 
+const products = Array.isArray(productCatalog)
+  ? productCatalog
+  : productCatalog.products ?? [];
 
 export const metadata = {
   title: "Shop",
-  description: "Shop page of Furniro.",
+  description: "Browse and filter Furniro products by room and price.",
 };
 
 export default function ShopPage() {
   return (
     <>
       <ShopBanner title="Shop" current="Shop" />
-      <ProductGrid title="" products={products} showMore={false} />
-      <Pagination />
+
+      <ShopProductFilter products={products} />
+
       <FeatureSection />
     </>
   );
