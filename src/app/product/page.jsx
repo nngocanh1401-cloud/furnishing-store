@@ -1,28 +1,10 @@
-
-import ShopBanner from "@/components/common/ShopBanner";
-import ProductDetail from "@/components/product/ProductDetail";
-import ProductTabs from "@/components/product/ProductTabs";
-import RelatedProducts from "@/components/product/RelatedProducts";
-import Breadcrumb from "@/components/common/Breadcrumb";
-import FeatureSection from "@/components/common/FeatureSection";
-import products from "@/data/products.json";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Product",
-  description: "Product detail page of Furniro.",
+  description: "Choose a product from the Furniro shop.",
 };
 
 export default function ProductPage() {
-  const product = products[0];
-  const relatedProducts = products.slice(0, 4);
-
-  return (
-    <>
-      <Breadcrumb product={product} />
-      <ProductDetail product={product} />
-      <ProductTabs />
-      <RelatedProducts products={relatedProducts} />
-      <FeatureSection />
-    </>
-  );
+  redirect("/shop");
 }

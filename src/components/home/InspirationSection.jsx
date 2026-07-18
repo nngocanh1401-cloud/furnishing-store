@@ -1,50 +1,44 @@
 import Link from "next/link";
+
 import Button from "@/components/common/Button";
-import images from "@/data/images.json";
 import { textStyles } from "@/styles/styles";
 
-const inspirations = [
-  {
-    id: 1,
-    image: images.inspirations.main,
-    room: "Bed Room",
-    title: "Inner Peace",
-    alt: "Bedroom inspiration interior",
-  },
-  {
-    id: 2,
-    image: images.inspirations.second,
-    room: "Living Room",
-    title: "Bright Space",
-    alt: "Bright room inspiration",
-  },
-  {
-    id: 3,
-    image: images.inspirations.third,
-    room: "Dining Room",
-    title: "Modern Style",
-    alt: "Modern interior inspiration",
-  },
-];
+export default function InspirationSection({
+  content,
+}) {
+  const items = Array.isArray(content?.items)
+    ? content.items
+    : [];
 
-export default function InspirationSection() {
-  const [main, second, third] = inspirations;
+  const [main, second, third] = items;
+
+  if (!main || !second || !third) {
+    return null;
+  }
 
   return (
     <section className="overflow-hidden bg-[#FCF8F3]">
       <div className="relative mx-auto w-full max-w-[1440px] px-5 py-12 lg:h-[670px] lg:px-0 lg:py-0">
         <div className="lg:absolute lg:left-[100px] lg:top-[223px] lg:w-[422px]">
           <h2 className={textStyles.sectionTitle}>
-            50+ Beautiful rooms inspiration
+            {content?.title ||
+              "50+ Beautiful rooms inspiration"}
           </h2>
 
           <p className="mt-[7px] max-w-[368px] font-['Poppins'] text-[16px] font-medium leading-[24px] text-[#616161]">
-            Our designer already made a lot of beautiful prototype of rooms that
-            inspire you
+            {content?.description ||
+              "Discover beautiful rooms designed to inspire your home."}
           </p>
 
-          <Button href="/shop" size="inspiration" className="mt-[25px]">
-            Explore More
+          <Button
+            href={
+              content?.buttonHref || "/shop"
+            }
+            size="inspiration"
+            className="mt-[25px]"
+          >
+            {content?.buttonText ||
+              "Explore More"}
           </Button>
         </div>
 
@@ -68,7 +62,9 @@ export default function InspirationSection() {
               </div>
 
               <Link
-                href="/shop"
+                href={
+                  content?.buttonHref || "/shop"
+                }
                 aria-label="Explore room inspiration"
                 className="flex h-12 w-12 items-center justify-center bg-[#B88E2F] text-2xl text-white transition hover:bg-[#9F7928]"
               >

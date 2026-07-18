@@ -1,0 +1,126 @@
+{
+  "hero": {
+    "image": "/images/furniro-hero.png",
+    "alt": "Modern Scandinavian interior room",
+    "eyebrow": "New Arrival",
+    "titleLine1": "Discover Our",
+    "titleLine2": "New Collection",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.",
+    "buttonText": "BUY NOW",
+    "buttonHref": "/shop"
+  },
+  "browse": {
+    "title": "Browse The Range",
+    "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "categories": [
+      {
+        "id": 1,
+        "slug": "dining",
+        "name": "Dining",
+        "image": "/images/dining-home.png",
+        "alt": "Dining room furniture",
+        "href": "/shop?category=dining"
+      },
+      {
+        "id": 2,
+        "slug": "living",
+        "name": "Living",
+        "image": "/images/living-room-home.png",
+        "alt": "Living room furniture",
+        "href": "/shop?category=living"
+      },
+      {
+        "id": 3,
+        "slug": "bedroom",
+        "name": "Bedroom",
+        "image": "/images/bed-room-home.png",
+        "alt": "Bedroom furniture",
+        "href": "/shop?category=bedroom"
+      }
+    ]
+  },
+  "productsSection": {
+    "title": "Our Products",
+    "limit": 8
+  },
+  "inspiration": {
+    "title": "50+ Beautiful rooms inspiration",
+    "description": "Our designer already made a lot of beautiful prototype of rooms that inspire you",
+    "buttonText": "Explore More",
+    "buttonHref": "/shop",
+    "items": [
+      {
+        "id": 1,
+        "image": "/images/bed-room-home.png",
+        "room": "Bed Room",
+        "title": "Inner Peace",
+        "alt": "Bedroom inspiration interior"
+      },
+      {
+        "id": 2,
+        "image": "/images/living-room-home.png",
+        "room": "Living Room",
+        "title": "Bright Space",
+        "alt": "Bright living room inspiration"
+      },
+      {
+        "id": 3,
+        "image": "/images/dining-home.png",
+        "room": "Dining Room",
+        "title": "Modern Style",
+        "alt": "Modern dining room inspiration"
+      }
+    ]
+  },
+  "interiorGallery": {
+  "eyebrow": "Share your setup with",
+  "title": "#FurniroFurniture",
+  "images": [
+    {
+      "id": 1,
+      "src": "/images/gallery-1.png",
+      "alt": "Modern workspace corner"
+    },
+    {
+      "id": 2,
+      "src": "/images/gallery-3.png",
+      "alt": "Home office furniture setup"
+    },
+    {
+      "id": 3,
+      "src": "/images/gallery-5.png",
+      "alt": "Minimal dining room"
+    },
+    {
+      "id": 4,
+      "src": "/images/gallery-7.png",
+      "alt": "Modern bedroom interior"
+    },
+    {
+      "id": 5,
+      "src": "/images/gallery-9.png",
+      "alt": "Bright dining room"
+    },
+    {
+      "id": 6,
+      "src": "/images/gallery-2.png",
+      "alt": "Vintage lounge chair"
+    },
+    {
+      "id": 7,
+      "src": "/images/gallery-4.png",
+      "alt": "Decorative side tables"
+    },
+    {
+      "id": 8,
+      "src": "/images/gallery-6.png",
+      "alt": "Minimal home decoration"
+    },
+    {
+      "id": 9,
+      "src": "/images/gallery-8.png",
+      "alt": "Modern kitchen corner"
+    }
+  ]
+}
+}
