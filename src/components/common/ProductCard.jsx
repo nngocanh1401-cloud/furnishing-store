@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { useCart } from "@/context/CartContext";
-import CartSidebar from "@/components/common/CartSidebar";
 
 function getBadgeClass(product) {
   const badge = product.badge || product.tag || "";
@@ -16,7 +14,6 @@ function getBadgeClass(product) {
 }
 
 export default function ProductCard({ product }) {
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const { addToCart } = useCart();
   /*
    * Nếu sản phẩm có id:
@@ -98,7 +95,7 @@ export default function ProductCard({ product }) {
                 type="button"
                 onClick={() => {
                   addToCart(product, 1);
-                  setIsCartOpen(true);
+                  router.push("/cart");
                 }}
                 className="h-12 w-[202px] bg-white font-['Poppins'] text-[16px] font-semibold text-[#B88E2F] transition hover:bg-[#B88E2F] hover:text-white"
               >
