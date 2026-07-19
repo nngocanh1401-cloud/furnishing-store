@@ -96,6 +96,20 @@ export function CartProvider({ children }) {
         )
     );
   };
+  const updateCartQuantity = (productId, quantity) => {
+  const safeQuantity = Math.max(1, Number(quantity) || 1);
+
+  setCartItems((currentItems) =>
+    currentItems.map((item) =>
+      item.id === productId
+        ? {
+            ...item,
+            quantity: safeQuantity,
+          }
+        : item
+    )
+  );
+};
 
   return (
     <CartContext.Provider
@@ -105,6 +119,7 @@ export function CartProvider({ children }) {
         removeFromCart,
         increaseQuantity,
         decreaseQuantity,
+        updateCartQuantity,
       }}
     >
       {children}

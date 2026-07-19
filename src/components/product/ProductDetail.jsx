@@ -151,7 +151,6 @@ export default function ProductDetail({ product }) {
 
       <CartSidebar
         isOpen={isCartOpen}
-        product={product}
         onClose={() => setIsCartOpen(false)}
       />
     </>

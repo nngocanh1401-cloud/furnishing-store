@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import CartSidebar from "@/components/common/CartSidebar";
+import { useCart } from "@/context/CartContext";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -112,109 +113,122 @@ function IconButton({ label, children, onClick }) {
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const { cartItems } = useCart();
 
+  const cartCount = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
   return (
     <>
-    <header className="sticky top-0 z-[999] bg-white shadow-sm">
-      <div className="mx-auto flex h-[80px] w-full max-w-[1440px] items-center justify-between px-5 md:h-[90px] lg:h-[100px] lg:px-[54px]">
-        <Logo />
+      <header className="sticky top-0 z-[999] bg-white shadow-sm">
+        <div className="mx-auto flex h-[80px] w-full max-w-[1440px] items-center justify-between px-5 md:h-[90px] lg:h-[100px] lg:px-[54px]">
+          <Logo />
 
-        <nav className="hidden lg:block" aria-label="Main navigation">
-          <ul className="flex items-center gap-[75px]">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <Link
-                  href={link.href}
-                  className="font-['Poppins'] text-[16px] font-medium leading-[24px] text-black transition hover:text-[#B88E2F]"
-                >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className="hidden items-center gap-[45px] lg:flex">
-          <IconButton label="Account">
-            <AccountIcon />
-          </IconButton>
-
-          <IconButton label="Search">
-            <SearchIcon />
-          </IconButton>
-
-          <IconButton label="Wishlist">
-            <HeartIcon />
-          </IconButton>
-
-          <IconButton
-            label="Cart"
-            onClick={() => setIsCartOpen(true)}
-          >
-            <CartIcon />
-          </IconButton>
-        </div>
-
-        <button
-          type="button"
-          aria-label="Toggle mobile menu"
-          aria-expanded={isOpen}
-          className="flex h-10 w-10 items-center justify-center rounded-md border border-[#D9D9D9] bg-white text-2xl lg:hidden"
-          onClick={() => setIsOpen((current) => !current)}
-        >
-          {isOpen ? "×" : "☰"}
-        </button>
-      </div>
-
-      {isOpen && (
-        <div className="absolute left-0 top-full z-[998] w-full border-t border-[#D9D9D9] bg-white shadow-lg lg:hidden">
-          <nav className="px-5 py-5 md:px-10" aria-label="Mobile navigation">
-            <ul className="flex flex-col gap-2">
+          <nav className="hidden lg:block" aria-label="Main navigation">
+            <ul className="flex items-center gap-[75px]">
               {navLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="block rounded-md px-3 py-3 font-['Poppins'] text-[18px] font-medium text-black transition hover:bg-[#F9F1E7] hover:text-[#B88E2F]"
-                    onClick={() => setIsOpen(false)}
+                    className="font-['Poppins'] text-[16px] font-medium leading-[24px] text-black transition hover:text-[#B88E2F]"
                   >
                     {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
+          </nav>
 
-            <div className="mt-5 flex items-center gap-6 border-t border-[#D9D9D9] pt-5">
-              <IconButton label="Account">
-                <AccountIcon />
-              </IconButton>
+          <div className="hidden items-center gap-[45px] lg:flex">
+            <IconButton label="Account">
+              <AccountIcon />
+            </IconButton>
 
-              <IconButton label="Search">
-                <SearchIcon />
-              </IconButton>
+            <IconButton label="Search">
+              <SearchIcon />
+            </IconButton>
 
-              <IconButton label="Wishlist">
-                <HeartIcon />
-              </IconButton>
+            <IconButton label="Wishlist">
+              <HeartIcon />
+            </IconButton>
 
+            <div className="relative">
               <IconButton
                 label="Cart"
-                onClick={() => {
-                  setIsOpen(false);
-                  setIsCartOpen(true);
-                }}
+                onClick={() => setIsCartOpen(true)}
               >
                 <CartIcon />
               </IconButton>
-            </div>
-          </nav>
-        </div>
-      )}
-    </header>
 
-    <CartSidebar
-    isOpen={isCartOpen}
-    onClose={() => setIsCartOpen(false)}
-  />
-  </>
+              {cartCount > 0 && (
+                <span className="absolute -right-[8px] -top-[8px] flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#B88E2F] px-[4px] text-[11px] font-semibold leading-none text-white">
+                  {cartCount}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            aria-label="Toggle mobile menu"
+            aria-expanded={isOpen}
+            className="flex h-10 w-10 items-center justify-center rounded-md border border-[#D9D9D9] bg-white text-2xl lg:hidden"
+            onClick={() => setIsOpen((current) => !current)}
+          >
+            {isOpen ? "×" : "☰"}
+          </button>
+        </div>
+
+        {isOpen && (
+          <div className="absolute left-0 top-full z-[998] w-full border-t border-[#D9D9D9] bg-white shadow-lg lg:hidden">
+            <nav className="px-5 py-5 md:px-10" aria-label="Mobile navigation">
+              <ul className="flex flex-col gap-2">
+                {navLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="block rounded-md px-3 py-3 font-['Poppins'] text-[18px] font-medium text-black transition hover:bg-[#F9F1E7] hover:text-[#B88E2F]"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-5 flex items-center gap-6 border-t border-[#D9D9D9] pt-5">
+                <IconButton label="Account">
+                  <AccountIcon />
+                </IconButton>
+
+                <IconButton label="Search">
+                  <SearchIcon />
+                </IconButton>
+
+                <IconButton label="Wishlist">
+                  <HeartIcon />
+                </IconButton>
+
+                <IconButton
+                  label="Cart"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setIsCartOpen(true);
+                  }}
+                >
+                  <CartIcon />
+                </IconButton>
+              </div>
+            </nav>
+          </div>
+        )}
+      </header>
+
+      <CartSidebar
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+      />
+    </>
   );
 }

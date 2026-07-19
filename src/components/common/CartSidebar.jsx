@@ -58,19 +58,28 @@ function RemoveIcon() {
     </svg>
   );
 }
+
+function getNumericPrice(price) {
+  if (typeof price === "number") {
+    return price;
+  }
+
+  return Number(
+    String(price || "").replace(/[^\d]/g, "")
+  ) || 0;
+}
+
+function formatCurrency(price) {
+  return `Rp ${getNumericPrice(price).toLocaleString("id-ID")}`;
+}
+
 export default function CartSidebar({ isOpen, onClose }) {
   const { cartItems, removeFromCart } = useCart();
   const subtotal = cartItems.reduce((total, item) => {
-    const numericPrice =
-      typeof item.price === "number"
-        ? item.price
-        : Number(
-          String(item.price)
-            .replace(/[^\d.,]/g, "")
-            .replace(/,/g, "")
-        );
+    const numericPrice = getNumericPrice(item.price);
+    const quantity = Number(item.quantity) || 1;
 
-    return total + numericPrice * item.quantity;
+    return total + numericPrice * quantity;
   }, 0);
 
   if (!isOpen) return null;
@@ -141,7 +150,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       </span>
 
                       <span className="whitespace-nowrap text-[12px] font-medium leading-[18px] text-[#B88E2F]">
-                        {item.priceDisplay || item.price}
+                        {formatCurrency(item.price)}
                       </span>
                     </div>
                   </div>
@@ -164,10 +173,7 @@ export default function CartSidebar({ isOpen, onClose }) {
           </span>
 
           <span className="absolute left-[200px] top-[615px] h-[24px] w-[117px] whitespace-nowrap text-[16px] font-semibold leading-[24px] text-[#B88E2F]">
-            Rs. {subtotal.toLocaleString("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
+            {formatCurrency(subtotal)}
           </span>
 
           <div className="absolute left-[30px] top-[663px] h-px w-[287px] bg-[#D9D9D9]" />

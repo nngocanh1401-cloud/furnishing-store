@@ -1,20 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-
-const initialCartItems = [
-  {
-    id: 1,
-    name: "Asgaard sofa",
-    price: 250000,
-    image: "/images/black-sofa.jpg",
-    quantity: 1,
-  },
-];
+import { useCart } from "@/context/CartContext";
 
 export default function CartSection() {
-  const [cartItems, setCartItems] = useState(initialCartItems);
+  const {
+    cartItems,
+    removeFromCart,
+    updateCartQuantity,
+  } = useCart();
 
   const formatPrice = (price) => `Rs. ${price.toLocaleString("en-US")}.00`;
 
@@ -28,9 +22,7 @@ export default function CartSection() {
     );
   };
 
-  const removeItem = (id) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
-  };
+
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -59,13 +51,19 @@ export default function CartSection() {
                     key={item.id}
                     className="mt-[45px] grid grid-cols-[120px_177px_177px_106px_162px_75px] items-center min-[768px]:mt-[55px]"
                   >
-                    <div className="flex h-[105px] w-[105px] items-center justify-center overflow-hidden rounded-[10px] bg-[rgba(184,142,47,0.22)]">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="h-full w-full object-contain"
-                      />
-                    </div>
+                    <Link
+                      href={`/product/${item.id}`}
+                      aria-label={`View ${item.name}`}
+                      className="block h-[105px] w-[105px]"
+                    >
+                      <div className="flex h-[105px] w-[105px] items-center justify-center overflow-hidden rounded-[10px] bg-[rgba(184,142,47,0.22)]">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                    </Link>
 
                     <p className="text-[16px] text-[#9F9F9F]">
                       {item.name}
@@ -79,8 +77,8 @@ export default function CartSection() {
                       type="number"
                       min="1"
                       value={item.quantity}
-                    onChange={(event) => updateQuantity(item.id, event.target.value)}
-                    onInput={(event) => updateQuantity(item.id, event.currentTarget.value)}
+                      onChange={(event) => updateQuantity(item.id, event.target.value)}
+                      onInput={(event) => updateQuantity(item.id, event.currentTarget.value)}
                       className="h-8 w-8 rounded-[5px] border border-[#9F9F9F] text-center text-[16px] text-black outline-none"
                       aria-label={`Quantity of ${item.name}`}
                     />
@@ -91,7 +89,7 @@ export default function CartSection() {
 
                     <button
                       type="button"
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeFromCart(item.id)}
                       className="flex h-8 w-8 items-center justify-center text-[22px] text-[#B88E2F] transition hover:scale-110"
                       aria-label={`Remove ${item.name}`}
                     >

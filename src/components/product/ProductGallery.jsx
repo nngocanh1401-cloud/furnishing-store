@@ -21,9 +21,18 @@ export default function ProductGallery({ product }) {
 
     const uniqueImages = [...new Set(allImages)];
 
-    return uniqueImages.length > 0
-      ? uniqueImages
-      : [FALLBACK_IMAGE];
+    const availableImages =
+      uniqueImages.length > 0
+        ? uniqueImages
+        : [FALLBACK_IMAGE];
+
+    return Array.from(
+      { length: 4 },
+      (_, index) =>
+        availableImages[index] ||
+        availableImages[0] ||
+        FALLBACK_IMAGE
+    );
   }, [product]);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -168,49 +177,39 @@ export default function ProductGallery({ product }) {
 
   return (
     <>
-      <div className="flex w-full flex-col items-start gap-6 sm:flex-row">
-        {/* Thumbnail chỉ xuất hiện khi có từ 2 ảnh khác nhau */}
-        {images.length > 1 && (
-          <div className="flex max-w-full flex-row gap-3 overflow-x-auto sm:flex-col sm:gap-4 sm:overflow-visible">
-            {images.map((image, index) => {
-              const isSelected =
-                selectedIndex === index;
+      <div className="flex w-[531px] items-start gap-[32px]">
+        {/* 4 ảnh nhỏ */}
+        <div className="flex w-[76px] shrink-0 flex-col gap-[32px]">
+          {images.map((image, index) => {
+            const isSelected = selectedIndex === index;
 
-              return (
-                <button
-                  key={`${image}-${index}`}
-                  type="button"
-                  onClick={() =>
-                    handleSelectImage(index)
+            return (
+              <button
+                key={`${image}-${index}`}
+                type="button"
+                onClick={() => handleSelectImage(index)}
+                className={`
+            flex h-[80px] w-[76px]
+            shrink-0 items-center justify-center
+            overflow-hidden rounded-[10px]
+            bg-[#F9F1E7] p-0
+            outline-none
+            ${isSelected
+                    ? ""
+                    : ""
                   }
-                  className={`
-                    h-[76px] w-[76px]
-                    shrink-0 overflow-hidden
-                    rounded-[10px] border-2
-                    bg-[#F9F1E7] p-0
-                    outline-none transition
-                    ${
-                      isSelected
-                        ? "border-[#B88E2F]"
-                        : "border-transparent hover:border-[#D8B86A]"
-                    }
-                  `}
-                  aria-label={`View image ${
-                    index + 1
-                  } of ${product?.name}`}
-                >
-                  <img
-                    src={image}
-                    alt={`${product?.name} thumbnail ${
-                      index + 1
-                    }`}
-                    className="h-full w-full object-cover"
-                  />
-                </button>
-              );
-            })}
-          </div>
-        )}
+          `}
+                aria-label={`View image ${index + 1} of ${product?.name}`}
+              >
+                <img
+                  src={image}
+                  alt={`${product?.name} thumbnail ${index + 1}`}
+                  className="h-full w-full object-contain"
+                />
+              </button>
+            );
+          })}
+        </div>
 
         {/* Ảnh chính */}
         <button
@@ -220,60 +219,57 @@ export default function ProductGallery({ product }) {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           className="
-            group relative
-            aspect-[4/3]
-            w-full max-w-[520px]
-            cursor-zoom-in
-            overflow-hidden rounded-[10px]
-            border-0 bg-[#F9F1E7]
-            p-0 outline-none
-            focus-visible:ring-2
-            focus-visible:ring-[#B88E2F]
-          "
+      group relative
+      flex h-[500px] w-[423px]
+      shrink-0 cursor-zoom-in
+      items-center justify-center
+      overflow-hidden rounded-[10px]
+      border-0 bg-[#F9F1E7]
+      p-0 outline-none
+    "
           aria-label={`Zoom ${product?.name}`}
         >
           <img
             src={selectedImage}
             alt={product?.name || "Product"}
             className="
-              h-full w-full
-              object-cover
-              transition-transform
-              duration-300 ease-out
-            "
+        max-h-full max-w-full
+        object-contain
+        transition-transform
+        duration-300 ease-out
+      "
             style={{
               transform: isZooming
                 ? "scale(1.35)"
                 : "scale(1)",
-
               transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
             }}
           />
 
           <span
             className="
-              pointer-events-none
-              absolute right-4 top-4
-              flex h-10 w-10
-              items-center justify-center
-              rounded-full bg-white/90
-              text-[21px] text-black
-              shadow-md
-            "
+        pointer-events-none
+        absolute right-4 top-4
+        flex h-10 w-10
+        items-center justify-center
+        rounded-full bg-white/90
+        text-[21px] text-black
+        shadow-md
+      "
           >
             ⤢
           </span>
 
           <span
             className="
-              pointer-events-none
-              absolute bottom-4 right-4
-              rounded-full bg-black/60
-              px-4 py-2
-              text-[13px] text-white
-              opacity-0 transition
-              group-hover:opacity-100
-            "
+        pointer-events-none
+        absolute bottom-4 right-4
+        rounded-full bg-black/60
+        px-4 py-2
+        text-[13px] text-white
+        opacity-0 transition
+        group-hover:opacity-100
+      "
           >
             Click to zoom
           </span>
@@ -402,21 +398,18 @@ export default function ProductGallery({ product }) {
                       shrink-0 overflow-hidden
                       rounded-[6px] border-2
                       p-0
-                      ${
-                        selectedIndex === index
-                          ? "border-[#B88E2F]"
-                          : "border-transparent"
+                      ${selectedIndex === index
+                        ? "border-[#B88E2F]"
+                        : "border-transparent"
                       }
                     `}
-                    aria-label={`Select image ${
-                      index + 1
-                    }`}
+                    aria-label={`Select image ${index + 1
+                      }`}
                   >
                     <img
                       src={image}
-                      alt={`${product?.name} preview ${
-                        index + 1
-                      }`}
+                      alt={`${product?.name} preview ${index + 1
+                        }`}
                       className="h-full w-full object-cover"
                     />
                   </button>

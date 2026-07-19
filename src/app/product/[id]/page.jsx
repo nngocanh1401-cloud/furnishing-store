@@ -57,12 +57,12 @@ function normalizeProduct(product) {
 
     gallery:
       Array.isArray(product.gallery) &&
-      product.gallery.length > 0
+        product.gallery.length > 0
         ? product.gallery
         : [
-            product.image ||
-              "/images/furniro-hero.png",
-          ],
+          product.image ||
+          "/images/furniro-hero.png",
+        ],
   };
 }
 
@@ -139,11 +139,13 @@ export default async function ProductPage({ params }) {
 
   return (
     <>
-      <section className="bg-[#F9F1E7] px-5 py-8">
-        <Breadcrumb
-          current={product.name}
-          showShop
-        />
+      <section className="h-[100px] w-full bg-[#F9F1E7]">
+        <div className="mx-auto flex h-full w-full max-w-[1440px] items-center px-[100px]">
+          <Breadcrumb
+            current={product.name}
+            showShop
+          />
+        </div>
       </section>
 
       <ProductDetail product={product} />

@@ -37,7 +37,7 @@ export default function ProductTabs() {
       <div className="mt-9 grid grid-cols-1 gap-7 md:grid-cols-2">
           <div className="flex min-h-[260px] items-center justify-center overflow-hidden rounded-[10px] bg-[#F9F1E7] md:h-[348px]">
             <img
-              src="/images/sofa-lef.png"
+              src="/images/sofa-left.png"
               alt="Asgaard sofa front view"
               className="h-full w-full object-contain"
             />

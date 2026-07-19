@@ -19,7 +19,7 @@ function getBadgeClass(product) {
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
-  
+  const [isCartOpen, setIsCartOpen] = useState(false);
   /*
    * Ví dụ:
    *
@@ -28,11 +28,11 @@ export default function ProductCard({ product }) {
    */
   const productHref =
     product.id !== undefined &&
-    product.id !== null
+      product.id !== null
       ? `/product/${product.id}`
       : product.productUrl ||
-        product.href ||
-        "/shop";
+      product.href ||
+      "/shop";
 
   const name =
     product.name ||
@@ -115,10 +115,9 @@ export default function ProductCard({ product }) {
           <div className="pointer-events-none absolute inset-0 z-10 hidden items-center justify-center bg-black/50 group-hover:flex">
             <div className="pointer-events-auto text-center">
               <button
-                type="button"
                 onClick={() => {
                   addToCart(product, 1);
-                  router.push("/cart");
+                  setIsCartOpen(true);
                 }}
                 className="h-12 w-[202px] bg-white font-['Poppins'] text-[16px] font-semibold text-[#B88E2F] transition hover:bg-[#B88E2F] hover:text-white"
               >
