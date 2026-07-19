@@ -1,132 +1,163 @@
 "use client";
+
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import productData from "@/data/products.json";
+import { useEffect, useState } from "react";
+
+import productCatalog from "@/data/productCatalog.json";
 import Container from "@/components/common/Container";
 import CartSidebar from "@/components/common/CartSidebar";
-import comparisonData from "@/data/comparisonData.json";
 import { comparisonStyles } from "@/styles/styles";
+import {
+  getCompareProductIds,
+  removeProductFromCompare,
+  MAX_COMPARE_PRODUCTS,
+} from "@/utils/compareStorage";
 
-const { comparisonSections } = comparisonData;
-const allProducts = productData.products ?? productData;
+const allProducts = Array.isArray(productCatalog)
+  ? productCatalog
+  : productCatalog.products ?? [];
 
-  const INITIAL_COMPARE_PRODUCTS = 2;
-  const MAX_COMPARE_PRODUCTS = 3;
+function hasComparison(product) {
+  return Array.isArray(product.comparison) && product.comparison.length > 0;
+}
 
-function RatingStars({ rating }) {
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 >= 0.5;
-  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+const productsWithComparison = allProducts.filter(hasComparison);
+
+const comparisonTemplateProduct = productsWithComparison[0];
+
+const comparisonSections =
+  comparisonTemplateProduct?.comparison.map((section) => ({
+    key: section.key,
+    title: section.title,
+    rows: section.rows.map((row) => ({
+      key: row.key,
+      label: row.label,
+    })),
+  })) ?? [];
+
+function getProductUrl(product) {
+  return `/product/${product.id}`;
+}
+
+function getProductImage(product) {
+  return product.image || "/images/furniro-hero.png";
+}
+
+function getProductPriceDisplay(product) {
+  return product.priceDisplay || product.price || "-";
+}
+
+function getComparisonValue(product, sectionKey, rowKey) {
+  const section = product.comparison?.find((item) => item.key === sectionKey);
+  const row = section?.rows?.find((item) => item.key === rowKey);
+
+  return row?.value || "-";
+}
+
+function RatingStars({ rating = 0 }) {
+  const roundedRating = Math.round(Number(rating) || 0);
 
   return (
     <span
-      className="text-[20px] leading-none tracking-[2px] text-[#FFC700]"
+      className={comparisonStyles.ratingStars}
       aria-label={`${rating} out of 5 stars`}
     >
-      {"★".repeat(fullStars)}
-      {hasHalfStar && "☆"}
-      {"☆".repeat(emptyStars)}
+      {Array.from({ length: 5 }, (_, index) => (
+        <span
+          key={index}
+          className={
+            index < roundedRating
+              ? comparisonStyles.starActive
+              : comparisonStyles.starInactive
+          }
+        >
+          ★
+        </span>
+      ))}
     </span>
   );
 }
 
 function ProductHeaderCard({ product, onRemove }) {
-  const productUrl = product.productUrl ?? "/product";
+  const productUrl = getProductUrl(product);
+  const image = getProductImage(product);
+  const priceDisplay = getProductPriceDisplay(product);
+  const rating = Number(product.rating || 0);
+  const reviews = product.reviews || 0;
 
   return (
     <article className={`${comparisonStyles.productColumn} relative`}>
       <button
         type="button"
         onClick={() => onRemove(product.id)}
-        className="absolute right-3 top-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-black/35 text-[14px] leading-none text-white transition hover:bg-black/55"
+        className={comparisonStyles.removeButton}
         aria-label={`Remove ${product.name}`}
       >
         ×
       </button>
+
       <Link href={productUrl} className={comparisonStyles.productImageBox}>
-        <img
-          src={product.image}
+        <Image
+          src={image}
           alt={product.name}
+          width={280}
+          height={177}
           className={comparisonStyles.productImage}
         />
       </Link>
+
       <Link href={productUrl}>
-        <h2 className="mt-[18px] text-[24px] font-medium leading-[126.5%] text-black transition hover:text-[#B88E2F]">
-          {product.name}
-        </h2>
+        <h2 className={comparisonStyles.productTitle}>{product.name}</h2>
       </Link>
 
-      <p className="mt-[6px] text-[18px] font-medium leading-[27px] text-black">
-        {product.price}
-      </p>
+      <p className={comparisonStyles.productPrice}>{priceDisplay}</p>
 
-      <div className="mt-[7px] flex items-center gap-[7px]">
-        <span className="text-[18px] font-medium leading-[27px] text-black">
-          {product.rating}
-        </span>
+      <div className={comparisonStyles.ratingRow}>
+        <span className={comparisonStyles.ratingNumber}>{rating || "-"}</span>
 
-        <RatingStars rating={Number(product.rating)} />
+        <RatingStars rating={rating} />
 
-        <span className="mx-[6px] h-[30px] w-px bg-[#9F9F9F]" />
+        <span className={comparisonStyles.ratingDivider} />
 
-        <span className="text-[13px] leading-[20px] text-[#9F9F9F]">
-          {product.reviews} Review
-        </span>
+        <span className={comparisonStyles.reviewText}>{reviews} Review</span>
       </div>
     </article>
   );
 }
 
-function AddProductBox({ availableProducts, onChooseProduct }) {
+function AddProductBox() {
   return (
     <div className={comparisonStyles.addProductColumn}>
-      <h2 className="mb-[14px] text-[24px] font-semibold leading-[126.5%] text-black">
-        Add A Product
-      </h2>
+      <h2 className={comparisonStyles.addProductTitle}>Add A Product</h2>
 
-      <select
-        className="h-[39px] w-[242px] rounded-[6px] border-0 bg-[#B88E2F] px-[18px] text-[14px] font-semibold leading-[126.5%] text-white outline-none"
-        aria-label="Choose a product"
-        defaultValue=""
-        onChange={(event) => onChooseProduct(event.target.value)}
-      >
-        <option value="" disabled>
-          Choose a Product
-        </option>
-
-        {availableProducts.map((product) => (
-          <option key={product.id} value={product.id}>
-            {product.name}
-          </option>
-        ))}
-      </select>
+      <Link href="/shop" className={comparisonStyles.addProductLink}>
+        Choose a Product
+      </Link>
     </div>
   );
 }
 
-function ComparisonRow({ row, productCount, canAddProduct }) {
-  const visibleValues = Array.from({ length: productCount }, (_, index) => {
-    return row.values[index] ?? "";
-  });
-
+function ComparisonRow({ row, sectionKey, products, canAddProduct }) {
   return (
     <div className={comparisonStyles.rowGrid}>
       <div className={comparisonStyles.rowLabel}>{row.label}</div>
 
-      {visibleValues.map((value, index) => (
-        <div key={`${row.label}-${index}`} className={comparisonStyles.rowValue}>
-          {value || "-"}
+      {products.map((product) => (
+        <div
+          key={`${product.id}-${sectionKey}-${row.key}`}
+          className={comparisonStyles.rowValue}
+        >
+          {getComparisonValue(product, sectionKey, row.key)}
         </div>
       ))}
 
-      {canAddProduct && (
-        <div className="min-h-[59px] border-l border-[#E8E8E8]" />
-      )}
+      {canAddProduct && <div className={comparisonStyles.emptyColumn} />}
     </div>
   );
 }
 
-function ComparisonSection({ section, productCount, canAddProduct }) {
+function ComparisonSection({ section, products, canAddProduct }) {
   return (
     <section>
       <h2 className={comparisonStyles.sectionTitle}>{section.title}</h2>
@@ -134,9 +165,10 @@ function ComparisonSection({ section, productCount, canAddProduct }) {
       <div>
         {section.rows.map((row) => (
           <ComparisonRow
-            key={row.label}
+            key={`${section.key}-${row.key}`}
             row={row}
-            productCount={productCount}
+            sectionKey={section.key}
+            products={products}
             canAddProduct={canAddProduct}
           />
         ))}
@@ -147,25 +179,22 @@ function ComparisonSection({ section, productCount, canAddProduct }) {
 
 function AddToCartRow({ products, canAddProduct, onAddToCart }) {
   return (
-    <div className="grid grid-cols-[300px_344px_344px_344px] pt-[36px]">
+    <div className={comparisonStyles.addToCartGrid}>
       <div />
 
       {products.map((product) => (
-        <div
-          key={product.id}
-          className="border-l border-[#E8E8E8] px-[42px] pb-[60px]"
-        >
+        <div key={product.id} className={comparisonStyles.addToCartColumn}>
           <button
             type="button"
             onClick={() => onAddToCart(product)}
-            className="flex h-[64px] w-[215px] items-center justify-center bg-[#B88E2F] text-[20px] font-normal text-white transition hover:bg-[#9F7928]"
+            className={comparisonStyles.addToCartButton}
           >
             Add To Cart
           </button>
         </div>
       ))}
 
-      {canAddProduct && <div className="border-l border-[#E8E8E8]" />}
+      {canAddProduct && <div className={comparisonStyles.emptyCartColumn} />}
     </div>
   );
 }
@@ -173,45 +202,50 @@ function AddToCartRow({ products, canAddProduct, onAddToCart }) {
 export default function ProductComparison() {
   const [isCartSidebarOpen, setIsCartSidebarOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [productsToCompare, setProductsToCompare] = useState([]);
 
-  const [productsToCompare, setProductsToCompare] = useState(
-    allProducts.slice(0, INITIAL_COMPARE_PRODUCTS)
-  );
-// 2 sp hien add product, 3 san pham an add product
   const canAddProduct = productsToCompare.length < MAX_COMPARE_PRODUCTS;
 
-  const availableProducts = allProducts.filter(
-    (product) =>
-      !productsToCompare.some((item) => Number(item.id) === Number(product.id))
-  );
+  useEffect(() => {
+    const storedIds = getCompareProductIds();
+
+    const storedProducts = storedIds
+      .map((id) =>
+        productsWithComparison.find(
+          (product) => Number(product.id) === Number(id)
+        )
+      )
+      .filter(Boolean);
+
+    setProductsToCompare(storedProducts);
+  }, []);
+
   function handleAddToCart(product) {
-    setSelectedProduct(product);
+    const cartProduct = {
+      id: product.id,
+      name: product.name,
+      image: getProductImage(product),
+      price: product.price,
+      priceDisplay: product.priceDisplay,
+      quantity: product.quantity || 1,
+    };
+
+    setSelectedProduct(cartProduct);
     setIsCartSidebarOpen(true);
   }
 
-  function handleChooseProduct(productId) {
-    const product = allProducts.find(
-      (item) => Number(item.id) === Number(productId)
-    );
-
-    if (!product) return;
-
-    setProductsToCompare((prev) => {
-      if (prev.length >= MAX_COMPARE_PRODUCTS) return prev;
-
-      const isExisting = prev.some(
-        (item) => Number(item.id) === Number(product.id)
-      );
-
-      if (isExisting) return prev;
-
-      return [...prev, product];
-    });
-  }
   function handleRemoveProduct(productId) {
-    setProductsToCompare((prev) =>
-      prev.filter((product) => Number(product.id) !== Number(productId))
-    );
+    const nextIds = removeProductFromCompare(productId);
+
+    const nextProducts = nextIds
+      .map((id) =>
+        productsWithComparison.find(
+          (product) => Number(product.id) === Number(id)
+        )
+      )
+      .filter(Boolean);
+
+    setProductsToCompare(nextProducts);
   }
 
   return (
@@ -244,19 +278,15 @@ export default function ProductComparison() {
                   onRemove={handleRemoveProduct}
                 />
               ))}
-              {canAddProduct && (
-                <AddProductBox
-                  availableProducts={availableProducts}
-                  onChooseProduct={handleChooseProduct}
-                />
-              )}
+
+              {canAddProduct && <AddProductBox />}
             </div>
 
             {comparisonSections.map((section) => (
               <ComparisonSection
-                key={section.title}
+                key={section.key}
                 section={section}
-                productCount={productsToCompare.length}
+                products={productsToCompare}
                 canAddProduct={canAddProduct}
               />
             ))}
@@ -264,11 +294,12 @@ export default function ProductComparison() {
             <AddToCartRow
               products={productsToCompare}
               canAddProduct={canAddProduct}
-              onAddToCart={handleAddToCart} 
+              onAddToCart={handleAddToCart}
             />
           </div>
         </Container>
       </section>
+
       <CartSidebar
         isOpen={isCartSidebarOpen}
         product={selectedProduct}

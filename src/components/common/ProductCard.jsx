@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import CartSidebar from "@/components/common/CartSidebar";
+import { useRouter } from "next/navigation";
+import { addProductToCompare } from "@/utils/compareStorage";
+
 
 function getBadgeClass(product) {
   const badge = product.badge || product.tag || "";
@@ -15,22 +18,73 @@ function getBadgeClass(product) {
 }
 
 export default function ProductCard({ product }) {
+
+  const router = useRouter();
+
+  function handleCompare() {
+    addProductToCompare(product.id);
+    router.push("/comparison");
+  }
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const productHref = product.productUrl || product.href || "/product";
-  const name = product.name || product.title;
-  const description = product.description || product.subtitle || "";
-  const price = product.price || product.currentPrice || "";
-  const oldPrice = product.oldPrice || product.originalPrice || "";
-  const badge = product.badge || product.tag || "";
+  /*
+   * Nếu sản phẩm có id:
+   * id = 1 → /product/1
+   * id = 2 → /product/2
+   */
+  const productHref =
+    product.id !== undefined && product.id !== null
+      ? `/product/${product.id}`
+      : product.productUrl || product.href || "/shop";
+
+  const name = product.name || product.title || "Product";
+
+  const description =
+    product.description || product.subtitle || "";
+
+  const price =
+    product.discountPrice ||
+    product.price ||
+    product.currentPrice ||
+    "";
+
+  const oldPrice =
+    product.oldPrice ||
+    product.originalPrice ||
+    "";
+
+  const badge =
+    product.badge ||
+    product.tag ||
+    "";
+
+  /*
+   * Hỗ trợ cả cấu trúc cũ và cấu trúc mới:
+   *
+   * Cũ:
+   * "image": "/images/chair.png"
+   *
+   * Mới:
+   * "images": {
+   *   "thumbnail": "/images/chair.png"
+   * }
+   */
+  const productImage =
+    product.images?.thumbnail ||
+    product.image ||
+    "/images/furniro-hero.png";
 
   return (
     <>
       <article className="group relative bg-[#F4F5F7] font-['Poppins']">
         <div className="relative h-[301px] overflow-hidden bg-[#F4F5F7]">
-          <Link href={productHref} aria-label={`View ${name}`}>
+          {/* Bấm ảnh để mở đúng trang sản phẩm theo ID */}
+          <Link
+            href={productHref}
+            aria-label={`View ${name}`}
+          >
             <img
-              src={product.image}
+              src={productImage}
               alt={name}
               className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
             />
@@ -38,7 +92,9 @@ export default function ProductCard({ product }) {
 
           {badge && (
             <span
-              className={`absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full text-[16px] font-medium text-white ${getBadgeClass(product)}`}
+              className={`absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full text-[16px] font-medium text-white ${getBadgeClass(
+                product
+              )}`}
             >
               {badge}
             </span>
@@ -62,12 +118,13 @@ export default function ProductCard({ product }) {
                   Share
                 </button>
 
-                <Link
-                  href="/comparison"
+                <button
+                  type="button"
+                  onClick={handleCompare}
                   className="text-[16px] font-semibold transition hover:text-[#B88E2F]"
                 >
                   Compare
-                </Link>
+                </button>
 
                 <button
                   type="button"
@@ -81,6 +138,7 @@ export default function ProductCard({ product }) {
         </div>
 
         <div className="px-4 pb-[30px] pt-4">
+          {/* Bấm tên để mở đúng trang sản phẩm theo ID */}
           <Link href={productHref}>
             <h3 className="text-[24px] font-semibold leading-[29px] text-[#3A3A3A] transition hover:text-[#B88E2F]">
               {name}
@@ -107,12 +165,7 @@ export default function ProductCard({ product }) {
 
       <CartSidebar
         isOpen={isCartOpen}
-        product={{
-          name,
-          image: product.image,
-          price,
-          quantity: 1,
-        }}
+        product={product}
         onClose={() => setIsCartOpen(false)}
       />
     </>

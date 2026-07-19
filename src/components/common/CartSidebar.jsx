@@ -2,115 +2,192 @@
 
 import Link from "next/link";
 
-const defaultProduct = {
-  name: "Asgaard Sofa",
-  image: "/images/black-sofa.jpg",
-  price: "Rs. 250,000.00",
-  quantity: 1,
-};
+const cartItems = [
+  {
+    id: 1,
+    name: "Asgaard sofa",
+    image: "/images/black-sofa.jpg",
+    price: "Rs. 250,000.00",
+    quantity: 1,
+  },
+  {
+    id: 2,
+    name: "Casaliving Wood",
+    image: "/images/casaliving-wood.jpg",
+    price: "Rs. 270,000.00",
+    quantity: 1,
+  },
+];
 
-export default function CartSidebar({ isOpen, product, onClose }) {
-  const item = product || defaultProduct;
+/* Icon đóng Cart SiFdebar lấy trực tiếp từ SVG của Figma */
+function CloseCartIcon() {
+  return (
+    <svg
+      width="17"
+      height="19"
+      viewBox="0 0 17 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M6.11047 9.6734C6.16563 9.6181 6.23115 9.57424 6.30328 9.5443C6.37542 9.51437 6.45275 9.49896 6.53085 9.49896C6.60894 9.49896 6.68628 9.51437 6.75841 9.5443C6.83055 9.57424 6.89607 9.6181 6.95122 9.6734L8.3121 11.0355L9.67297 9.6734C9.78446 9.56191 9.93568 9.49927 10.0933 9.49927C10.251 9.49927 10.4022 9.56191 10.5137 9.6734C10.6252 9.78489 10.6878 9.9361 10.6878 10.0938C10.6878 10.2514 10.6252 10.4027 10.5137 10.5141L9.15166 11.875L10.5137 13.2359C10.6252 13.3474 10.6878 13.4986 10.6878 13.6563C10.6878 13.8139 10.6252 13.9652 10.5137 14.0766C10.4022 14.1881 10.251 14.2508 10.0933 14.2508C9.93568 14.2508 9.78446 14.1881 9.67297 14.0766L8.3121 12.7146L6.95122 14.0766C6.83973 14.1881 6.68852 14.2508 6.53085 14.2508C6.37318 14.2508 6.22196 14.1881 6.11047 14.0766C5.99898 13.9652 5.93635 13.8139 5.93635 13.6563C5.93635 13.4986 5.99898 13.3474 6.11047 13.2359L7.47253 11.875L6.11047 10.5141C6.05518 10.459 6.01131 10.3935 5.98137 10.3213C5.95144 10.2492 5.93604 10.1719 5.93604 10.0938C5.93604 10.0157 5.95144 9.93834 5.98137 9.86621C6.01131 9.79407 6.05518 9.72855 6.11047 9.6734Z"
+        fill="#9F9F9F"
+      />
 
+      <path
+        d="M8.3125 1.1875C9.09986 1.1875 9.85497 1.50028 10.4117 2.05703C10.9685 2.61378 11.2812 3.36889 11.2812 4.15625V4.75H5.34375V4.15625C5.34375 3.36889 5.65653 2.61378 6.21328 2.05703C6.77003 1.50028 7.52514 1.1875 8.3125 1.1875ZM12.4688 4.75V4.15625C12.4688 3.05394 12.0309 1.99679 11.2514 1.21734C10.472 0.437889 9.41481 0 8.3125 0C7.21019 0 6.15304 0.437889 5.37359 1.21734C4.59414 1.99679 4.15625 3.05394 4.15625 4.15625V4.75H0V16.625C0 17.2549 0.250223 17.859 0.695621 18.3044C1.14102 18.7498 1.74511 19 2.375 19H14.25C14.8799 19 15.484 18.7498 15.9294 18.3044C16.3748 17.859 16.625 17.2549 16.625 16.625V4.75H12.4688ZM1.1875 5.9375H15.4375V16.625C15.4375 16.9399 15.3124 17.242 15.0897 17.4647C14.867 17.6874 14.5649 17.8125 14.25 17.8125H2.375C2.06006 17.8125 1.75801 17.6874 1.53531 17.4647C1.31261 17.242 1.1875 16.9399 1.1875 16.625V5.9375Z"
+        fill="#9F9F9F"
+      />
+    </svg>
+  );
+}
+
+function RemoveIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <circle cx="10" cy="10" r="10" fill="#9F9F9F" />
+
+      <path
+        d="M7 7L13 13"
+        stroke="white"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M13 7L7 13"
+        stroke="white"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+export default function CartSidebar({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[999] font-['Poppins']">
+    <div
+      className="
+        fixed inset-0 z-[999]
+        overflow-auto
+        font-['Poppins']
+      "
+    >
       <button
         type="button"
         aria-label="Close cart sidebar overlay"
-        className="absolute inset-0 bg-black/30"
+        className="fixed inset-0 z-0 bg-black/20"
         onClick={onClose}
       />
 
-      <aside className="absolute right-0 top-0 flex h-full w-full max-w-[417px] flex-col bg-white shadow-2xl">
-        <div className="flex items-center justify-between border-b border-[#D9D9D9] px-[30px] py-[28px]">
-          <h2 className="text-[24px] font-semibold text-black">
+      <div className="relative z-10 min-h-[746px] min-w-[417px] pointer-events-none">
+        <aside className="pointer-events-auto absolute right-0 top-0 h-[746px] w-[417px] overflow-hidden bg-white">
+          <h2 className="absolute left-[30px] top-[28px] h-[36px] w-[177px] text-[24px] font-semibold leading-[36px] text-black">
             Shopping Cart
           </h2>
 
           <button
             type="button"
             onClick={onClose}
-            className="text-[28px] leading-none text-[#9F9F9F] transition hover:text-black"
-            aria-label="Close cart sidebar"
+            aria-label="Close shopping cart"
+            className="absolute right-[30px] top-[35px] flex h-[19px] w-[17px] items-center justify-center"
           >
-            ×
+            <CloseCartIcon />
           </button>
-        </div>
 
-        <div className="flex-1 px-[30px] py-[32px]">
-          <div className="flex gap-[24px]">
-            <div className="flex h-[105px] w-[108px] items-center justify-center rounded-[10px] bg-[#F9F1E7]">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="max-h-[95px] max-w-[95px] object-contain"
-              />
-            </div>
+          <div className="absolute left-[30px] top-[90px] h-px w-[287px] bg-[#D9D9D9]" />
 
-            <div className="flex-1">
-              <h3 className="text-[16px] font-normal text-black">
-                {item.name}
-              </h3>
+          <div className="absolute left-[27px] top-[132px] flex w-[350px] flex-col gap-[20px]">
+            {cartItems.map((item) => (
+              <div
+                key={item.id}
+                className="relative flex h-[105px] w-[350px] items-center"
+              >
+                <div className="flex h-[105px] w-[108px] shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-[#F9F1E7]">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="h-full w-full object-contain"
+                  />
+                </div>
 
-              <div className="mt-[11px] flex items-center gap-[15px]">
-                <span className="text-[16px] text-black">
-                  {item.quantity || 1}
-                </span>
+                <div className="ml-[27px] flex min-w-0 flex-1 flex-col justify-center">
+                  <h3 className="text-[16px] font-normal leading-[24px] text-black">
+                    {item.name}
+                  </h3>
 
-                <span className="text-[12px] text-black">X</span>
+                  <div className="mt-[5px] flex items-center gap-[15px]">
+                    <span className="text-[16px] font-normal leading-[24px] text-black">
+                      {item.quantity}
+                    </span>
 
-                <span className="text-[12px] font-medium text-[#B88E2F]">
-                  {item.price}
-                </span>
+                    <span className="text-[12px] font-normal leading-[18px] text-black">
+                      X
+                    </span>
+
+                    <span className="whitespace-nowrap text-[12px] font-medium leading-[18px] text-[#B88E2F]">
+                      {item.price}
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  aria-label={`Remove ${item.name}`}
+                  className="absolute right-0 top-[42px] flex h-5 w-5 items-center justify-center"
+                >
+                  <RemoveIcon />
+                </button>
               </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={onClose}
-              className="mt-[36px] flex h-5 w-5 items-center justify-center rounded-full bg-[#9F9F9F] text-[14px] text-white"
-              aria-label="Remove item"
-            >
-              ×
-            </button>
-          </div>
-        </div>
-
-        <div className="border-t border-[#D9D9D9] px-[30px] pb-[28px] pt-[15px]">
-          <div className="flex items-center justify-between">
-            <span className="text-[16px] text-black">Subtotal</span>
-
-            <span className="text-[16px] font-semibold text-[#B88E2F]">
-              {item.price}
-            </span>
+            ))}
           </div>
 
-          <div className="mt-[26px] flex flex-wrap gap-[14px]">
+          <span className="absolute left-[31px] top-[615px] h-[24px] w-[68px] text-[16px] font-normal leading-[24px] text-black">
+            Subtotal
+          </span>
+
+          <span className="absolute left-[200px] top-[615px] h-[24px] w-[117px] whitespace-nowrap text-[16px] font-semibold leading-[24px] text-[#B88E2F]">
+            Rs. 520,000.00
+          </span>
+
+          <div className="absolute left-[30px] top-[663px] h-px w-[287px] bg-[#D9D9D9]" />
+
+          <div className="absolute left-[27px] top-[688px] flex h-[30px] w-[368px] items-center gap-[14px]">
             <Link
               href="/cart"
-              className="flex h-[30px] min-w-[87px] items-center justify-center rounded-[50px] border border-black px-5 text-[12px] text-black transition hover:bg-black hover:text-white"
+              className="flex h-[30px] w-[87px] shrink-0 items-center justify-center rounded-[50px] border border-black text-[12px] font-normal leading-[18px] text-black"
             >
               Cart
             </Link>
 
             <Link
               href="/checkout"
-              className="flex h-[30px] min-w-[118px] items-center justify-center rounded-[50px] border border-black px-5 text-[12px] text-black transition hover:bg-black hover:text-white"
+              className="flex h-[30px] w-[118px] shrink-0 items-center justify-center rounded-[50px] border border-black text-[12px] font-normal leading-[18px] text-black"
             >
               Checkout
             </Link>
 
             <Link
               href="/comparison"
-              className="flex h-[30px] min-w-[135px] items-center justify-center rounded-[50px] border border-black px-5 text-[12px] text-black transition hover:bg-black hover:text-white"
+              className="flex h-[30px] w-[135px] shrink-0 items-center justify-center rounded-[50px] border border-black text-[12px] font-normal leading-[18px] text-black"
             >
               Comparison
             </Link>
           </div>
-        </div>
-      </aside>
+        </aside>
+      </div>
     </div>
   );
 }

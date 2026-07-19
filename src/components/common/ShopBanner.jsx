@@ -41,6 +41,7 @@ export default function ShopBanner({ title = "Shop", current = "Shop" }) {
           <span className="text-black">›</span>
 
           <span className="font-light text-black">{current}</span>
+
         </div>
       </div>
     </section>
