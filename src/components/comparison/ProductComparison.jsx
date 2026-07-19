@@ -1,172 +1,261 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import FeatureSection from "@/components/common/FeatureSection";
-import ShopBanner from "@/components/common/ShopBanner";
-import ComparisonCartSidebar from "@/components/comparison/ComparisonCartSidebar";
-import { compareProducts, comparisonSections } from "@/data/comparisonData";
-import { comparisonStyles } from "@/styles/styles";
+import { useEffect, useState } from "react";
 
-function RatingStars() {
+import productCatalog from "@/data/productCatalog.json";
+import Container from "@/components/common/Container";
+import CartSidebar from "@/components/common/CartSidebar";
+import { comparisonStyles } from "@/styles/styles";
+import {
+  getCompareProductIds,
+  removeProductFromCompare,
+  MAX_COMPARE_PRODUCTS,
+} from "@/utils/compareStorage";
+
+const allProducts = Array.isArray(productCatalog)
+  ? productCatalog
+  : productCatalog.products ?? [];
+
+function hasComparison(product) {
+  return Array.isArray(product.comparison) && product.comparison.length > 0;
+}
+
+const productsWithComparison = allProducts.filter(hasComparison);
+
+const comparisonTemplateProduct = productsWithComparison[0];
+
+const comparisonSections =
+  comparisonTemplateProduct?.comparison.map((section) => ({
+    key: section.key,
+    title: section.title,
+    rows: section.rows.map((row) => ({
+      key: row.key,
+      label: row.label,
+    })),
+  })) ?? [];
+
+function getProductUrl(product) {
+  return `/product/${product.id}`;
+}
+
+function getProductImage(product) {
+  return product.image || "/images/furniro-hero.png";
+}
+
+function getProductPriceDisplay(product) {
+  return product.priceDisplay || product.price || "-";
+}
+
+function getComparisonValue(product, sectionKey, rowKey) {
+  const section = product.comparison?.find((item) => item.key === sectionKey);
+  const row = section?.rows?.find((item) => item.key === rowKey);
+
+  return row?.value || "-";
+}
+
+function RatingStars({ rating = 0 }) {
+  const roundedRating = Math.round(Number(rating) || 0);
+
   return (
     <span
-      className="text-[20px] leading-none tracking-[2px] text-[#FFC700]"
-      aria-label="5 stars"
+      className={comparisonStyles.ratingStars}
+      aria-label={`${rating} out of 5 stars`}
     >
-      ★★★★★
+      {Array.from({ length: 5 }, (_, index) => (
+        <span
+          key={index}
+          className={
+            index < roundedRating
+              ? comparisonStyles.starActive
+              : comparisonStyles.starInactive
+          }
+        >
+          ★
+        </span>
+      ))}
     </span>
   );
 }
 
-function ProductHeaderCard({ product }) {
+function ProductHeaderCard({ product, onRemove }) {
+  const productUrl = getProductUrl(product);
+  const image = getProductImage(product);
+  const priceDisplay = getProductPriceDisplay(product);
+  const rating = Number(product.rating || 0);
+  const reviews = product.reviews || 0;
+
   return (
-    <article className={comparisonStyles.productColumn}>
-      <Link
-        href={product.productUrl ?? "/product"}
-        className={comparisonStyles.productImageBox}
+    <article className={`${comparisonStyles.productColumn} relative`}>
+      <button
+        type="button"
+        onClick={() => onRemove(product.id)}
+        className={comparisonStyles.removeButton}
+        aria-label={`Remove ${product.name}`}
       >
-        <img
-          src={product.image}
+        ×
+      </button>
+
+      <Link href={productUrl} className={comparisonStyles.productImageBox}>
+        <Image
+          src={image}
           alt={product.name}
+          width={280}
+          height={177}
           className={comparisonStyles.productImage}
         />
       </Link>
 
-      <Link href={product.productUrl ?? "/product"}>
-        <h2 className="mt-[18px] text-[24px] font-medium leading-[126.5%] text-black transition hover:text-[#B88E2F]">
-          {product.name}
-        </h2>
+      <Link href={productUrl}>
+        <h2 className={comparisonStyles.productTitle}>{product.name}</h2>
       </Link>
 
-      <p className="mt-[6px] text-[18px] font-medium leading-[27px] text-black">
-        {product.price}
-      </p>
+      <p className={comparisonStyles.productPrice}>{priceDisplay}</p>
 
-      <div className="mt-[7px] flex items-center gap-[7px]">
-        <span className="text-[18px] font-medium leading-[27px] text-black">
-          {product.rating}
-        </span>
+      <div className={comparisonStyles.ratingRow}>
+        <span className={comparisonStyles.ratingNumber}>{rating || "-"}</span>
 
-        <RatingStars />
+        <RatingStars rating={rating} />
 
-        <span className="mx-[6px] h-[30px] w-px bg-[#9F9F9F]" />
+        <span className={comparisonStyles.ratingDivider} />
 
-        <span className="text-[13px] leading-[20px] text-[#9F9F9F]">
-          {product.reviews} Review
-        </span>
+        <span className={comparisonStyles.reviewText}>{reviews} Review</span>
       </div>
     </article>
   );
 }
 
-function AddProductBox({ onChooseProduct }) {
+function AddProductBox() {
   return (
     <div className={comparisonStyles.addProductColumn}>
-      <h2 className="mb-[14px] text-[24px] font-semibold leading-[126.5%] text-black">
-        Add A Product
-      </h2>
+      <h2 className={comparisonStyles.addProductTitle}>Add A Product</h2>
 
-      <select
-        className="h-[39px] w-[242px] rounded-[6px] border-0 bg-[#B88E2F] px-[18px] text-[14px] font-semibold leading-[126.5%] text-white outline-none"
-        aria-label="Choose a product"
-        defaultValue=""
-        onChange={(event) => onChooseProduct(event.target.value)}
-      >
-        <option value="" disabled>
-          Choose a Product
-        </option>
-        <option value="/product">Asgaard Sofa</option>
-        <option value="/product">Outdoor Sofa Set</option>
-        <option value="/shop">View more products</option>
-      </select>
+      <Link href="/shop" className={comparisonStyles.addProductLink}>
+        Choose a Product
+      </Link>
     </div>
   );
 }
 
-function ComparisonRow({ row }) {
+function ComparisonRow({ row, sectionKey, products, canAddProduct }) {
   return (
     <div className={comparisonStyles.rowGrid}>
       <div className={comparisonStyles.rowLabel}>{row.label}</div>
 
-      {row.values.map((value, index) => (
-        <div key={`${row.label}-${index}`} className={comparisonStyles.rowValue}>
-          {value}
+      {products.map((product) => (
+        <div
+          key={`${product.id}-${sectionKey}-${row.key}`}
+          className={comparisonStyles.rowValue}
+        >
+          {getComparisonValue(product, sectionKey, row.key)}
         </div>
       ))}
 
-      <div className="min-h-[59px] border-l border-[#E8E8E8]" />
+      {canAddProduct && <div className={comparisonStyles.emptyColumn} />}
     </div>
   );
 }
 
-function ComparisonSection({ section }) {
+function ComparisonSection({ section, products, canAddProduct }) {
   return (
     <section>
       <h2 className={comparisonStyles.sectionTitle}>{section.title}</h2>
 
       <div>
         {section.rows.map((row) => (
-          <ComparisonRow key={row.label} row={row} />
+          <ComparisonRow
+            key={`${section.key}-${row.key}`}
+            row={row}
+            sectionKey={section.key}
+            products={products}
+            canAddProduct={canAddProduct}
+          />
         ))}
       </div>
     </section>
   );
 }
 
-function AddToCartRow({ onAddToCart }) {
+function AddToCartRow({ products, canAddProduct, onAddToCart }) {
   return (
-    <div className="grid grid-cols-[300px_344px_344px_344px] pt-[36px]">
+    <div className={comparisonStyles.addToCartGrid}>
       <div />
 
-      {compareProducts.map((product) => (
-        <div
-          key={product.id}
-          className="border-l border-[#E8E8E8] px-[42px] pb-[60px]"
-        >
+      {products.map((product) => (
+        <div key={product.id} className={comparisonStyles.addToCartColumn}>
           <button
             type="button"
             onClick={() => onAddToCart(product)}
-            className="flex h-[64px] w-[215px] items-center justify-center bg-[#B88E2F] text-[20px] font-normal text-white transition hover:bg-[#9F7928]"
+            className={comparisonStyles.addToCartButton}
           >
             Add To Cart
           </button>
         </div>
       ))}
 
-      <div className="border-l border-[#E8E8E8]" />
+      {canAddProduct && <div className={comparisonStyles.emptyCartColumn} />}
     </div>
   );
 }
 
 export default function ProductComparison() {
-  const router = useRouter();
   const [isCartSidebarOpen, setIsCartSidebarOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [productsToCompare, setProductsToCompare] = useState([]);
+
+  const canAddProduct = productsToCompare.length < MAX_COMPARE_PRODUCTS;
+
+  useEffect(() => {
+    const storedIds = getCompareProductIds();
+
+    const storedProducts = storedIds
+      .map((id) =>
+        productsWithComparison.find(
+          (product) => Number(product.id) === Number(id)
+        )
+      )
+      .filter(Boolean);
+
+    setProductsToCompare(storedProducts);
+  }, []);
 
   function handleAddToCart(product) {
-    setSelectedProduct(product);
+    const cartProduct = {
+      id: product.id,
+      name: product.name,
+      image: getProductImage(product),
+      price: product.price,
+      priceDisplay: product.priceDisplay,
+      quantity: product.quantity || 1,
+    };
+
+    setSelectedProduct(cartProduct);
     setIsCartSidebarOpen(true);
   }
 
-  function handleChooseProduct(url) {
-    if (!url) return;
-    router.push(url);
+  function handleRemoveProduct(productId) {
+    const nextIds = removeProductFromCompare(productId);
+
+    const nextProducts = nextIds
+      .map((id) =>
+        productsWithComparison.find(
+          (product) => Number(product.id) === Number(id)
+        )
+      )
+      .filter(Boolean);
+
+    setProductsToCompare(nextProducts);
   }
 
   return (
     <>
-      <ShopBanner title="Product Comparison" current="Comparison" />
-
       <section className={comparisonStyles.section}>
-        <div className="mx-auto max-w-[1332px] px-5 lg:px-0">
+        <Container size="comparison" className={comparisonStyles.wrapper}>
           <p className={comparisonStyles.mobileHint}>
             Kéo ngang bảng để xem đầy đủ thông tin so sánh sản phẩm.
           </p>
-        </div>
 
-        <div className={comparisonStyles.wrapper}>
           <div className={comparisonStyles.table}>
             <div className={comparisonStyles.topGrid}>
               <div className={comparisonStyles.leftIntro}>
@@ -182,25 +271,36 @@ export default function ProductComparison() {
                 </Link>
               </div>
 
-              {compareProducts.map((product) => (
-                <ProductHeaderCard key={product.id} product={product} />
+              {productsToCompare.map((product) => (
+                <ProductHeaderCard
+                  key={product.id}
+                  product={product}
+                  onRemove={handleRemoveProduct}
+                />
               ))}
 
-              <AddProductBox onChooseProduct={handleChooseProduct} />
+              {canAddProduct && <AddProductBox />}
             </div>
 
             {comparisonSections.map((section) => (
-              <ComparisonSection key={section.title} section={section} />
+              <ComparisonSection
+                key={section.key}
+                section={section}
+                products={productsToCompare}
+                canAddProduct={canAddProduct}
+              />
             ))}
 
-            <AddToCartRow onAddToCart={handleAddToCart} />
+            <AddToCartRow
+              products={productsToCompare}
+              canAddProduct={canAddProduct}
+              onAddToCart={handleAddToCart}
+            />
           </div>
-        </div>
+        </Container>
       </section>
 
-      <FeatureSection />
-
-      <ComparisonCartSidebar
+      <CartSidebar
         isOpen={isCartSidebarOpen}
         product={selectedProduct}
         onClose={() => setIsCartSidebarOpen(false)}

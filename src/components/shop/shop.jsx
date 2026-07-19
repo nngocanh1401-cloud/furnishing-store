@@ -1,8 +1,8 @@
 import FeatureSection from "@/components/common/FeatureSection";
-import Pagination from "@/components/common/Pagination";
+import Pagination from "@/components/shop/Pagination";
 import ProductGrid from "@/components/common/ProductGrid";
 import ShopBanner from "@/components/common/ShopBanner";
-import { products } from "@/data/product";
+import products from "@/data/products.json";
 
 export default function Shop() {
   return (

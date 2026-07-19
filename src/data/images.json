@@ -1,0 +1,33 @@
+{
+  "hero": "/images/furniro-hero.png",
+  "categories": {
+    "dining": "/images/furniro-hero.png",
+    "living": "/images/furniro-hero.png",
+    "bedroom": "/images/furniro-hero.png"
+  },
+  "products": {
+    "syltherine": "/images/furniro-hero.png",
+    "leviosa": "/images/furniro-hero.png",
+    "lolito": "/images/furniro-hero.png",
+    "respira": "/images/furniro-hero.png",
+    "grifo": "/images/furniro-hero.png",
+    "muggo": "/images/furniro-hero.png",
+    "pingky": "/images/furniro-hero.png",
+    "potty": "/images/furniro-hero.png"
+  },
+  "inspirations": {
+    "main": "/images/furniro-hero.png",
+    "second": "/images/furniro-hero.png",
+    "third": "/images/furniro-hero.png"
+  },
+  "gallery": [
+    "/images/furniro-hero.png",
+    "/images/furniro-hero.png",
+    "/images/furniro-hero.png",
+    "/images/furniro-hero.png",
+    "/images/furniro-hero.png",
+    "/images/furniro-hero.png",
+    "/images/furniro-hero.png",
+    "/images/furniro-hero.png"
+  ]
+}

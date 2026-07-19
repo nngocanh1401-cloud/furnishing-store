@@ -1,9 +1,9 @@
-import ShopBanner from "@/components/common/ShopBanner";
-import ShopFilterBar from "@/components/shop/ShopFilterBar";
 import ProductGrid from "@/components/common/ProductGrid";
-import Pagination from "@/components/common/Pagination";
+import Pagination from "@/components/shop/Pagination";
 import FeatureSection from "@/components/common/FeatureSection";
-import { products } from "@/data/product";
+import ShopBanner from "@/components/common/ShopBanner";
+import products from "@/data/products.json";
+
 
 export const metadata = {
   title: "Shop",
@@ -14,7 +14,6 @@ export default function ShopPage() {
   return (
     <>
       <ShopBanner title="Shop" current="Shop" />
-      <ShopFilterBar />
       <ProductGrid title="" products={products} showMore={false} />
       <Pagination />
       <FeatureSection />

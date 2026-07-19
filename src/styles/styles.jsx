@@ -34,9 +34,7 @@ export const buttonSizes = {
   hero: "h-[74px] w-[222px] uppercase",
   showMore: "h-12 w-[245px]",
   inspiration: "h-12 w-[176px]",
-
   compareAdd: "h-[64px] w-[215px] text-[20px] font-normal",
-
 };
 
 export const layoutStyles = {
@@ -47,20 +45,86 @@ export const layoutStyles = {
   categoryGrid:
     "mt-[48px] grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3",
 
+  pageSection: "bg-white py-[98px]",
+};
+
+export const formStyles = {
+  group: "grid gap-[22px]",
+
+  label:
+    "font-['Poppins'] text-[16px] font-medium text-black",
+
+  input:
+    "h-[75px] rounded-[10px] border border-[#9F9F9F] px-6 font-['Poppins'] outline-none",
+
+  textarea:
+    "h-[120px] rounded-[10px] border border-[#9F9F9F] px-6 py-5 font-['Poppins'] outline-none",
+
+  submit:
+    "h-[55px] w-[237px] rounded-[5px] bg-[#B88E2F] font-['Poppins'] text-[16px] text-white transition hover:bg-[#9F7928]",
+};
+
+export const contactStyles = {
+  title:
+    "font-['Poppins'] text-[36px] font-semibold text-black",
+
+  description:
+    "mx-auto mt-2 max-w-[644px] font-['Poppins'] text-[16px] text-[#9F9F9F]",
+
+  contentGrid:
+    "mt-[82px] grid gap-10 lg:grid-cols-[393px_1fr]",
+
+  infoWrapper:
+    "space-y-10 font-['Poppins']",
+
+  infoTitle:
+    "text-[24px] font-medium text-black",
+
+  infoText:
+    "text-[16px] leading-[24px] text-black",
+};
+
+export const shopStyles = {
+  filterBar: "bg-[#F9F1E7] font-['Poppins']",
+
+  filterContent:
+    "flex flex-col gap-6 py-8 lg:flex-row lg:items-center lg:justify-between",
+
+  filterLeft:
+    "flex flex-wrap items-center gap-6",
+
+  filterButton:
+    "flex items-center gap-2 text-[20px] text-black",
+
+  divider:
+    "hidden h-[37px] w-px bg-[#9F9F9F] md:block",
+
+  filterRight:
+    "flex flex-wrap items-center gap-4",
+
+  filterLabel:
+    "text-[20px] text-black",
+
+  numberInput:
+    "h-[55px] w-[55px] bg-white text-center text-[20px] text-[#9F9F9F] outline-none",
+
+  select:
+    "h-[55px] w-[188px] bg-white px-4 text-[20px] text-[#9F9F9F] outline-none",
 };
 
 export const comparisonStyles = {
-  section: "bg-white px-5 py-[34px] lg:px-0",
+  section: "bg-white py-[34px]",
 
-  wrapper:
-    "mx-auto w-full max-w-[1332px] overflow-x-auto font-['Poppins']",
+  wrapper: "overflow-x-auto font-['Poppins']",
 
   table: "min-w-[1000px] border-collapse text-left",
+
+  gridCols: "grid grid-cols-[300px_344px_344px_344px]",
 
   topGrid:
     "grid grid-cols-[300px_344px_344px_344px] border-b border-[#E8E8E8]",
 
-  leftIntro: "px-[42px] pt-[21px] pb-8",
+  leftIntro: "px-[42px] pb-8 pt-[21px]",
 
   productColumn:
     "border-l border-[#E8E8E8] px-[39px] pb-[30px]",
@@ -69,12 +133,49 @@ export const comparisonStyles = {
     "border-l border-[#E8E8E8] px-[39px] pt-[52px]",
 
   productImageBox:
-    "flex h-[177px] w-[280px] items-center justify-center rounded-[10px] bg-[#F9F1E7] transition hover:opacity-80",
+      "flex h-[177px] w-[280px] cursor-pointer items-center justify-center rounded-[10px] bg-[#F9F1E7] transition hover:opacity-80",
 
   productImage:
     "max-h-[165px] max-w-[260px] object-contain",
 
-  rowGrid: "grid grid-cols-[300px_344px_344px_344px]",
+  productTitle:
+    "mt-[18px] text-[24px] font-medium leading-[126.5%] text-black transition hover:text-[#B88E2F]",
+
+  productPrice:
+    "mt-[6px] text-[18px] font-medium leading-[27px] text-black",
+
+  ratingRow:
+    "mt-[7px] flex items-center gap-[7px]",
+
+  ratingNumber:
+    "text-[18px] font-medium leading-[27px] text-black",
+
+  ratingStars:
+    "flex gap-[2px] text-[20px] leading-none",
+
+  starActive:
+    "text-[#FFC700]",
+
+  starInactive:
+    "text-[#D9D9D9]",
+
+  ratingDivider:
+    "mx-[6px] h-[30px] w-px bg-[#9F9F9F]",
+
+  reviewText:
+    "text-[13px] leading-[20px] text-[#9F9F9F]",
+
+  removeButton:
+    "absolute right-3 top-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-black/35 text-[14px] leading-none text-white transition hover:bg-black/55",
+
+  addProductTitle:
+    "mb-[14px] text-[24px] font-semibold leading-[126.5%] text-black",
+
+  addProductSelect:
+    "h-[39px] w-[242px] rounded-[6px] border-0 bg-[#B88E2F] px-[18px] text-[14px] font-semibold leading-[126.5%] text-white outline-none",
+
+  rowGrid:
+    "grid grid-cols-[300px_344px_344px_344px]",
 
   rowLabel:
     "min-h-[59px] px-[42px] py-[12px] text-[20px] font-normal leading-[126.5%] text-black",
@@ -82,9 +183,55 @@ export const comparisonStyles = {
   rowValue:
     "min-h-[59px] border-l border-[#E8E8E8] px-[42px] py-[12px] text-[20px] font-normal leading-[126.5%] text-black",
 
+  emptyColumn:
+    "min-h-[59px] border-l border-[#E8E8E8]",
+
   sectionTitle:
     "px-[42px] pb-[28px] pt-[42px] text-[28px] font-medium leading-[126.5%] text-black",
 
+  addToCartGrid:
+    "grid grid-cols-[300px_344px_344px_344px] pt-[36px]",
+
+  addToCartColumn:
+    "border-l border-[#E8E8E8] px-[42px] pb-[60px]",
+
+  emptyCartColumn:
+    "border-l border-[#E8E8E8]",
+
+  addToCartButton:
+    "flex h-[64px] w-[215px] items-center justify-center bg-[#B88E2F] text-[20px] font-normal text-white transition hover:bg-[#9F7928]",
+
   mobileHint:
     "mb-4 block rounded-md bg-[#FFF3E3] px-4 py-3 text-center text-[14px] text-[#616161] lg:hidden",
+  addProductLink:
+  "flex h-[39px] w-[242px] items-center rounded-[6px] bg-[#B88E2F] px-[18px] text-[14px] font-semibold leading-[126.5%] text-white transition hover:bg-[#9F7928]",
+
+addProductTitle:
+  "mb-[14px] text-[24px] font-semibold leading-[126.5%] text-black",
+  };
+
+export const singleProductStyles = {
+  section:
+    "px-5 py-10 font-['Poppins']",
+
+  container:
+    "mx-auto grid max-w-[1236px] gap-10 lg:grid-cols-[553px_1fr]",
+
+  mutedText:
+    "text-[#9F9F9F]",
+
+  softBackground:
+    "bg-[#F9F1E7]",
+
+  actionButton:
+    "flex h-[64px] w-[215px] items-center justify-center rounded-[15px] border border-black text-[20px] text-black",
+
+  optionButton:
+    "h-[30px] w-[30px] rounded-[5px] bg-[#F9F1E7] text-[13px]",
+
+  colorButton:
+    "h-[30px] w-[30px] rounded-full",
+
+  meta:
+    "space-y-3 text-[16px] leading-[24px] text-[#9F9F9F]",
 };
