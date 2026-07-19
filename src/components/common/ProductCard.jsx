@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import CartSidebar from "@/components/common/CartSidebar";
+import { useRouter } from "next/navigation";
+import { addProductToCompare } from "@/utils/compareStorage";
+
 
 function getBadgeClass(product) {
   const badge = product.badge || product.tag || "";
@@ -15,6 +18,13 @@ function getBadgeClass(product) {
 }
 
 export default function ProductCard({ product }) {
+
+  const router = useRouter();
+
+  function handleCompare() {
+    addProductToCompare(product.id);
+    router.push("/comparison");
+  }
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   /*
@@ -108,12 +118,13 @@ export default function ProductCard({ product }) {
                   Share
                 </button>
 
-                <Link
-                  href="/comparison"
+                <button
+                  type="button"
+                  onClick={handleCompare}
                   className="text-[16px] font-semibold transition hover:text-[#B88E2F]"
                 >
                   Compare
-                </Link>
+                </button>
 
                 <button
                   type="button"
