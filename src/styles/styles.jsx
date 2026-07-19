@@ -115,17 +115,16 @@ export const shopStyles = {
 export const comparisonStyles = {
   section: "bg-white py-[34px]",
 
-  wrapper:
-    "overflow-x-auto font-['Poppins']",
+  wrapper: "overflow-x-auto font-['Poppins']",
 
-  table:
-    "min-w-[1000px] border-collapse text-left",
+  table: "min-w-[1000px] border-collapse text-left",
+
+  gridCols: "grid grid-cols-[300px_344px_344px_344px]",
 
   topGrid:
     "grid grid-cols-[300px_344px_344px_344px] border-b border-[#E8E8E8]",
 
-  leftIntro:
-    "px-[42px] pb-8 pt-[21px]",
+  leftIntro: "px-[42px] pb-8 pt-[21px]",
 
   productColumn:
     "border-l border-[#E8E8E8] px-[39px] pb-[30px]",
@@ -134,10 +133,46 @@ export const comparisonStyles = {
     "border-l border-[#E8E8E8] px-[39px] pt-[52px]",
 
   productImageBox:
-    "flex h-[177px] w-[280px] items-center justify-center rounded-[10px] bg-[#F9F1E7] transition hover:opacity-80",
+      "flex h-[177px] w-[280px] cursor-pointer items-center justify-center rounded-[10px] bg-[#F9F1E7] transition hover:opacity-80",
 
   productImage:
     "max-h-[165px] max-w-[260px] object-contain",
+
+  productTitle:
+    "mt-[18px] text-[24px] font-medium leading-[126.5%] text-black transition hover:text-[#B88E2F]",
+
+  productPrice:
+    "mt-[6px] text-[18px] font-medium leading-[27px] text-black",
+
+  ratingRow:
+    "mt-[7px] flex items-center gap-[7px]",
+
+  ratingNumber:
+    "text-[18px] font-medium leading-[27px] text-black",
+
+  ratingStars:
+    "flex gap-[2px] text-[20px] leading-none",
+
+  starActive:
+    "text-[#FFC700]",
+
+  starInactive:
+    "text-[#D9D9D9]",
+
+  ratingDivider:
+    "mx-[6px] h-[30px] w-px bg-[#9F9F9F]",
+
+  reviewText:
+    "text-[13px] leading-[20px] text-[#9F9F9F]",
+
+  removeButton:
+    "absolute right-3 top-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-black/35 text-[14px] leading-none text-white transition hover:bg-black/55",
+
+  addProductTitle:
+    "mb-[14px] text-[24px] font-semibold leading-[126.5%] text-black",
+
+  addProductSelect:
+    "h-[39px] w-[242px] rounded-[6px] border-0 bg-[#B88E2F] px-[18px] text-[14px] font-semibold leading-[126.5%] text-white outline-none",
 
   rowGrid:
     "grid grid-cols-[300px_344px_344px_344px]",
@@ -148,12 +183,32 @@ export const comparisonStyles = {
   rowValue:
     "min-h-[59px] border-l border-[#E8E8E8] px-[42px] py-[12px] text-[20px] font-normal leading-[126.5%] text-black",
 
+  emptyColumn:
+    "min-h-[59px] border-l border-[#E8E8E8]",
+
   sectionTitle:
     "px-[42px] pb-[28px] pt-[42px] text-[28px] font-medium leading-[126.5%] text-black",
 
+  addToCartGrid:
+    "grid grid-cols-[300px_344px_344px_344px] pt-[36px]",
+
+  addToCartColumn:
+    "border-l border-[#E8E8E8] px-[42px] pb-[60px]",
+
+  emptyCartColumn:
+    "border-l border-[#E8E8E8]",
+
+  addToCartButton:
+    "flex h-[64px] w-[215px] items-center justify-center bg-[#B88E2F] text-[20px] font-normal text-white transition hover:bg-[#9F7928]",
+
   mobileHint:
     "mb-4 block rounded-md bg-[#FFF3E3] px-4 py-3 text-center text-[14px] text-[#616161] lg:hidden",
-};
+  addProductLink:
+  "flex h-[39px] w-[242px] items-center rounded-[6px] bg-[#B88E2F] px-[18px] text-[14px] font-semibold leading-[126.5%] text-white transition hover:bg-[#9F7928]",
+
+addProductTitle:
+  "mb-[14px] text-[24px] font-semibold leading-[126.5%] text-black",
+  };
 
 export const singleProductStyles = {
   section:

@@ -7,22 +7,9 @@ export default function CartSection() {
   const {
     cartItems,
     removeFromCart,
-    updateCartQuantity,
   } = useCart();
 
   const formatPrice = (price) => `Rs. ${price.toLocaleString("en-US")}.00`;
-
-  const updateQuantity = (id, value) => {
-    const quantity = Math.max(1, Number(value));
-
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, quantity } : item
-      )
-    );
-  };
-
-
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -77,9 +64,13 @@ export default function CartSection() {
                       type="number"
                       min="1"
                       value={item.quantity}
-                      onChange={(event) => updateQuantity(item.id, event.target.value)}
-                      onInput={(event) => updateQuantity(item.id, event.currentTarget.value)}
-                      className="h-8 w-8 rounded-[5px] border border-[#9F9F9F] text-center text-[16px] text-black outline-none"
+                      onChange={(event) =>
+                        updateCartQuantity(
+                          item.id,
+                          event.target.value
+                        )
+                      }
+                      className="h-8 w-8 rounded-[5px] border border-[#9F9F9F] text-center text-[16px] leading-[32px] text-black outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                       aria-label={`Quantity of ${item.name}`}
                     />
 

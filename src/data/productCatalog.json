@@ -20,8 +20,12 @@
       "reviews": 128,
       "quantity": 1,
       "gallery": [
+
         "/images/black-sofa.jpg",
         "/images/casaliving-wood.jpg",
+
+        "/images/furniro-hero.png",
+        "/images/furniro-hero.png",
         "/images/furniro-hero.png",
         "/images/furniro-hero.png"
       ],
