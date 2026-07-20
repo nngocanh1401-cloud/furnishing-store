@@ -48,6 +48,7 @@
     "description": "Our designer already made a lot of beautiful prototype of rooms that inspire you",
     "buttonText": "Explore More",
     "buttonHref": "/shop",
+    "autoPlaySeconds": 4,
     "items": [
       {
         "id": 1,
@@ -69,58 +70,65 @@
         "room": "Dining Room",
         "title": "Modern Style",
         "alt": "Modern dining room inspiration"
+      },
+      {
+        "id": 4,
+        "image": "/images/gallery-7.png",
+        "room": "Bed Room",
+        "title": "Cozy Retreat",
+        "alt": "Cozy modern bedroom inspiration"
       }
     ]
   },
   "interiorGallery": {
-  "eyebrow": "Share your setup with",
-  "title": "#FurniroFurniture",
-  "images": [
-    {
-      "id": 1,
-      "src": "/images/gallery-1.png",
-      "alt": "Modern workspace corner"
-    },
-    {
-      "id": 2,
-      "src": "/images/gallery-3.png",
-      "alt": "Home office furniture setup"
-    },
-    {
-      "id": 3,
-      "src": "/images/gallery-5.png",
-      "alt": "Minimal dining room"
-    },
-    {
-      "id": 4,
-      "src": "/images/gallery-7.png",
-      "alt": "Modern bedroom interior"
-    },
-    {
-      "id": 5,
-      "src": "/images/gallery-9.png",
-      "alt": "Bright dining room"
-    },
-    {
-      "id": 6,
-      "src": "/images/gallery-2.png",
-      "alt": "Vintage lounge chair"
-    },
-    {
-      "id": 7,
-      "src": "/images/gallery-4.png",
-      "alt": "Decorative side tables"
-    },
-    {
-      "id": 8,
-      "src": "/images/gallery-6.png",
-      "alt": "Minimal home decoration"
-    },
-    {
-      "id": 9,
-      "src": "/images/gallery-8.png",
-      "alt": "Modern kitchen corner"
-    }
-  ]
-}
+    "eyebrow": "Share your setup with",
+    "title": "#FurniroFurniture",
+    "images": [
+      {
+        "id": 1,
+        "src": "/images/gallery-1.png",
+        "alt": "Modern workspace corner"
+      },
+      {
+        "id": 2,
+        "src": "/images/gallery-3.png",
+        "alt": "Home office furniture setup"
+      },
+      {
+        "id": 3,
+        "src": "/images/gallery-5.png",
+        "alt": "Minimal dining room"
+      },
+      {
+        "id": 4,
+        "src": "/images/gallery-7.png",
+        "alt": "Modern bedroom interior"
+      },
+      {
+        "id": 5,
+        "src": "/images/gallery-9.png",
+        "alt": "Bright dining room"
+      },
+      {
+        "id": 6,
+        "src": "/images/gallery-2.png",
+        "alt": "Vintage lounge chair"
+      },
+      {
+        "id": 7,
+        "src": "/images/gallery-4.png",
+        "alt": "Decorative side tables"
+      },
+      {
+        "id": 8,
+        "src": "/images/gallery-6.png",
+        "alt": "Minimal home decoration"
+      },
+      {
+        "id": 9,
+        "src": "/images/gallery-8.png",
+        "alt": "Modern kitchen corner"
+      }
+    ]
+  }
 }

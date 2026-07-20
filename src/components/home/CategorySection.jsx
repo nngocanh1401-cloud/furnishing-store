@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+
 import {
   motion,
-  useReducedMotion,
+  MotionConfig,
 } from "motion/react";
 
 import Container from "@/components/common/Container";
@@ -19,16 +20,14 @@ const EASE_LUXURY = [
 ];
 
 /*
- * Thời gian card đầu tiên bắt đầu xuất hiện.
+ * Card đầu tiên bắt đầu xuất hiện
+ * sau 0,25 giây.
  */
 const FIRST_CARD_DELAY = 0.25;
 
 /*
- * Khoảng cách giữa từng card.
- *
- * Dining  : 0.25 giây
- * Living  : 0.73 giây
- * Bedroom : 1.21 giây
+ * Khoảng cách xuất hiện giữa
+ * card trước và card sau.
  */
 const CARD_REVEAL_GAP = 0.48;
 
@@ -90,10 +89,14 @@ const subtitleVariants = {
 };
 
 /* =====================================
-   VỊ TRÍ BAN ĐẦU CỦA TỪNG CARD
+   VỊ TRÍ XUẤT HIỆN CỦA TỪNG CARD
 ===================================== */
 
 function getCardInitialPosition(index) {
+  /*
+   * Card đầu tiên:
+   * xuất hiện từ bên trái.
+   */
   if (index === 0) {
     return {
       opacity: 0,
@@ -105,6 +108,10 @@ function getCardInitialPosition(index) {
     };
   }
 
+  /*
+   * Card thứ hai:
+   * xuất hiện từ phía dưới.
+   */
   if (index === 1) {
     return {
       opacity: 0,
@@ -116,6 +123,10 @@ function getCardInitialPosition(index) {
     };
   }
 
+  /*
+   * Card thứ ba:
+   * xuất hiện từ bên phải.
+   */
   return {
     opacity: 0,
     x: 90,
@@ -130,18 +141,7 @@ function getCardInitialPosition(index) {
    MÀN CHE ẢNH
 ===================================== */
 
-/*
- * Dining và Bedroom dùng màn che ngang.
- * Living dùng màn che dọc.
- */
-function getCurtainInitial(index) {
-  if (index === 1) {
-    return {
-      scaleX: 1,
-      scaleY: 1,
-    };
-  }
-
+function getCurtainInitial() {
   return {
     scaleX: 1,
     scaleY: 1,
@@ -149,6 +149,10 @@ function getCurtainInitial(index) {
 }
 
 function getCurtainVisible(index) {
+  /*
+   * Card giữa mở màn che
+   * theo chiều dọc.
+   */
   if (index === 1) {
     return {
       scaleX: 1,
@@ -156,6 +160,10 @@ function getCurtainVisible(index) {
     };
   }
 
+  /*
+   * Card trái và phải mở màn che
+   * theo chiều ngang.
+   */
   return {
     scaleX: 0,
     scaleY: 1,
@@ -164,35 +172,20 @@ function getCurtainVisible(index) {
 
 function getCurtainOrigin(index) {
   if (index === 0) {
-    /*
-     * Màn che Dining co về bên phải,
-     * tạo cảm giác ảnh mở từ trái sang phải.
-     */
     return "right center";
   }
 
   if (index === 1) {
-    /*
-     * Màn che Living co về phía trên,
-     * tạo cảm giác ảnh mở từ dưới lên.
-     */
     return "center top";
   }
 
-  /*
-   * Màn che Bedroom co về bên trái,
-   * tạo cảm giác ảnh mở từ phải sang trái.
-   */
   return "left center";
 }
 
 /* =====================================
-   ANIMATION HOVER
+   ANIMATION HOVER CỦA CARD
 ===================================== */
 
-/*
- * Card nâng nhẹ khi rê chuột.
- */
 const cardHoverVariants = {
   rest: {
     y: 0,
@@ -210,9 +203,10 @@ const cardHoverVariants = {
   },
 };
 
-/*
- * Bóng của khung ảnh.
- */
+/* =====================================
+   ANIMATION KHUNG ẢNH
+===================================== */
+
 const imageFrameHoverVariants = {
   rest: {
     boxShadow:
@@ -230,12 +224,14 @@ const imageFrameHoverVariants = {
   },
 };
 
-/*
- * Zoom ảnh khi rê chuột.
- */
+/* =====================================
+   ANIMATION ẢNH KHI HOVER
+===================================== */
+
 const imageHoverVariants = {
   hover: {
     scale: 1.06,
+
     filter:
       "brightness(0.98) saturate(1.05)",
 
@@ -246,9 +242,10 @@ const imageHoverVariants = {
   },
 };
 
-/*
- * Lớp gradient khi rê chuột.
- */
+/* =====================================
+   GRADIENT KHI HOVER
+===================================== */
+
 const overlayHoverVariants = {
   rest: {
     opacity: 0,
@@ -264,9 +261,10 @@ const overlayHoverVariants = {
   },
 };
 
-/*
- * Tên category khi rê chuột.
- */
+/* =====================================
+   TÊN CATEGORY KHI HOVER
+===================================== */
+
 const categoryTitleHoverVariants = {
   hover: {
     y: -2,
@@ -280,13 +278,12 @@ const categoryTitleHoverVariants = {
 };
 
 /* =====================================
-   MỘT CATEGORY CARD
+   COMPONENT MỘT CATEGORY
 ===================================== */
 
 function CategoryCard({
   category,
   index,
-  shouldReduceMotion,
 }) {
   const href =
     category?.href || "/shop";
@@ -307,15 +304,16 @@ function CategoryCard({
 
   return (
     /*
-     * Lớp ngoài chỉ xử lý hiệu ứng
+     * Lớp ngoài xử lý hiệu ứng
      * xuất hiện khi cuộn tới.
+     *
+     * initial luôn giống nhau trên
+     * server và client.
      */
     <motion.article
-      initial={
-        shouldReduceMotion
-          ? false
-          : getCardInitialPosition(index)
-      }
+      initial={getCardInitialPosition(
+        index
+      )}
       whileInView={{
         opacity: 1,
         x: 0,
@@ -340,18 +338,15 @@ function CategoryCard({
       "
     >
       {/*
-       * Lớp trong chỉ xử lý hover.
-       * Nhờ tách hai lớp nên hover không
-       * xung đột với animation xuất hiện.
+       * Lớp trong xử lý hover.
+       *
+       * Tách hover ra khỏi animation
+       * xuất hiện để tránh xung đột.
        */}
       <motion.div
         initial="rest"
         animate="rest"
-        whileHover={
-          shouldReduceMotion
-            ? undefined
-            : "hover"
-        }
+        whileHover="hover"
         variants={cardHoverVariants}
         className="
           origin-center
@@ -386,18 +381,14 @@ function CategoryCard({
               will-change-transform
             "
           >
-            {/* Ảnh */}
+            {/* Ảnh category */}
             <motion.img
-              initial={
-                shouldReduceMotion
-                  ? false
-                  : {
-                      scale: 1.14,
+              initial={{
+                scale: 1.14,
 
-                      filter:
-                        "brightness(0.9) saturate(0.85)",
-                    }
-              }
+                filter:
+                  "brightness(0.9) saturate(0.85)",
+              }}
               whileInView={{
                 scale: 1,
 
@@ -415,9 +406,7 @@ function CategoryCard({
                 duration: 1.15,
                 ease: EASE_LUXURY,
               }}
-              variants={
-                imageHoverVariants
-              }
+              variants={imageHoverVariants}
               src={image}
               alt={alt}
               loading="lazy"
@@ -431,18 +420,14 @@ function CategoryCard({
             />
 
             {/*
-             * Màn che màu kem.
-             * Đây là phần tạo kiểu xuất hiện mới.
+             * Màn che màu kem tạo
+             * hiệu ứng mở ảnh.
              */}
             <motion.div
-              initial={
-                shouldReduceMotion
-                  ? false
-                  : getCurtainInitial(index)
-              }
-              whileInView={
-                getCurtainVisible(index)
-              }
+              initial={getCurtainInitial()}
+              whileInView={getCurtainVisible(
+                index
+              )}
               viewport={{
                 once: true,
                 amount: 0.3,
@@ -488,14 +473,10 @@ function CategoryCard({
 
           {/* Tên category */}
           <motion.h3
-            initial={
-              shouldReduceMotion
-                ? false
-                : {
-                    opacity: 0,
-                    y: 18,
-                  }
-            }
+            initial={{
+              opacity: 0,
+              y: 18,
+            }}
             whileInView={{
               opacity: 1,
               y: 0,
@@ -537,9 +518,6 @@ function CategoryCard({
 export default function CategorySection({
   browse,
 }) {
-  const shouldReduceMotion =
-    useReducedMotion();
-
   const categories = Array.isArray(
     browse?.categories
   )
@@ -551,99 +529,106 @@ export default function CategorySection({
   }
 
   return (
-    <motion.section
-      initial={
-        shouldReduceMotion
-          ? "visible"
-          : "hidden"
-      }
-      whileInView="visible"
-      viewport={{
-        once: true,
-        amount: 0.18,
-        margin:
-          "0px 0px -70px 0px",
-      }}
-      className="
-        bg-white
-        pb-[56px]
-        pt-[56px]
-        font-['Poppins']
-      "
-    >
-      <Container size="categories">
-        {/* Tiêu đề */}
-        <motion.div
-          variants={
-            headingContainerVariants
-          }
-          className="
-            mx-auto
-            max-w-[760px]
-            text-center
-          "
-        >
-          <motion.h2
+    /*
+     * Motion tự đọc thiết lập Reduced Motion.
+     *
+     * Không cần dùng useReducedMotion()
+     * để thay đổi initial trong JSX.
+     */
+    <MotionConfig reducedMotion="user">
+      <motion.section
+        /*
+         * Server và client luôn bắt đầu
+         * từ cùng một trạng thái.
+         */
+        initial="hidden"
+        whileInView="visible"
+        viewport={{
+          once: true,
+          amount: 0.18,
+          margin:
+            "0px 0px -70px 0px",
+        }}
+        className="
+          bg-white
+          pb-[56px]
+          pt-[56px]
+          font-['Poppins']
+        "
+      >
+        <Container size="categories">
+          {/* Tiêu đề */}
+          <motion.div
             variants={
-              headingTitleVariants
+              headingContainerVariants
             }
             className="
-              text-[32px]
-              font-bold
-              leading-[48px]
-              text-[#333333]
-
-              md:text-[40px]
+              mx-auto
+              max-w-[760px]
+              text-center
             "
           >
-            {browse?.title ||
-              "Browse The Range"}
-          </motion.h2>
+            <motion.h2
+              variants={
+                headingTitleVariants
+              }
+              className="
+                text-[32px]
+                font-bold
+                leading-[48px]
+                text-[#333333]
 
-          <motion.p
-            variants={subtitleVariants}
+                md:text-[40px]
+              "
+            >
+              {browse?.title ||
+                "Browse The Range"}
+            </motion.h2>
+
+            <motion.p
+              variants={
+                subtitleVariants
+              }
+              className="
+                mt-1
+                text-[18px]
+                leading-[30px]
+                text-[#666666]
+              "
+            >
+              {browse?.subtitle ||
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
+            </motion.p>
+          </motion.div>
+
+          {/* Ba category */}
+          <div
             className="
-              mt-1
-              text-[18px]
-              leading-[30px]
-              text-[#666666]
+              mt-[48px]
+              grid
+              grid-cols-1
+              gap-[32px]
+
+              md:grid-cols-3
+              md:gap-[20px]
             "
           >
-            {browse?.subtitle ||
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
-          </motion.p>
-        </motion.div>
-
-        {/* Ba category */}
-        <div
-          className="
-            mt-[48px]
-            grid
-            grid-cols-1
-            gap-[32px]
-
-            md:grid-cols-3
-            md:gap-[20px]
-          "
-        >
-          {categories.map(
-            (category, index) => (
-              <CategoryCard
-                key={
-                  category.id ??
-                  category.slug ??
-                  `${category.name}-${index}`
-                }
-                category={category}
-                index={index}
-                shouldReduceMotion={
-                  shouldReduceMotion
-                }
-              />
-            )
-          )}
-        </div>
-      </Container>
-    </motion.section>
+            {categories.map(
+              (category, index) => (
+                <CategoryCard
+                  key={
+                    category.id ??
+                    category.slug ??
+                    `${category.name}-${index}`
+                  }
+                  category={category}
+                  index={index}
+                />
+              )
+            )}
+          </div>
+        </Container>
+      </motion.section>
+    </MotionConfig>
   );
 }
