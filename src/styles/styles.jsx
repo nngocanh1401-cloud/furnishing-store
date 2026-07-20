@@ -249,3 +249,89 @@ export const singleProductStyles = {
   divider:
     "my-10 border-[#D9D9D9]",
 };
+export const paginationStyles = {
+  wrapper:
+    "flex justify-center bg-white pb-[85px] pt-[40px] font-['Poppins']",
+
+  list:
+    "flex flex-wrap items-center justify-center gap-3 sm:gap-5 lg:gap-[38px]",
+
+  buttonBase:
+    "inline-flex h-[60px] min-w-[60px] items-center justify-center rounded-[10px] px-4 text-[20px] font-normal transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88E2F] focus-visible:ring-offset-2",
+
+  active:
+    "bg-[#B88E2F] text-white hover:bg-[#9F7928]",
+
+  inactive:
+    "bg-[#F9F1E7] text-black hover:bg-[#B88E2F] hover:text-white",
+
+  navigation:
+    "min-w-[98px] bg-[#F9F1E7] px-6 font-light text-black hover:bg-[#B88E2F] hover:text-white",
+};
+export const inspirationStyles = {
+  section:
+    "overflow-hidden bg-[#FCF8F3]",
+
+  container:
+    "relative mx-auto w-full max-w-[1440px] px-5 py-12 lg:h-[670px] lg:px-0 lg:py-0",
+
+  content:
+    "lg:absolute lg:left-[100px] lg:top-[223px] lg:w-[422px]",
+
+  description:
+    "mt-[7px] max-w-[368px] font-['Poppins'] text-[16px] font-medium leading-[24px] text-[#616161]",
+
+  carousel:
+    "mt-10 flex gap-6 overflow-x-auto pb-4 lg:absolute lg:left-[564px] lg:top-[44px] lg:mt-0 lg:w-[1196px] lg:overflow-visible lg:pb-0",
+
+  mainCard:
+    "relative h-[500px] w-[360px] shrink-0 overflow-hidden md:h-[582px] md:w-[404px]",
+
+  mainImage:
+    "h-full w-full object-cover",
+
+  informationWrapper:
+    "absolute bottom-6 left-6 flex items-end",
+
+  informationBox:
+    "h-[130px] w-[217px] bg-white/70 px-8 py-8 backdrop-blur-[1.5px]",
+
+  informationRoom:
+    "font-['Poppins'] text-[16px] font-medium leading-[24px] text-[#616161]",
+
+  informationTitle:
+    "mt-2 font-['Poppins'] text-[28px] font-semibold leading-[34px] text-[#3A3A3A]",
+
+  arrow:
+    "flex h-12 w-12 items-center justify-center bg-[#B88E2F] text-2xl text-white transition duration-200 hover:bg-[#9F7928] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88E2F] focus-visible:ring-offset-2",
+
+  previewColumn:
+    "shrink-0",
+
+  previewImage:
+    "h-[420px] w-[320px] object-cover md:h-[486px] md:w-[372px]",
+
+  thirdImage:
+    "h-[420px] w-[320px] shrink-0 object-cover md:h-[486px] md:w-[372px]",
+
+  dots:
+    "mt-10 hidden items-center gap-3 md:flex",
+
+  dotButton:
+    "flex h-[27px] w-[27px] items-center justify-center rounded-full transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88E2F] focus-visible:ring-offset-2",
+
+  dotActive:
+    "border border-[#B88E2F]",
+
+  dotInactive:
+    "border border-transparent hover:border-[#D8D8D8]",
+
+  dotInner:
+    "h-[11px] w-[11px] rounded-full transition duration-200",
+
+  dotInnerActive:
+    "bg-[#B88E2F]",
+
+  dotInnerInactive:
+    "bg-[#D8D8D8] hover:bg-[#B0B0B0]",
+};

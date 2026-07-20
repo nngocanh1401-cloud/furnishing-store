@@ -1,39 +1,273 @@
+"use client";
+
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import Link from "next/link";
 
 import Button from "@/components/common/Button";
-import { textStyles } from "@/styles/styles";
+
+import {
+  inspirationStyles,
+  textStyles,
+} from "@/styles/styles";
+
+import { cn } from "@/utils/cn";
+
+/*
+ * Thời gian mặc định nếu homeData.json
+ * không khai báo autoPlaySeconds.
+ */
+const DEFAULT_AUTOPLAY_SECONDS = 4;
+
+/* =====================================
+   HÀM LẤY ITEM THEO VÒNG LẶP
+===================================== */
+
+/*
+ * Ví dụ có 3 sản phẩm:
+ *
+ * index 0 → item 0
+ * index 1 → item 1
+ * index 2 → item 2
+ * index 3 → quay lại item 0
+ */
+function getLoopItem(
+  items,
+  index
+) {
+  if (items.length === 0) {
+    return null;
+  }
+
+  const safeIndex =
+    ((index % items.length) +
+      items.length) %
+    items.length;
+
+  return items[safeIndex];
+}
+
+/* =====================================
+   INSPIRATION SECTION
+===================================== */
 
 export default function InspirationSection({
   content,
 }) {
-  const items = Array.isArray(content?.items)
+  const items = Array.isArray(
+    content?.items
+  )
     ? content.items
     : [];
 
-  const [main, second, third] = items;
-
-  if (!main || !second || !third) {
+  /*
+   * Carousel hiện tại cần tối thiểu
+   * ba hình:
+   *
+   * 1 hình chính
+   * 2 hình xem trước
+   */
+  if (items.length < 3) {
     return null;
   }
 
+  /* ===================================
+     STATE SLIDE
+  =================================== */
+
+  const [
+    activeIndex,
+    setActiveIndex,
+  ] = useState(0);
+
+  /*
+   * Tạm dừng khi người dùng rê chuột
+   * hoặc dùng bàn phím tương tác.
+   */
+  const [
+    isPaused,
+    setIsPaused,
+  ] = useState(false);
+
+  const totalSlides = items.length;
+
+  /*
+   * Tránh activeIndex vượt quá số lượng
+   * item nếu dữ liệu thay đổi.
+   */
+  const safeActiveIndex =
+    activeIndex % totalSlides;
+
+  /* ===================================
+     THỜI GIAN TỰ CHUYỂN
+  =================================== */
+
+  const configuredSeconds = Number(
+    content?.autoPlaySeconds
+  );
+
+  const autoPlaySeconds =
+    Number.isFinite(configuredSeconds) &&
+    configuredSeconds > 0
+      ? configuredSeconds
+      : DEFAULT_AUTOPLAY_SECONDS;
+
+  const autoPlayMilliseconds =
+    autoPlaySeconds * 1000;
+
+  /* ===================================
+     BA ITEM ĐANG HIỂN THỊ
+  =================================== */
+
+  const mainItem = getLoopItem(
+    items,
+    safeActiveIndex
+  );
+
+  const secondItem = getLoopItem(
+    items,
+    safeActiveIndex + 1
+  );
+
+  const thirdItem = getLoopItem(
+    items,
+    safeActiveIndex + 2
+  );
+
+  const shopHref =
+    content?.buttonHref || "/shop";
+
+  const slideNumber = String(
+    safeActiveIndex + 1
+  ).padStart(2, "0");
+
+  /* ===================================
+     TỰ ĐỘNG CHUYỂN SLIDE
+  =================================== */
+
+  useEffect(() => {
+    /*
+     * Không cần chạy autoplay khi:
+     *
+     * - Carousel đang tạm dừng.
+     * - Chỉ có một slide.
+     */
+    if (
+      isPaused ||
+      totalSlides <= 1
+    ) {
+      return undefined;
+    }
+
+    /*
+     * Dùng setTimeout thay vì một interval
+     * chạy liên tục.
+     *
+     * Mỗi khi activeIndex thay đổi,
+     * timer được tạo lại từ đầu.
+     */
+    const timerId = window.setTimeout(
+      () => {
+        setActiveIndex(
+          (currentIndex) =>
+            (currentIndex + 1) %
+            totalSlides
+        );
+      },
+      autoPlayMilliseconds
+    );
+
+    /*
+     * Dọn timer khi:
+     *
+     * - Component unmount.
+     * - Slide thay đổi.
+     * - Người dùng pause carousel.
+     */
+    return () => {
+      window.clearTimeout(timerId);
+    };
+  }, [
+    activeIndex,
+    autoPlayMilliseconds,
+    isPaused,
+    totalSlides,
+  ]);
+
+  /* ===================================
+     CHUYỂN SLIDE BẰNG NÚT TRÒN
+  =================================== */
+
+  function handleDotClick(index) {
+    setActiveIndex(index);
+  }
+
+  /* ===================================
+     PAUSE KHI DÙNG BÀN PHÍM
+  =================================== */
+
+  function handleCarouselBlur(event) {
+    /*
+     * Chỉ tiếp tục autoplay khi focus
+     * thật sự rời khỏi toàn carousel.
+     */
+    const nextFocusedElement =
+      event.relatedTarget;
+
+    const isFocusStillInside =
+      nextFocusedElement &&
+      event.currentTarget.contains(
+        nextFocusedElement
+      );
+
+    if (!isFocusStillInside) {
+      setIsPaused(false);
+    }
+  }
+
   return (
-    <section className="overflow-hidden bg-[#FCF8F3]">
-      <div className="relative mx-auto w-full max-w-[1440px] px-5 py-12 lg:h-[670px] lg:px-0 lg:py-0">
-        <div className="lg:absolute lg:left-[100px] lg:top-[223px] lg:w-[422px]">
-          <h2 className={textStyles.sectionTitle}>
+    <section
+      className={
+        inspirationStyles.section
+      }
+    >
+      <div
+        className={
+          inspirationStyles.container
+        }
+      >
+        {/* =================================
+            NỘI DUNG BÊN TRÁI
+        ================================= */}
+
+        <div
+          className={
+            inspirationStyles.content
+          }
+        >
+          <h2
+            className={
+              textStyles.sectionTitle
+            }
+          >
             {content?.title ||
               "50+ Beautiful rooms inspiration"}
           </h2>
 
-          <p className="mt-[7px] max-w-[368px] font-['Poppins'] text-[16px] font-medium leading-[24px] text-[#616161]">
+          <p
+            className={
+              inspirationStyles.description
+            }
+          >
             {content?.description ||
               "Discover beautiful rooms designed to inspire your home."}
           </p>
 
           <Button
-            href={
-              content?.buttonHref || "/shop"
-            }
+            href={shopHref}
             size="inspiration"
             className="mt-[25px]"
           >
@@ -42,60 +276,212 @@ export default function InspirationSection({
           </Button>
         </div>
 
-        <div className="mt-10 flex gap-6 overflow-x-auto pb-4 lg:absolute lg:left-[564px] lg:top-[44px] lg:mt-0 lg:w-[1196px] lg:overflow-visible lg:pb-0">
-          <div className="relative h-[500px] w-[360px] shrink-0 overflow-hidden md:h-[582px] md:w-[404px]">
+        {/* =================================
+            CAROUSEL
+        ================================= */}
+
+        <div
+          className={
+            inspirationStyles.carousel
+          }
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Room inspiration"
+          onMouseEnter={() =>
+            setIsPaused(true)
+          }
+          onMouseLeave={() =>
+            setIsPaused(false)
+          }
+          onFocusCapture={() =>
+            setIsPaused(true)
+          }
+          onBlurCapture={
+            handleCarouselBlur
+          }
+        >
+          {/* ===============================
+              HÌNH CHÍNH
+          =============================== */}
+
+          <div
+            key={`main-${
+              mainItem.id ??
+              safeActiveIndex
+            }`}
+            className={cn(
+              inspirationStyles.mainCard,
+              "inspiration-main-enter"
+            )}
+          >
             <img
-              src={main.image}
-              alt={main.alt}
-              className="h-full w-full object-cover"
+              src={mainItem.image}
+              alt={mainItem.alt}
+              loading="lazy"
+              decoding="async"
+              className={
+                inspirationStyles.mainImage
+              }
             />
 
-            <div className="absolute bottom-6 left-6 flex items-end">
-              <div className="h-[130px] w-[217px] bg-white/70 px-8 py-8 backdrop-blur-[1.5px]">
-                <p className="font-['Poppins'] text-[16px] font-medium leading-[24px] text-[#616161]">
-                  01 — {main.room}
+            {/* Thông tin slide */}
+            <div
+              className={cn(
+                inspirationStyles.informationWrapper,
+                "inspiration-information-enter"
+              )}
+            >
+              <div
+                className={
+                  inspirationStyles.informationBox
+                }
+              >
+                <p
+                  className={
+                    inspirationStyles.informationRoom
+                  }
+                >
+                  {slideNumber} —{" "}
+                  {mainItem.room}
                 </p>
 
-                <h3 className="mt-2 font-['Poppins'] text-[28px] font-semibold leading-[34px] text-[#3A3A3A]">
-                  {main.title}
+                <h3
+                  className={
+                    inspirationStyles.informationTitle
+                  }
+                >
+                  {mainItem.title}
                 </h3>
               </div>
 
+              {/* Nút mũi tên tới Shop */}
               <Link
-                href={
-                  content?.buttonHref || "/shop"
+                href={shopHref}
+                aria-label={`Open shop from ${mainItem.title}`}
+                className={
+                  inspirationStyles.arrow
                 }
-                aria-label="Explore room inspiration"
-                className="flex h-12 w-12 items-center justify-center bg-[#B88E2F] text-2xl text-white transition hover:bg-[#9F7928]"
               >
-                →
+                <span aria-hidden="true">
+                  →
+                </span>
               </Link>
             </div>
           </div>
 
-          <div className="shrink-0">
+          {/* ===============================
+              HÌNH XEM TRƯỚC THỨ NHẤT
+          =============================== */}
+
+          <div
+            className={
+              inspirationStyles.previewColumn
+            }
+          >
             <img
-              src={second.image}
-              alt={second.alt}
-              className="h-[420px] w-[320px] object-cover md:h-[486px] md:w-[372px]"
+              key={`second-${
+                secondItem.id ??
+                safeActiveIndex + 1
+              }`}
+              src={secondItem.image}
+              alt={secondItem.alt}
+              loading="lazy"
+              decoding="async"
+              className={cn(
+                inspirationStyles.previewImage,
+                "inspiration-preview-enter"
+              )}
             />
 
-            <div className="mt-10 hidden items-center gap-5 md:flex">
-              <span className="flex h-[27px] w-[27px] items-center justify-center rounded-full border border-[#B88E2F]">
-                <span className="h-[11px] w-[11px] rounded-full bg-[#B88E2F]" />
-              </span>
+            {/* =============================
+                NÚT TRÒN
+            ============================= */}
 
-              <span className="h-[11px] w-[11px] rounded-full bg-[#D8D8D8]" />
-              <span className="h-[11px] w-[11px] rounded-full bg-[#D8D8D8]" />
-              <span className="h-[11px] w-[11px] rounded-full bg-[#D8D8D8]" />
+            <div
+              className={
+                inspirationStyles.dots
+              }
+              role="group"
+              aria-label="Choose inspiration slide"
+            >
+              {items.map(
+                (item, index) => {
+                  const isActive =
+                    index ===
+                    safeActiveIndex;
+
+                  return (
+                    <button
+                      key={
+                        item.id ??
+                        `inspiration-dot-${index}`
+                      }
+                      type="button"
+                      onClick={() =>
+                        handleDotClick(
+                          index
+                        )
+                      }
+                      className={cn(
+                        inspirationStyles.dotButton,
+                        isActive
+                          ? inspirationStyles.dotActive
+                          : inspirationStyles.dotInactive
+                      )}
+                      aria-label={`Show slide ${
+                        index + 1
+                      }: ${
+                        item.title
+                      }`}
+                      aria-current={
+                        isActive
+                          ? "true"
+                          : undefined
+                      }
+                    >
+                      <span
+                        className={cn(
+                          inspirationStyles.dotInner,
+                          isActive
+                            ? inspirationStyles.dotInnerActive
+                            : inspirationStyles.dotInnerInactive
+                        )}
+                      />
+                    </button>
+                  );
+                }
+              )}
             </div>
           </div>
 
+          {/* ===============================
+              HÌNH XEM TRƯỚC THỨ HAI
+          =============================== */}
+
           <img
-            src={third.image}
-            alt={third.alt}
-            className="h-[420px] w-[320px] shrink-0 object-cover md:h-[486px] md:w-[372px]"
+            key={`third-${
+              thirdItem.id ??
+              safeActiveIndex + 2
+            }`}
+            src={thirdItem.image}
+            alt={thirdItem.alt}
+            loading="lazy"
+            decoding="async"
+            className={cn(
+              inspirationStyles.thirdImage,
+              "inspiration-preview-enter"
+            )}
           />
+
+          {/* Nội dung hỗ trợ screen reader */}
+          <p
+            className="sr-only"
+            aria-live="polite"
+          >
+            Slide {safeActiveIndex + 1} of{" "}
+            {totalSlides}:{" "}
+            {mainItem.title}
+          </p>
         </div>
       </div>
     </section>
