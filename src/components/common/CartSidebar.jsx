@@ -74,13 +74,11 @@ function formatCurrency(price) {
 }
 
 export default function CartSidebar({ isOpen, onClose }) {
-  const { cartItems, removeFromCart } = useCart();
-  const subtotal = cartItems.reduce((total, item) => {
-    const numericPrice = getNumericPrice(item.price);
-    const quantity = Number(item.quantity) || 1;
-
-    return total + numericPrice * quantity;
-  }, 0);
+  const {
+    cartItems,
+    removeFromCart,
+    cartTotal,
+  } = useCart();
 
   if (!isOpen) return null;
 
@@ -173,7 +171,7 @@ export default function CartSidebar({ isOpen, onClose }) {
           </span>
 
           <span className="absolute left-[200px] top-[615px] h-[24px] w-[117px] whitespace-nowrap text-[16px] font-semibold leading-[24px] text-[#B88E2F]">
-            {formatCurrency(subtotal)}
+            {formatCurrency(cartTotal)}
           </span>
 
           <div className="absolute left-[30px] top-[663px] h-px w-[287px] bg-[#D9D9D9]" />

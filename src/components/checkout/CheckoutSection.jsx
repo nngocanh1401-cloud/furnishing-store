@@ -1,11 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-
-const orderItem = {
-  name: "Asgaard sofa",
-  quantity: 1,
-  price: 250000,
-};
+import { useCart } from "@/context/CartContext";
 
 const countries = ["Sri Lanka", "Viet Nam", "United States", "Japan"];
 
@@ -17,6 +12,7 @@ const fallbackProvinces = {
 
 
 export default function CheckoutSection() {
+  const { cartItems, cartTotal } = useCart();
   const [paymentMethod, setPaymentMethod] = useState("bank");
   const [provinces, setProvinces] = useState([]);
   const [isProvinceLoading, setIsProvinceLoading] = useState(true);
@@ -57,9 +53,8 @@ export default function CheckoutSection() {
       ? provinces.map((province) => province.name)
       : fallbackProvinces[formData.country] || [];
 
-  const subtotal = orderItem.price * orderItem.quantity;
-
-  const formatPrice = (price) => `Rs. ${price.toLocaleString("en-US")}.00`;
+  const formatPrice = (price) =>
+    `Rp ${Number(price || 0).toLocaleString("id-ID")}`;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -244,29 +239,54 @@ export default function CheckoutSection() {
             </div>
 
             <div className="mb-[22px] flex items-center justify-between">
-              <p className="text-[16px] text-[#9F9F9F]">
-                {orderItem.name}{" "}
-                <span className="ml-[11px] text-[12px] text-black">
-                  x {orderItem.quantity}
-                </span>
+              <p className="text-[16px] text-black">
+                Subtotal
               </p>
 
               <p className="text-[16px] font-light text-black">
-                {formatPrice(subtotal)}
+                {formatPrice(cartTotal)}
               </p>
             </div>
 
-            <div className="mb-[22px] flex items-center justify-between">
-              <p className="text-[16px] text-black">Subtotal</p>
-              <p className="text-[16px] font-light text-black">
-                {formatPrice(subtotal)}
-              </p>
-            </div>
+            <div className="mb-[22px] space-y-[14px]">
+              {cartItems.length > 0 ? (
+                cartItems.map((item) => {
+                  const itemSubtotal =
+                    Number(item.price || 0) *
+                    Number(item.quantity || 1);
 
+                  return (
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-between gap-4"
+                    >
+                      <p className="text-[16px] text-[#9F9F9F]">
+                        {item.name}
+
+                        <span className="ml-[11px] text-[12px] text-black">
+                          x {item.quantity}
+                        </span>
+                      </p>
+
+                      <p className="shrink-0 text-[16px] font-light text-black">
+                        {formatPrice(itemSubtotal)}
+                      </p>
+                    </div>
+                  );
+                })
+              ) : (
+                <p className="text-[16px] text-[#9F9F9F]">
+                  Your cart is empty.
+                </p>
+              )}
+            </div>
             <div className="mb-[33px] flex items-center justify-between border-b border-[#D9D9D9] pb-[33px]">
-              <p className="text-[16px] text-black">Total</p>
+              <p className="text-[16px] text-black">
+                Total
+              </p>
+
               <strong className="text-[24px] font-bold text-[#B88E2F]">
-                {formatPrice(subtotal)}
+                {formatPrice(cartTotal)}
               </strong>
             </div>
 

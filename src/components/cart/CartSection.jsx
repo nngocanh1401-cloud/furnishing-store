@@ -6,15 +6,12 @@ import { useCart } from "@/context/CartContext";
 export default function CartSection() {
   const {
     cartItems,
+    cartTotal,
     removeFromCart,
+    updateCartQuantity,
   } = useCart();
 
   const formatPrice = (price) => `Rs. ${price.toLocaleString("en-US")}.00`;
-
-  const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
 
   return (
     <section className="bg-white py-10 font-[Poppins] min-[768px]:py-14 min-[992px]:py-[72px]">
@@ -60,19 +57,9 @@ export default function CartSection() {
                       {formatPrice(item.price)}
                     </p>
 
-                    <input
-                      type="number"
-                      min="1"
-                      value={item.quantity}
-                      onChange={(event) =>
-                        updateCartQuantity(
-                          item.id,
-                          event.target.value
-                        )
-                      }
-                      className="h-8 w-8 rounded-[5px] border border-[#9F9F9F] text-center text-[16px] leading-[32px] text-black outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                      aria-label={`Quantity of ${item.name}`}
-                    />
+                    <div className="flex h-8 w-8 items-center justify-center rounded-[5px] border border-[#9F9F9F] text-[16px] text-black">
+                      {item.quantity}
+                    </div>
 
                     <p className="text-[16px] text-black">
                       {formatPrice(item.price * item.quantity)}
@@ -107,7 +94,7 @@ export default function CartSection() {
               </span>
 
               <p className="text-[14px] text-[#9F9F9F] min-[768px]:text-[16px]">
-                {formatPrice(total)}
+                {formatPrice(cartTotal)}
               </p>
             </div>
 
@@ -117,7 +104,7 @@ export default function CartSection() {
               </span>
 
               <strong className="text-[18px] font-medium text-[#B88E2F] min-[768px]:text-[20px]">
-                {formatPrice(total)}
+                {formatPrice(cartTotal)}
               </strong>
             </div>
 

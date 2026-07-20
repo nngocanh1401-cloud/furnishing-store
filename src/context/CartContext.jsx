@@ -8,10 +8,26 @@ import {
 } from "react";
 
 const CartContext = createContext(null);
+function getNumericPrice(price) {
+  if (typeof price === "number") {
+    return price;
+  }
 
+  return (
+    Number(
+      String(price || "").replace(/[^\d]/g, "")
+    ) || 0
+  );
+}
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const cartTotal = cartItems.reduce((total, item) => {
+  const price = getNumericPrice(item.price);
+  const quantity = Number(item.quantity) || 1;
+
+  return total + price * quantity;
+}, 0);
 
   // Đọc giỏ hàng từ localStorage khi website khởi động
   useEffect(() => {
@@ -115,6 +131,7 @@ export function CartProvider({ children }) {
     <CartContext.Provider
       value={{
         cartItems,
+        cartTotal,
         addToCart,
         removeFromCart,
         increaseQuantity,
