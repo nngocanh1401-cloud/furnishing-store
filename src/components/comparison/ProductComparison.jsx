@@ -3,12 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
+import { useSearchParams } from "next/navigation";
 import productCatalog from "@/data/productCatalog.json";
 import Container from "@/components/common/Container";
 import CartSidebar from "@/components/common/CartSidebar";
 import { comparisonStyles } from "@/styles/styles";
 import {
+  addProductToCompare,
   getCompareProductIds,
   removeProductFromCompare,
   MAX_COMPARE_PRODUCTS,
@@ -204,21 +205,27 @@ export default function ProductComparison() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [productsToCompare, setProductsToCompare] = useState([]);
 
+  const searchParams = useSearchParams();
+  const productIdFromUrl = searchParams.get("product");
   const canAddProduct = productsToCompare.length < MAX_COMPARE_PRODUCTS;
 
   useEffect(() => {
+    if (productIdFromUrl) {
+      addProductToCompare(productIdFromUrl);
+    }
+
     const storedIds = getCompareProductIds();
 
     const storedProducts = storedIds
       .map((id) =>
         productsWithComparison.find(
-          (product) => Number(product.id) === Number(id)
+          (product) => String(product.id) === String(id)
         )
       )
       .filter(Boolean);
 
     setProductsToCompare(storedProducts);
-  }, []);
+  }, [productIdFromUrl]);
 
   function handleAddToCart(product) {
     const cartProduct = {
